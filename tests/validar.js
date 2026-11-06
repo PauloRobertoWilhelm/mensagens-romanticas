@@ -46,6 +46,9 @@ if (MS.length!==80) err('total '+MS.length);
 const Chave = require(path.join(raiz,'js/chave.js'));
 for (let i=1;i<=255;i++) for (let k=0;k<20;k++) { const c=Chave.gerar(i); if (Chave.decodificar(c)!==i) err('chave falhou id '+i+' '+c); if (Chave.decodificar(c.toLowerCase())!==i) err('minúscula falhou'); }
 let inv=0; for (let i=0;i<5000;i++){ let s=''; for(let j=0;j<5;j++) s+= '23456789ABCDEFGHJKMNPQRSTUVWXYZ'[Math.floor(Math.random()*31)]; const r=Chave.decodificar(s); if(r!==null && !(r>=1&&r<=255)) err('decodificação fora de faixa'); if (r!==null) inv++; }
+// Chaves fixas: mesma chave sempre, abre o id certo e não repete entre ids.
+const fixas = new Set(); for (let i=1;i<=255;i++) { const c=Chave.fixa(i); if (c!==Chave.fixa(i)) err('chave fixa mudou id '+i); if (Chave.decodificar(c)!==i) err('chave fixa falhou id '+i+' '+c); fixas.add(c); }
+if (fixas.size!==255) err('chaves fixas repetidas: '+fixas.size+' de 255');
 console.log('mensagens:',MS.length,contCat);
 console.log('chaves aleatórias aceitas por acaso:',inv,'de 5000 (esperado ~ pequeno)');
 console.log('combinações únicas:',chaves.size);

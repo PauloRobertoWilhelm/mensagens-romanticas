@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- painel/index.html — SUA ferramenta: escolhe a mensagem e gera o link com chave. -->
+<!-- painel/index.html — SUA ferramenta: escolhe a mensagem e pega o link fixo dela. -->
 <html lang="pt-BR">
 <head>
   <!-- Codificação e layout de celular. -->
@@ -15,7 +15,7 @@
   <!-- Cabeçalho com explicação curta. -->
   <header>
     <h1>Painel de links 💌</h1>
-    <p class="sub">Escolha uma mensagem, toque em <b>Gerar link</b> e envie. Cada clique cria uma chave nova (todas abrem a mesma mensagem).</p>
+    <p class="sub">Escolha uma mensagem, toque em <b>Ver link</b> e envie. Cada mensagem tem um link fixo, que nunca muda.</p>
   </header>
 
   <!-- Barra de ferramentas: categoria, busca e anotação de destinatário. -->
@@ -28,7 +28,7 @@
   <!-- Lista de cartões das mensagens (preenchida pelo painel.js). -->
   <main id="lista" class="lista"></main>
 
-  <!-- Gaveta do link gerado: aparece embaixo quando você gera um link. -->
+  <!-- Gaveta do link: aparece embaixo quando você toca em Ver link. -->
   <aside id="gaveta" hidden>
     <p id="gNome" class="gNome"></p>
     <input id="gLink" type="text" readonly aria-label="Link gerado">
@@ -40,9 +40,9 @@
     <p id="gAviso" class="sub"></p>
   </aside>
 
-  <!-- Histórico dos links gerados NESTE navegador (fica salvo só aqui). -->
+  <!-- Histórico dos links vistos NESTE navegador (fica salvo só aqui). -->
   <section class="hist">
-    <h2>Links gerados neste aparelho</h2>
+    <h2>Links vistos neste aparelho</h2>
     <ul id="historico"></ul>
     <button id="limpar" type="button" class="leve">Limpar histórico</button>
   </section>

@@ -21,7 +21,7 @@
 5. Reações no final abrem o WhatsApp se `CONFIG.WHATSAPP` estiver preenchido.
 
 ## Chave do link
-5 caracteres, alfabeto de 31 símbolos (sem 0 O 1 I L). Bits: salt 9 · id mascarado 8 · verificação 6. Ids de 1 a 255. **É ofuscação, não segurança.** Cada geração produz uma chave diferente para o mesmo id.
+5 caracteres, alfabeto de 31 símbolos (sem 0 O 1 I L). Bits: salt 9 · id mascarado 8 · verificação 6. Ids de 1 a 255. **É ofuscação, não segurança.** O painel usa `Chave.fixa(id)`: cada mensagem tem um link fixo, que nunca muda. `Chave.gerar(id)` continua sorteando chaves diferentes, e toda chave válida segue abrindo a mensagem.
 
 ## Esquema (dados em JS)
 ```js

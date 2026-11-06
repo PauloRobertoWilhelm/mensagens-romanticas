@@ -10,7 +10,7 @@ window.CONFIG = {
   // Endereço do seu site no GitHub Pages, usado pelo PAINEL para montar os links.
   // Exemplo: 'https://seuusuario.github.io/mensagens-romanticas/' (com a barra no final).
   // Se o painel estiver aberto dentro do próprio site publicado, pode deixar vazio.
-  URL_BASE: '',
+  URL_BASE: 'https://paulorobertowilhelm.github.io/mensagens-romanticas/',
   // Volume da música de 0 a 1 (0.85 = 85%).
   VOLUME: 0.85
 };

@@ -24,12 +24,10 @@
   // Objeto público.
   const Chave = {};
 
-  // Gera uma chave nova para o id informado (cada chamada gera uma chave DIFERENTE, todas válidas).
-  Chave.gerar = (id) => {
+  // Monta a chave de um id a partir de um salt (0 a 511). É a parte comum de gerar e fixa.
+  const montar = (id, salt) => {
     // Recusa ids fora da faixa.
     if (!Number.isInteger(id) || id < 1 || id > 255) throw new Error('id inválido: ' + id);
-    // Sorteia o salt (0 a 511).
-    const salt = Math.floor(Math.random() * 512);
     // Mascara o id com o salt (XOR) para não aparecer em claro.
     const idm = (id ^ (salt & 255) ^ 0xA5) & 255;
     // Junta os três campos num único número de 23 bits.
@@ -41,6 +39,13 @@
     // Devolve a chave.
     return saida;
   };
+
+  // Gera uma chave sorteada para o id (cada chamada dá uma chave DIFERENTE, todas válidas).
+  Chave.gerar = (id) => montar(id, Math.floor(Math.random() * 512));
+
+  // Devolve a chave FIXA do id: sempre a mesma, então o link de cada mensagem nunca muda.
+  // O salt vem do próprio id; 197 é ímpar, por isso ids diferentes nunca repetem o salt.
+  Chave.fixa = (id) => montar(id, (id * 197 + 53) % 512);
 
   // Lê uma chave e devolve o id, ou null se for inválida.
   Chave.decodificar = (texto) => {

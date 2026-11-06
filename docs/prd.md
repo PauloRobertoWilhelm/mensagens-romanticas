@@ -30,7 +30,7 @@ Site estático no GitHub Pages. O dono gera um link com chave, manda para algué
 
 **RF-02 Chave no link.** Como dono, quero que o link tenha uma chave (`?k=...`) que escolhe a mensagem. *Aceite:* chave inválida ou ausente mostra uma página neutra e simpática, sem erro técnico.
 
-**RF-03 Painel do dono.** Como dono, quero uma página `painel/` onde escolho a categoria (ou aleatório) e gero um link novo. *Aceite:* cada clique gera chave nova; botão copiar funciona no celular; mostra prévia da mensagem.
+**RF-03 Painel do dono.** Como dono, quero uma página `painel/` onde escolho a categoria (ou aleatório) e pego o link dela. *Aceite:* cada mensagem tem um link fixo, que nunca muda; botão copiar funciona no celular; mostra prévia da mensagem.
 
 **RF-04 Oitenta mensagens.** Como dono, quero 80 mensagens: 20 de paquera, 20 de namoro, 20 de amigos e 20 de datas especiais. *Aceite:* nenhuma repete texto de outra; nenhuma cita nome; cada uma tem combinação única de tema + abertura + sequência de cenas + final.
 

@@ -1,5 +1,5 @@
 /* ==========================================================
-   painel.js — lista as 80 mensagens, gera links com chave e guarda o histórico
+   painel.js — lista as 80 mensagens, mostra o link fixo de cada uma e guarda o histórico
    (histórico fica só no navegador de quem usa o painel, via localStorage).
    ========================================================== */
 
@@ -56,17 +56,17 @@
       const fim = m.passos[m.passos.length - 1];
       return '<article class="card"><h3><span class="pt" style="background:' + COR[m.tema] + '"></span>' + esc(m.nome) + '<span class="id">#' + m.id + '</span></h3>'
         + '<p class="meta">' + esc(CATEGORIAS[m.cat].nome) + ' · tema ' + esc(m.tema) + '<br>abertura: ' + esc(m.ab.t) + '<br>cenas: ' + esc(cenas) + '<br>final: ' + esc(fim.tp) + (m.carta ? ' · com carta ✉️' : '') + '</p>'
-        + '<button type="button" data-id="' + m.id + '">Gerar link</button></article>';
+        + '<button type="button" data-id="' + m.id + '">Ver link</button></article>';
     }).join('') || '<p class="sub">Nada encontrado.</p>';
     // Liga o botão de cada cartão.
     $('#lista').querySelectorAll('button[data-id]').forEach((b) => b.addEventListener('click', () => gerar(parseInt(b.dataset.id, 10))));
   };
 
-  // Gera um link novo para o id, mostra na gaveta e grava no histórico.
+  // Monta o link fixo do id, mostra na gaveta e grava no histórico.
   const gerar = (id) => {
-    // Acha a mensagem e cria a chave.
+    // Acha a mensagem e pega a chave fixa dela (é sempre a mesma).
     const m = MENSAGENS.find((x) => x.id === id);
-    const chave = Chave.gerar(id);
+    const chave = Chave.fixa(id);
     const link = baseUrl() + 'index.html?k=' + chave;
     // Preenche e mostra a gaveta.
     $('#gNome').textContent = '#' + m.id + ' · ' + m.nome;
