@@ -11,8 +11,8 @@ window.CATEGORIAS = {
   // Paquera / conquista.
   paquera: {
     nome: 'Paquera', emoji: '💘', musica: 'music/paquera.mp3', bpm: 76,
-    legendas: ['respira fundo… 💭', 'tem coisa que não dá pra disfarçar', 'um sorriso e o resto fica pequeno', 'sem pressa, no seu tempo', 'o coração tem seus atalhos', 'borboletas: ninguém avisou', 'pensei em você de novo', 'é só um oi que eu queria dizer', 'o silêncio também fala', 'calma, o melhor vem devagar', 'alguém sorriu agora, adivinha quem', 'o mundo pode esperar um minuto'],
-    chips: ['Me fez sorrir 😊', 'Fiquei sem graça 🙈', 'Quero te responder 💬']
+    legendas: ['esse sorriso devia ter aviso de perigo', 'que mulher, meu Deus', 'tem coisa que não dá pra disfarçar', 'esse cabelo é covardia', 'inteligente assim, é até injusto', 'você sabe o que faz comigo', 'pensei em você de novo', 'linda de um jeito que atrapalha', 'perdi o assunto quando você chegou', 'alguém sorriu agora, adivinha quem', 'sem defesa nenhuma aqui', 'o mundo pode esperar um minuto'],
+    chips: ['Que ousadia 😏', 'Fiquei sem graça 🙈', 'Continua… 💬']
   },
   // Namorada.
   namoro: {
