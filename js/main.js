@@ -41,9 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Aplica o tema (cores via CSS) e a receita de partículas do mesmo nome.
-  document.documentElement.dataset.tema = msg.tema;
-  Fundo.iniciar(Fundo.TEMAS[msg.tema] || Fundo.TEMAS.noite);
+  // Aplica o tema (cores via CSS) e marca a arte, que pode ter cores e fontes próprias.
+  document.documentElement.dataset.tema = msg.tema; document.documentElement.dataset.arte = msg.ab.a;
+  // Liga as partículas do tema, com os ajustes próprios da arte quando houver.
+  Fundo.iniciar(Object.assign({}, Fundo.TEMAS[msg.tema] || Fundo.TEMAS.noite, msg.ab.fundo));
   // Cor da barra do navegador no celular combina com o tema.
   const meta = U.$('meta[name="theme-color"]');
   if (meta) meta.content = getComputedStyle(document.documentElement).getPropertyValue('--bg-a').trim() || '#0b0b1a';

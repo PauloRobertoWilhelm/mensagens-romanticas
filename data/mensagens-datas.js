@@ -2,153 +2,167 @@
    mensagens-datas.js — ids 61 a 80 (categoria: datas especiais).
    Aniversário, aniversário de namoro, Dia dos Namorados, Natal, Ano Novo,
    Dia das Mães, Pais, Mulher, Amigo, Páscoa, conquista, Professores, casamento.
+   Cada mensagem usa uma arte só dela (js/artes-datas.js).
    ========================================================== */
 
-// 61 — Feliz aniversário (confete / presente)
-M(61, 'datas', 'confete', 'Feliz aniversário', abPresente('É o seu dia!', 'toque para abrir'), [
-  K('Desejos', [['Saúde', 'pra aproveitar tudo'], ['Alegria', 'pra rir à toa'], ['Paz', 'pra dormir bem']]),
-  H('Parabéns', ['Mais um ano de vida.', 'Mais um ano de *histórias*.', 'E eu feliz por fazer parte de algumas.']),
-  N('Aniversário em números', [[1, 'ano a mais de experiência'], [365, 'novos dias pela frente'], ['∞', 'motivos pra comemorar']], 'Que cada dia seja *melhor* que o anterior.'),
-  F('deslizar', 'Parabéns! 🎂', 'Que esse novo ciclo traga *tudo de bom* que você merece. Feliz aniversário!', { dica2: 'deslize para soprar a vela' })
+// 61 — Bolo de aniversário.
+M(61, 'datas', 'confete', 'Apague as velas', abArte('bolo', {
+  abre: 'Toque nas velas para apagar. Cada uma é um desejo.', fecho: '*Feliz aniversário!* Que venha o seu melhor ano.', fim: 'cortar o bolo ›',
+  desejos: ['Que não falte *saúde*.', 'Que sobre *motivo pra rir*.', 'Que venha *paz* na hora de dormir.', 'Que apareça *gente boa* pelo caminho.', 'E que seus *sonhos* saiam do papel.']
+}, { forma: '✦', qtd: 14 }), [
+  F('Parabéns! 🎂', 'Que esse novo ciclo traga *tudo de bom* que você merece.')
 ], 'Hoje o dia é seu, então o resto do mundo pode esperar.\n\nQuero que você receba esse dia com o sorriso que merece. Que o novo ciclo venha com saúde, com gente querida por perto e com aquelas pequenas alegrias que enchem a vida.\n\nSe eu pudesse, te dava o dia inteiro de folga do mundo.\n\nFeliz aniversário. Que seja um ano lindo.');
 
-// 62 — Contagem do aniversário (noite / presente)
-M(62, 'datas', 'noite', 'Contagem do aniversário', abPresente('Hoje é sobre você', 'toque para abrir'), [
-  N('Contagem regressiva', [[3, 'respire fundo'], [2, 'faça um pedido'], [1, 'sopre a vela']], 'E que venha *um ano lindo*.'),
-  L('O que eu desejo', ['Que você sorria mais', 'Que cuidem de você como você cuida', 'Que seus planos saiam do papel', 'Que você nunca perca a leveza']),
-  F('segurar', 'Feliz aniversário.', 'Que esse seja *seu melhor ano*. Você merece. 🎉')
+// 62 — Balões.
+M(62, 'datas', 'oceano', 'Estoure os desejos', abArte('baloes', {
+  abre: 'Hoje é o seu dia. Estoure os balões!', fecho: 'Todos os desejos soltos. *Agora é só viver.*', fim: 'continuar ›',
+  desejos: ['Que você *sorria mais*.', 'Que cuidem de você *como você cuida*.', 'Que seus planos *saiam do papel*.', 'Que a leveza *nunca te abandone*.', 'Que esse ano *te surpreenda*.']
+}, { qtd: 0 }), [
+  F('Feliz aniversário.', 'Que esse seja *seu melhor ano*. Você merece. 🎉')
 ]);
 
-// 63 — Um ano de nós (rosa / envelope)
-M(63, 'datas', 'rosa', 'Um ano de nós', abEnvelope('Feliz aniversário de namoro', '💞'), [
-  N('Nosso tempo', [[12, 'meses de nós'], [365, 'dias de escolha'], ['∞', 'pra frente']], 'Cada dia contado *valeu a pena*.'),
-  H('Retrospectiva', ['Quando a gente começou, eu não imaginava.', 'Não imaginava que ia ser *tão bom*.', 'Que ia ser *tão nosso*.']),
-  C('coracao', 'Mais um ano ao seu lado: *a melhor decisão* que eu tomei.'),
-  F('segurar', 'Feliz aniversário de namoro.', 'Te amo hoje, mais do que ontem e *menos do que amanhã*.')
+// 63 — Doze meses.
+M(63, 'datas', 'rosa', 'Um ano de nós', abArte('doze', {
+  unidade: 'meses', dica: 'segure o círculo para passar o ano', fim: 'guardar esse ano ›',
+  frases: ['Janeiro: *a gente ainda se descobria*.', 'Abril: já sabia *o seu café* de cor.', 'Julho: *primeira briga*, primeiro perdão.', 'Outubro: casa virou *onde você está*.'],
+  fecho: 'Doze meses e eu *escolheria tudo de novo*.'
+}, { forma: '♥', qtd: 10 }), [
+  F('Feliz aniversário de namoro.', 'Foi só o primeiro capítulo. *Tenho muita página pra escrever com você.*')
 ], 'Meu amor,\n\nFaz tempo que eu quero te agradecer por tudo que a gente construiu. Parece pouco, mas cada dia ao seu lado foi um tijolo desse lugar que a gente chama de nós.\n\nTivemos dias leves, dias pesados, discussões bobas e risadas que ninguém mais entende. E mesmo assim, eu escolheria tudo de novo.\n\nFeliz aniversário de namoro. Que venham muitos mais.');
 
-// 64 — Mais um ano juntos (fogo / envelope)
-M(64, 'datas', 'fogo', 'Mais um ano juntos', abEnvelope('Aniversário de nós', '🔥'), [
-  H('Chama', ['O tempo passa.', 'O fogo *continua*.', 'E fica melhor a cada ano.']),
-  L('O que mais gosto em nós', ['A forma como a gente se entende', 'As brigas curtas e os beijos longos', 'Os planos que fazemos juntos', 'A certeza de que é com você']),
-  F('segurar', 'Feliz aniversário, meu amor.', 'Gratidão por cada dia. *Que venham muitos mais.*')
+// 64 — Brinde de aniversário de namoro.
+M(64, 'datas', 'fogo', 'Tim-tim', abArte('brinde', {
+  abre: 'Mais um ano juntos. Isso pede um brinde.', dica: 'arraste a taça até a outra', fim: 'beber ›',
+  frases: ['Às risadas que a gente deu.', 'Às brigas que a gente *venceu junto*.', 'E a tudo que *ainda vem pela frente*.']
+}, { forma: '✧', qtd: 10 }), [
+  F('Saúde, meu amor.', 'De todos os anos que eu vivi, *os melhores têm você*.')
 ]);
 
-// 65 — Mesversário (aurora / envelope)
-M(65, 'datas', 'aurora', 'Mesversário', abEnvelope('Mais um mês', '📆'), [
-  N('Marcamos', [[1, 'mês a mais de nós'], [30, 'dias de carinho'], ['∞', 'dias pela frente']], 'Mês a mês, *a gente cresce*.'),
-  H('Pequenas vitórias', ['A gente não precisa de data grande pra comemorar.', 'Cada mês é uma *vitória* de quem se escolhe.', 'Feliz mesversário. 💞']),
-  F('toques', 'Mesversário feliz.', 'Que nossos meses virem *anos*, e os anos virem uma vida. Te amo.', { n: 6 })
+// 65 — Fases da Lua.
+M(65, 'datas', 'aurora', 'Mesversário', abArte('luas', {
+  dica: 'arraste a lua no trilho', fim: 'continuar ›',
+  frases: ['Lua nova: *começamos mais um mês*.', 'Crescente: *meu amor também*.', 'Lua cheia: *assim que eu fico* com você.', 'Minguante: é a única coisa que mingua.'],
+  fecho: 'A Lua muda todo mês. *O que eu sinto, não.*'
+}, { forma: '✦', qtd: 14 }), [
+  F('Feliz mesversário.', 'Mais um mês *te amando*, mais um mês com vontade de mais mil.')
 ]);
 
-// 66 — Dia dos Namorados I (rosa / coração)
-M(66, 'datas', 'rosa', 'Dia dos Namorados I', abCoracao('Feliz Dia dos Namorados', 'toque no coração'), [
-  K('Presentes do coração', [['Um beijo', 'dado devagar'], ['Um abraço', 'sem hora pra acabar'], ['Uma promessa', 'de estar por perto']]),
-  H('Hoje', ['Tem gente que ama de longe, de perto, de qualquer jeito.', 'Eu amo *do meu jeito*.', 'E o meu jeito sempre chega em você.']),
-  L('Pra comemorar', ['Um jantar a dois, ou a pizza no sofá', 'Uma mensagem sincera, como esta', 'Um beijo bem demorado']),
-  F('deslizar', 'Feliz Dia dos Namorados.', 'Hoje e todos os dias: *eu escolho você*. Te amo.', { dica2: 'deslize para abrir o coração' })
+// 66 — Cupido.
+M(66, 'datas', 'rosa', 'Flechada', abArte('cupido', {
+  dica: 'puxe o arco para baixo e solte', fim: 'guardar o arco ›',
+  frases: ['Primeira flecha: *seu sorriso*.', 'Segunda flecha: *o seu jeito*.', 'Terceira: nem precisava, *eu já era seu*.']
+}, { qtd: 0 }), [
+  F('Feliz Dia dos Namorados.', 'O cupido nem precisou mirar. *Você foi certeira.*')
 ]);
 
-// 67 — Dia dos Namorados II (crepúsculo / coração)
-M(67, 'datas', 'crepusculo', 'Dia dos Namorados II', abCoracao('Hoje é dia de nós', 'toque no coração'), [
-  S('Termômetro do amor', [['Carinho', 100], ['Companhia', 100], ['Saudade quando não está perto', 100]], 'Resultado do dia: *amor em estado puro*.'),
-  H('Dia 12', ['Dia dos Namorados é bom.', 'Mas amar é *todo dia*.', 'Só que hoje eu quis registrar.']),
-  F('segurar', 'Meu amor.', 'Gratidão por me escolher todo dia. *Feliz Dia dos Namorados.*')
+// 67 — Cadeado na ponte.
+M(67, 'datas', 'crepusculo', 'Cadeado do amor', abArte('cadeado', {
+  iniciais: '♥', abre: 'Dizem que cadeado em ponte é pra sempre.', dica: 'arraste a chave até o cadeado', fim: 'seguir pela ponte ›',
+  frases: ['Fechei.', 'E joguei a chave *no rio mais fundo* que achei.', 'Agora não tem saída. *Ainda bem.*']
+}, { forma: '✦', qtd: 10 }), [
+  F('Trancado neste Dia dos Namorados.', 'Meu coração é seu, e *a chave eu perdi de propósito*.')
 ]);
 
-// 68 — Dia dos Namorados III (neon / terminal)
-M(68, 'datas', 'neon', 'Dia dos Namorados III', abTerminal('12/06', ['verificando data...', 'evento: Dia dos Namorados', 'ação: declarar amor']), [
-  H('Log', ['Mensagem de amor enviada com sucesso.', 'Remetente: alguém que *te ama*.', 'Destinatário: o coração mais importante do meu mundo.']),
-  N('Estatísticas do dia', [[1, 'pessoa insubstituível'], [100, '% de amor'], ['∞', 'beijos']], 'Tudo certo. Sem erros.'),
-  L('Lista de tarefas', ['Te abraçar forte', 'Te dizer te amo sem pressa', 'Agradecer por você existir']),
-  F('segurar', 'Executado.', 'Feliz Dia dos Namorados. *Te amo* em todas as linguagens.')
+// 68 — Fliperama.
+M(68, 'datas', 'neon', 'Player 2', abArte('pixel', {
+  score: 'HIGH SCORE 999999', abre: 'INSERT COIN', ficha: 'INSERIR FICHA', fim: 'CONTINUAR',
+  frases: ['PLAYER 2 ENTROU NO JOGO', 'COMBO: *RISADA + ABRAÇO*', 'VIDA INFINITA *COM VOCÊ*']
+}, { qtd: 0 }), [
+  F('Feliz Dia dos Namorados, player 2.', 'Em todas as fases do jogo, *eu quero você no segundo controle*.')
 ]);
 
-// 69 — Natal (ouro / terminal)
-M(69, 'datas', 'ouro', 'Natal de luz', abTerminal('Feliz Natal', ['acendendo luzes...', 'carregando abraços...', 'enviando carinho']), [
-  H('Natal', ['Fim de ano é tempo de olhar pra trás.', 'Eu olho e vejo *gente que importa*.', 'E você está nessa lista.']),
-  C('estrela', 'Que a estrela do Natal *ilumine* a sua casa e o seu coração.'),
-  F('segurar', 'Feliz Natal.', 'Saúde, paz e muita comida boa. Que a mesa esteja *cheia de gente querida*. 🎄')
+// 69 — Árvore de Natal.
+M(69, 'datas', 'ouro', 'Árvore acesa', abArte('arvore', {
+  abre: 'Toque nas bolas para acender a árvore.', fecho: 'Que a luz de hoje *fique acesa o ano inteiro*.', fim: 'continuar ›',
+  desejos: ['Paz *na sua casa*.', 'Mesa cheia *de gente querida*.', 'Abraço *apertado de quem você ama*.', 'Saudade *que vira reencontro*.', 'E muita *gratidão por chegar até aqui*.']
+}, { forma: '❄', qtd: 26 }), [
+  F('Feliz Natal.', 'Que o melhor presente deste ano seja *quem está do seu lado*.')
 ]);
 
-// 70 — Cartinha de Natal (jardim / presente)
-M(70, 'datas', 'jardim', 'Cartinha de Natal', abPresente('Papai Noel passou aqui', 'toque para abrir'), [
-  K('Presentes de Natal', [['Paz', 'pra dormir tranquilo'], ['Saúde', 'pra aproveitar tudo'], ['Amor', 'pra encher a casa']]),
-  L('Pedidos ao bom velhinho', ['Que você sorria mais', 'Que o novo ano seja gentil', 'Que ninguém faça falta na mesa']),
-  F('toques', 'Boas festas.', 'Que o Natal chegue *quentinho* no seu coração. 🎅', { n: 5 })
+// 70 — Globo de neve.
+M(70, 'datas', 'jardim', 'Globo de neve', abArte('globo', {
+  dentro: 'Feliz Natal', dica: 'toque no globo para chacoalhar', fim: 'continuar ›',
+  frases: ['Dentro deste globo cabe *tudo de bom* que eu te desejo.', 'Saúde, paz e uma casa *sempre quentinha*.', 'E que a magia não acabe *quando a neve assentar*.']
+}, { qtd: 0 }), [
+  F('Boas festas.', 'Nem precisa nevar. *O carinho aqui é o ano inteiro.*')
 ]);
 
-// 71 — Ano Novo I (ouro / coração)
-M(71, 'datas', 'ouro', 'Contagem do Ano Novo', abCoracao('Contagem regressiva', 'toque no coração'), [
-  N('Virada', [[10, 'segundos para um ano novo'], [1, 'chance de recomeçar'], ['∞', 'possibilidades']], 'Feliz Ano Novo: *tudo pode ser diferente*.'),
-  H('Resoluções', ['Ano novo, caderno novo.', 'Eu desejo que ele seja *gentil* com você.', 'Que as coisas boas durem. E as ruins passem rápido.']),
-  L('Desejos', ['Muita saúde', 'Tempo pra quem importa', 'Coragem pra recomeçar', 'Pequenas alegrias todo dia']),
-  F('deslizar', 'Feliz Ano Novo! 🎆', 'Que venham *365 oportunidades* de ser feliz.', { dica2: 'deslize para brindar' })
+// 71 — Virada do relógio.
+M(71, 'datas', 'noite', 'Meia-noite', abArte('relogio', {
+  abre: 'Quase lá.', botao: 'adiantar o relógio', ano: 'FELIZ ANO NOVO!', fecho: 'Que os próximos 365 dias *sejam gentis* com você.', fim: 'brindar ›'
+}, { forma: '✦', qtd: 16 }), [
+  F('Ano novo, vida boa.', 'Deixe o que pesou lá atrás. *O melhor capítulo começa agora.*')
 ]);
 
-// 72 — Ano Novo II (confete / terminal)
-M(72, 'datas', 'confete', 'Virada de ano', abTerminal('Virada do ano', ['contando os segundos...', 'preparando fogos...', 'carregando esperança']), [
-  H('Meia-noite', ['Mais um ciclo se fecha.', 'Um novo vai começar *com a força de tudo que você viveu*.']),
-  N('Placar do ano', [[12, 'meses vividos'], [365, 'dias superados'], ['∞', 'motivos de orgulho']], 'Você chegou até aqui. *Isso já é vitória.*'),
-  C('estrela', 'O primeiro brilho do ano *tem o seu nome*.'),
-  F('deslizar', 'Feliz Ano Novo!', 'Que o próximo ano seja o *melhor* de todos. Brinde! 🥂', { dica2: 'deslize para estourar o champanhe' })
+// 72 — Sete ondas.
+M(72, 'datas', 'confete', 'Sete ondas', abArte('ondas', {
+  abre: 'Tradição é tradição. Pule as sete ondas!', botao: 'pular a onda', fecho: 'Sete ondas, sete pedidos. *O mar tomou nota.*', fim: 'voltar para a areia ›',
+  pedidos: ['Saúde.', 'Dinheiro no bolso.', 'Amor de verdade.', 'Paz em casa.', 'Viagem boa.', 'Amigos por perto.', 'E *sorte sem fim*!']
+}, { qtd: 0 }), [
+  F('Feliz Ano Novo!', 'Que a sorte venha *em ondas*, e que você saiba surfar todas.')
 ]);
 
-// 73 — Dia das Mães (rosa / terminal)
-M(73, 'datas', 'rosa', 'Dia das Mães', abTerminal('Para a mulher mais importante', ['buscando a melhor palavra...', 'palavra encontrada: mãe', 'gratidão: infinita']), [
-  K('Mãe, eu aprendi', [['A cuidar', 'vendo você cuidar'], ['A insistir', 'vendo você não desistir'], ['A amar', 'porque você me ensinou']]),
-  H('Gratidão', ['Mãe, não existe palavra grande o bastante pra agradecer.', 'Então mando *o que eu tenho*: todo o meu amor.', 'Você é meu primeiro e maior exemplo.']),
-  F('segurar', 'Feliz Dia das Mães.', 'Te amo mais do que sei dizer. *Você é meu abrigo.* 🌸')
+// 73 — Receita de mãe.
+M(73, 'datas', 'rosa', 'Receita de mãe', abArte('receita', {
+  titulo: 'Receita de Mãe', rende: 'rende: uma vida inteira', dica: 'toque nos ingredientes', fim: 'servir com amor ›',
+  ingredientes: ['2 xícaras de *paciência*', '1 colo que cura tudo', '3 colheres de *“leva um casaco”*', 'Amor sem medida'],
+  preparo: 'Modo de preparo: *misture tudo e nunca deixe faltar*. Ninguém nesse mundo acerta o ponto como você.'
+}, { forma: '✿', qtd: 10 }), [
+  F('Feliz Dia das Mães.', 'Tudo de bom que eu sei fazer *eu aprendi com você*.')
 ]);
 
-// 74 — Dia dos Pais (oceano / envelope)
-M(74, 'datas', 'oceano', 'Dia dos Pais', abEnvelope('Para o meu herói', '👔'), [
-  H('Pai', ['Pai, ninguém me ensinou tanto sem precisar de tantas palavras.', 'Com os seus exemplos, *aprendi o que é força*.', 'E o que é carinho também.']),
-  L('O que eu levo de você', ['A honestidade', 'O jeito de enfrentar o dia', 'A certeza de que posso contar contigo']),
-  F('deslizar', 'Feliz Dia dos Pais.', 'Te admiro e te amo. *Você é meu porto seguro.* ⚓', { dica2: 'deslize para abraçar' })
+// 74 — Projeto do pai.
+M(74, 'datas', 'oceano', 'Projeto: meu pai', abArte('projeto', {
+  titulo: 'PROJETO: MEU PAI', abre: 'Toque nas cotas para ler o projeto.', fim: 'aprovar o projeto ›',
+  cotas: ['Telhado: *protegeu a família* de toda tempestade.', 'Parede: *firme*, mesmo nos dias que ele mesmo balançava.', 'Porta: *sempre aberta* pra quando eu precisar voltar.']
+}, { qtd: 0 }), [
+  F('Feliz Dia dos Pais.', 'Tudo que eu tenho de firme *foi você que construiu*.')
 ]);
 
-// 75 — Dia da Mulher (crepúsculo / terminal)
-M(75, 'datas', 'crepusculo', 'Dia da Mulher', abTerminal('08/03', ['lembrando de mulheres incríveis...', 'processando coragem...', 'homenagem iniciada']), [
-  H('Homenagem', ['Você enfrenta tudo e ainda faz parecer leve.', 'Isso não é pouco.', 'É *força* de verdade.']),
-  L('Você é', ['Inteligente', 'Corajosa', 'Inspiradora', 'Insubstituível']),
-  C('coracao', 'Hoje e sempre: *respeito, admiração e carinho*.'),
-  F('toques', 'Feliz Dia da Mulher.', 'Que o mundo seja mais justo com você. E que você nunca esqueça *o quanto vale*. 💜', { n: 6 })
+// 75 — Rosa do Dia da Mulher.
+M(75, 'datas', 'crepusculo', 'Dia da Mulher', abArte('rosa', {
+  dica: 'toque na rosa para abrir', fim: 'continuar ›',
+  frases: ['Você é *força*, e nem sempre te contam isso.', 'É *coragem*, até nos dias de medo.', 'É *inteligência*, e ninguém precisa te dar licença.', 'É *delicadeza*, quando você decide ser.', 'Hoje e sempre: *que ninguém te diminua*.']
+}, { forma: '❀', qtd: 12 }), [
+  F('Feliz Dia da Mulher.', 'Flor é só um detalhe. *O respeito é todo dia.*')
 ]);
 
-// 76 — Dia do Amigo (neon / presente)
-M(76, 'datas', 'neon', 'Dia do Amigo', abPresente('20 de julho', 'toque para abrir'), [
-  N('Amizade', [[1, 'data pra lembrar'], [365, 'dias de amizade possível'], ['∞', 'gratidão']], 'Amizade boa *não precisa de data*, mas hoje é bom lembrar.'),
-  K('Brinde', [['Aos risos', 'que não têm explicação'], ['Aos conselhos', 'que salvaram o dia'], ['À presença', 'que não falha']]),
-  F('segurar', 'Feliz Dia do Amigo.', 'Valeu por ser parte da minha história. *Feliz Dia do Amigo!* 🤝')
+// 76 — Pulseira da amizade.
+M(76, 'datas', 'neon', 'Pulseira da amizade', abArte('pulseira', {
+  titulo: 'Faça a pulseira', palavra: 'AMIGO', dica: 'toque nas contas, uma por uma', fecho: 'Essa pulseira é invisível, *e não arrebenta nunca*.', fim: 'colocar no pulso ›'
+}, { forma: '✦', qtd: 12 }), [
+  F('Feliz Dia do Amigo.', 'Tem laço que a gente não dá. *A gente é.*')
 ]);
 
-// 77 — Páscoa (jardim / coração)
-M(77, 'datas', 'jardim', 'Feliz Páscoa', abCoracao('Feliz Páscoa', 'toque no coração'), [
-  N('Receita de Páscoa', [[1, 'abraço apertado'], [2, 'colheres de paz'], ['∞', 'chocolate']], 'Mistura tudo e *divide com quem você ama*.'),
-  H('Renovação', ['Páscoa é tempo de recomeço.', 'De deixar pra trás o que pesa.', 'E de abrir espaço pro *que renova*.']),
-  F('toques', 'Feliz Páscoa.', 'Que sua casa tenha paz, sua mesa tenha fartura e seu coração *muita leveza*. 🐰', { n: 5 })
+// 77 — Ovo de Páscoa.
+M(77, 'datas', 'jardim', 'Ovo de Páscoa', abArte('ovo', {
+  dica: 'toque no ovo para quebrar', fim: 'continuar ›', fecho: 'Lá dentro, o recheio: *todo o carinho do mundo*.',
+  frases: ['Crack!', 'Quase…', 'Sabia que você *quebraria a dieta*.']
+}, { forma: '🐰', qtd: 8 }), [
+  F('Feliz Páscoa.', 'Que a sua vida seja *doce e cheia de recomeços*.')
 ]);
 
-// 78 — Conquista (ouro / presente)
-M(78, 'datas', 'ouro', 'Parabéns pela conquista', abPresente('Você conseguiu', 'toque para abrir'), [
-  S('Seu desempenho', [['Esforço', 100], ['Dedicação', 100], ['Orgulho que eu sinto', 150]], 'Resultado: *conquista merecida*.'),
-  H('Reconhecimento', ['Ninguém vê as noites mal dormidas.', 'Eu imagino cada uma.', 'Por isso hoje eu celebro *do jeito que você merece*.']),
-  C('estrela', 'Mais uma estrela no seu caminho. *Brilha, que é sua.*'),
-  F('toques', 'Parabéns pela conquista!', 'O futuro é seu e você *já provou* que sabe chegar lá. 🎓', { n: 7 })
+// 78 — Montanha.
+M(78, 'datas', 'ouro', 'Você chegou lá', abArte('montanha', {
+  abre: 'Foi um caminho longo.', botao: 'segure para subir', fim: 'descer para comemorar ›',
+  frases: ['Teve noite sem dormir.', 'Teve vontade de *desistir*.', 'E você *continuou subindo*.'],
+  fecho: 'Topo alcançado. *Essa vitória é toda sua.*'
+}, { qtd: 0 }), [
+  F('Parabéns pela conquista!', 'Eu sempre soube. *Orgulho é pouco* para o que eu sinto.')
 ]);
 
-// 79 — Dia dos Professores (oceano / presente)
-M(79, 'datas', 'oceano', 'Dia dos Professores', abPresente('Para quem ensina', 'toque para abrir'), [
-  H('Mestre', ['Ensinar é plantar sem ver a árvore crescer.', 'Mas a gente vê.', 'E *agradece*.']),
-  N('Impacto', [[1, 'pessoa que marca uma vida'], [1000, 'coisas aprendidas'], ['∞', 'gratidão']], 'Seu trabalho *continua* em cada pessoa que passou por você.'),
-  F('segurar', 'Feliz Dia dos Professores.', 'Gratidão por transformar vidas. *Sua lição fica pra sempre.* 📚')
+// 79 — Caderno da professora.
+M(79, 'datas', 'oceano', 'Caderno de obrigado', abArte('caderno', {
+  titulo: 'Lição de hoje: obrigado', dica: 'toque nas estrelas para colar', assinatura: 'de quem aprendeu com você', fim: 'entregar o caderno ›',
+  linhas: ['Por ter *paciência* quando ninguém tinha.', 'Por acreditar em mim *antes de mim*.', 'Por ensinar muito além *da matéria*.']
+}, { forma: '★', qtd: 10 }), [
+  F('Feliz Dia dos Professores.', 'Tudo que eu me tornei *tem um pouco do que você ensinou*.')
 ]);
 
-// 80 — Aniversário de casamento (noite / envelope)
-M(80, 'datas', 'noite', 'Aniversário de casamento', abEnvelope('Aniversário de casamento', '💍'), [
-  H('Nossa história', ['Escolher alguém todo dia dá trabalho.', 'E vale cada segundo.', 'Porque *é com você* que a vida faz sentido.']),
-  C('infinito', 'A aliança é redonda porque *o amor não termina*.'),
-  K('Votos renovados', [['Eu prometo', 'continuar te escolhendo'], ['Eu prometo', 'rir com você nos dias difíceis'], ['Eu prometo', 'fazer o possível pra te fazer feliz']]),
-  F('toques', 'Feliz aniversário de casamento.', 'Mais um ano. *E ainda mais amor.* Te amo. 💍', { n: 6 })
+// 80 — Alianças.
+M(80, 'datas', 'noite', 'Aniversário de casamento', abArte('aliancas', {
+  abre: 'Lembra desse dia?', dica: 'arraste uma aliança até a outra', fim: 'renovar os votos ›',
+  frases: ['Eu disse sim uma vez, *naquele dia*.', 'E digo de novo, *toda manhã*.', 'Na saúde, na correria e no boleto. *Sempre você.*']
+}, { forma: '✦', qtd: 14 }), [
+  F('Feliz aniversário de casamento.', 'Se eu pudesse voltar no tempo, *eu casaria com você mais cedo*.')
 ], 'Meu amor,\n\nMais um ano e eu continuo achando que ganhei na loteria da vida.\n\nA gente já passou por muita coisa. Já se cansou, já se perdeu um pouco, já se encontrou de novo. E em todas as versões, é você quem eu quero ao lado.\n\nGratidão por dividir a casa, os dias e os sonhos comigo.\n\nFeliz aniversário de casamento. Que a gente tenha muitos mais.');

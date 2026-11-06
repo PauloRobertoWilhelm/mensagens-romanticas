@@ -60,7 +60,7 @@
     if (p && p.catch) p.catch(() => { semAudio = true; btn.hidden = true; rodape.classList.add('parado'); });
     // Sobe o volume de 0 até o configurado em 2 s (fade-in suave).
     const alvo = (window.CONFIG && CONFIG.VOLUME) || .85; const t0 = performance.now();
-    const sobe = (t) => { audio.volume = Math.min(alvo, alvo * ((t - t0) / 2000)); if (audio.volume < alvo) requestAnimationFrame(sobe); };
+    const sobe = (t) => { audio.volume = Math.max(0, Math.min(alvo, alvo * ((t - t0) / 2000))); if (audio.volume < alvo) requestAnimationFrame(sobe); };
     requestAnimationFrame(sobe);
     // Equalizador começa a mexer (se há áudio).
     rodape.classList.remove('parado');

@@ -16,14 +16,13 @@ Site estático no GitHub Pages. O dono gera um link com chave, manda para algué
 | Link | Painel do dono gera link com chave (assumido, confirmar) |
 | Hospedagem | GitHub Pages |
 
-## Músicas de referência (o dono baixa os MP3 por conta própria)
+## Músicas (arquivos MP3 do dono)
 | Categoria | Referência |
 |---|---|
-| Namoro | https://www.youtube.com/watch?v=i9vtmmE49kI |
-| A definir | https://www.youtube.com/watch?v=42QG9tIHRsQ |
-| Paquera | https://www.youtube.com/watch?v=q3n5z4W4c9Y |
-| Datas especiais | https://www.youtube.com/watch?v=zmRGjVLR6rs (provisória, a confirmar) |
-| Amigos | https://www.youtube.com/watch?v=Yo0_-eMCkf4 |
+| Paquera | Goo Goo Dolls, *Iris* (`music/paquera.mp3`) |
+| Namoro | Hoobastank, *The Reason* (`music/namoro.mp3`) |
+| Amigos | Bruno Mars, *Count on Me* (`music/amigos.mp3`) |
+| Datas especiais | Alok, *Alive (It Feels Like)* (`music/datas.mp3`) |
 
 ## Cards de requisito
 **RF-01 Abrir pelo link.** Como destinatário, quero abrir o link no celular e ver a mensagem direto, sem instalar nada nem fazer login. *Aceite:* carrega em até 3 s no 4G; funciona no Chrome Android e no Safari iOS 16+.
@@ -34,15 +33,15 @@ Site estático no GitHub Pages. O dono gera um link com chave, manda para algué
 
 **RF-04 Oitenta mensagens.** Como dono, quero 80 mensagens: 20 de paquera, 20 de namoro, 20 de amigos e 20 de datas especiais. *Aceite:* nenhuma repete texto de outra; nenhuma cita nome; cada uma tem combinação única de tema + abertura + sequência de cenas + final.
 
-**RF-05 Designs variados.** Como dono, quero visuais diferentes entre as mensagens. *Aceite:* 10 temas visuais; nenhuma combinação de tema + ordem de cenas + tipo de final se repete.
+**RF-05 Uma animação para cada link.** Como dono, quero que cada link tenha animação, gráficos, ideia e conteúdo próprios, sem parecer com os outros. *Aceite:* 80 artes diferentes; nenhuma arte se repete entre mensagens; o validador confere isso.
 
-**RF-06 Cenas reutilizáveis.** Como dono, quero cenas prontas combináveis: abertura tipo terminal, mensagens em sequência, constelação, análise com barras, segurar o coração, carta no envelope, cartas viradas, contagem regressiva. *Aceite:* cada cena é um módulo independente; trocar a ordem é só mudar a lista de cenas no arquivo de dados (data/mensagens-*.js).
+**RF-06 Peças reutilizáveis.** Como dono, quero peças comuns (toque, segurar, arrastar, raspar, canvas, som) que as artes usam sem repetir código. *Aceite:* toda interação passa por `js/kit.js` e marca o elemento com `data-acao`, o que permite testar os 80 links com um único teste.
 
 **RF-07 Música por categoria.** Como destinatário, quero ouvir uma música ao abrir. *Aceite:* começa no primeiro toque (regra do navegador); repete; botão de mudo e volume; pausa ao sair da aba.
 
 **RF-08 Legenda no rodapé.** Como destinatário, quero ver frases curtas no pé da tela enquanto a música toca. *Aceite:* troca a cada N batidas (BPM configurável por categoria); fica legível sobre qualquer tema; respeita "reduzir movimento".
 
-**RF-09 Final por categoria.** Como dono, quero um final que combine com a ocasião. *Aceite:* paquera termina sem convite pressionando (segurar o coração + reações); namorada, amigos e datas têm finais próprios.
+**RF-09 Final.** Como dono, quero que toda mensagem feche com um título, uma frase e reações. *Aceite:* nenhuma termina pedindo para sair ou se encontrar; a letra do título acompanha a arte; a paquera é ousada, com cantadas e elogios ao sorriso, ao cabelo, à inteligência e à mulher incrível que ela é.
 
 **RF-10 Resposta por WhatsApp (opcional).** Como dono, quero que a pessoa possa responder pelo meu WhatsApp. *Aceite:* só aparece se o número estiver no config; mensagem pronta por reação.
 

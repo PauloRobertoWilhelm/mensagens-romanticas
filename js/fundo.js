@@ -105,9 +105,12 @@
       // Estrela de 5 pontas (10 vértices alternando raio externo/interno).
       for (let i = 0; i < 10; i++) { const r = i % 2 ? s * .28 : s * .65; const a = (i * Math.PI) / 5 - Math.PI / 2; cx.lineTo(Math.cos(a) * r, Math.sin(a) * r); }
       cx.closePath(); cx.fill();
-    } else {
+    } else if (f === 'confete') {
       // Confete = retângulo pequeno.
       cx.fillRect(-s / 2, -s / 4, s, s / 2);
+    } else {
+      // Qualquer outra forma é um símbolo escrito (♪, ✦, ❄...), para cada arte ter o seu.
+      cx.font = Math.round(s * 1.5) + 'px serif'; cx.textAlign = 'center'; cx.fillText(f, 0, s * .5);
     }
   };
 
@@ -176,11 +179,11 @@
     }
   };
 
-  // Festa: várias explosões espalhadas pela parte de cima da tela (usada em finais e presentes).
+  // Festa: várias explosões espalhadas pela parte de cima da tela, com a partícula da própria mensagem.
   Fundo.festa = (n) => {
     // Quantidade de rajadas.
     const k = n || 5;
-    for (let i = 0; i < k; i++) setTimeout(() => Fundo.explodirEm(U.rand(W * .15, W * .85), U.rand(H * .2, H * .55), 34, 'confete'), i * 220);
+    for (let i = 0; i < k; i++) setTimeout(() => Fundo.explodirEm(U.rand(W * .15, W * .85), U.rand(H * .2, H * .55), 34), i * 220);
   };
 
   // Publica.

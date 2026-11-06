@@ -1,25 +1,19 @@
 PASTA DAS MÚSICAS
 =================
 
-Coloque aqui 4 arquivos MP3 com ESTES nomes:
+Cada categoria toca um arquivo desta pasta:
 
-  paquera.mp3
-  namoro.mp3
-  amigos.mp3
-  datas.mp3
+  paquera.mp3  ->  Goo Goo Dolls - Iris
+  namoro.mp3   ->  Hoobastank - The Reason
+  amigos.mp3   ->  Bruno Mars - Count on Me
+  datas.mp3    ->  Alok - Alive (It Feels Like)
 
 Sem o arquivo, a mensagem funciona normalmente, só sem som.
 
-Referências que você escolheu (IDs de vídeos do YouTube, para você localizar a faixa):
-
-  namoro   -> i9vtmmE49kI
-  paquera  -> q3n5z4W4c9Y
-  amigos   -> Yo0_-eMCkf4
-  datas    -> zmRGjVLR6rs   (provisória: confira se combina)
+Para trocar uma música, substitua o arquivo mantendo o mesmo nome.
 
 Dicas:
 - Prefira MP3 de 128 kbps (cerca de 3 MB por faixa) para abrir rápido no celular.
 - Trechos de 2 a 4 minutos bastam: a música repete em loop.
 - Músicas comerciais em repositório PÚBLICO podem ser removidas por direitos autorais.
   Alternativa: músicas livres de direitos, ou hospedar em local privado.
-- Se trocar a faixa, ajuste "bpm" em data/categorias.js (só muda a velocidade das legendas).

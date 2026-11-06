@@ -8,16 +8,17 @@
 | Hospedagem | GitHub Pages (site estático) | Grátis, sem servidor |
 | Linguagem | HTML + CSS + JavaScript puro | Sem build; abre com duplo clique ou Live Server |
 | Scripts | **Clássicos** (`<script src>`), sem ES modules e sem `fetch` | Módulos e `fetch` não funcionam em `file://` |
-| Conteúdo | Arquivos JS de dados (`data/mensagens-*.js`) usando funções curtas (`M`, `H`, `S`...) | Editar texto sem tocar no motor |
+| Conteúdo | Arquivos JS de dados (`data/mensagens-*.js`) usando funções curtas (`M`, `abArte`, `F`) | Editar texto sem tocar no motor |
 | Partículas | Canvas 2D próprio | Sem biblioteca |
 | Música | `HTMLAudioElement` com MP3 local por categoria | Sem depender do YouTube |
-| Testes | Node (validação de dados) + Playwright/Chrome (fluxo ponta a ponta) | Ver README |
+| Artes | Uma função por link em `js/artes-*.js`, com estilo em `css/artes-*.css` e peças comuns em `js/kit.js` | Cada link tem ideia, gráfico e interação próprios |
+| Testes | Node (`tests/validar.js`) + Chrome (`tests/e2e.js`, joga os 80 links) | As peças do kit marcam cada gesto com `data-acao` |
 
 ## Fluxo do usuário
 1. Recebe `index.html?k=CHAVE`.
 2. `main.js` decodifica a chave (`chave.js`) → id → mensagem em `MENSAGENS`.
-3. Aplica `data-tema`, inicia `Fundo` (partículas do tema) e `Musica` (categoria).
-4. `Cenas.rodar`: abertura (primeiro toque libera a música) → cenas → final (jogo + revelação).
+3. Aplica `data-tema` e `data-arte`, inicia `Fundo` (partículas do tema, com ajustes da arte) e `Musica` (categoria).
+4. `Cenas.rodar`: arte própria do link (o primeiro toque libera a música) → final (título, mensagem, reações, carta).
 5. Reações no final abrem o WhatsApp se `CONFIG.WHATSAPP` estiver preenchido.
 
 ## Chave do link
@@ -25,17 +26,11 @@
 
 ## Esquema (dados em JS)
 ```js
-M(id, 'categoria', 'tema', 'nome', abTerminal(titulo, [linhas]) /* ou abCoracao | abEnvelope | abPresente */, [
-  H(titulo, [frases]),            // historia
-  C('coracao|estrela|infinito', msg), // constelacao
-  S(titulo, [[rotulo, pct]], veredito), // scanner
-  K(titulo, [[frente, verso]]),   // cartas
-  N(titulo, [[numero, rotulo]], fecho), // contagem
-  L(titulo, [itens]),             // motivos
-  E(pergunta, [[opcao, resposta]]), // escolha
-  F('segurar|toques|deslizar', titulo, mensagem, { n, dica, dica2, pre }) // final (obrigatório, último)
+M(id, 'categoria', 'tema', 'nome', abArte('arte', { /* textos que a arte usa */ }, { /* partículas, opcional */ }), [
+  F('título', 'mensagem') // final (obrigatório, último)
 ], 'carta opcional');
 ```
+Para criar uma mensagem nova: escreva a função `A.nome = async (d) => { ... }` em `js/artes-<categoria>.js` usando as peças de `js/kit.js` (`K.tela`, `K.toque`, `K.segura`, `K.arrasta`, `K.raspa`, `K.pinta`...), o estilo `.a-nome` em `css/artes-<categoria>.css` e os textos no arquivo de dados. O validador recusa arte repetida entre mensagens.
 `CATEGORIAS[cat] = { nome, emoji, musica, bpm, legendas[], chips[] }`.
 
 ## Segurança e privacidade

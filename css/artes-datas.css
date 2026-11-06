@@ -1,0 +1,233 @@
+/* ==========================================================
+   artes-datas.css — o visual próprio de cada link de datas especiais.
+   Cada bloco começa com o nome da arte; .a-nome limita o estilo a ela.
+   ========================================================== */
+
+/* ---------- 61 bolo: bolo de dois andares e velas ---------- */
+.a-bolo .torta { position: relative; width: min(82vw, 300px); height: 250px; }
+.a-bolo .velas { position: absolute; top: 0; left: 15%; right: 15%; display: flex; justify-content: space-around; z-index: 2; }
+.a-bolo .velinha { position: relative; width: 44px; height: 92px; appearance: none; border: 0; background: none; }
+.a-bolo .velinha::after { content: ''; position: absolute; bottom: 0; left: 15px; width: 14px; height: 54px; border-radius: 3px; background: repeating-linear-gradient(45deg, #fff 0 6px, #ff8fb1 6px 12px); }
+.a-bolo .velinha i { position: absolute; top: 4px; left: 11px; width: 22px; height: 36px; border-radius: 50% 50% 46% 46% / 72% 72% 28% 28%; background: radial-gradient(ellipse at 50% 72%, #fff 10%, #ffd34d 40%, #ff7a1a 74%); box-shadow: 0 0 18px #ffb347; animation: tremula-b .3s ease-in-out infinite alternate; }
+@keyframes tremula-b { to { rotate: 5deg; } }
+.a-bolo .velinha.apagou i { background: none; box-shadow: none; width: 6px; left: 19px; height: 34px; border-radius: 3px; background: rgba(220, 220, 230, .5); animation: fumaca 1.5s ease-out forwards; }
+@keyframes fumaca { to { transform: translateY(-46px) scaleX(2.4); opacity: 0; } }
+.a-bolo .andar { position: absolute; left: 50%; border-radius: 10px 10px 4px 4px; transform: translateX(-50%); box-shadow: inset 0 14px 0 #fff4f7; }
+.a-bolo .um { bottom: 0; width: 100%; height: 88px; background: #ff8fb1; }
+.a-bolo .dois { bottom: 88px; width: 74%; height: 72px; background: #ffc2d6; }
+.a-bolo .texto { min-height: 3.2em; }
+
+/* ---------- 62 baloes: céu azul e balões ---------- */
+.a-baloes .ceu-b { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 0 22px 110px; text-align: center; background: linear-gradient(180deg, #4ea8ff, #bfe6ff 70%, #fff3d6); color: #143a66; }
+.a-baloes .balao-d { --cor: #e0457b; position: absolute; width: 88px; height: 108px; appearance: none; border: 0; border-radius: 50% 50% 48% 48%; background: radial-gradient(circle at 34% 28%, rgba(255, 255, 255, .75), var(--cor) 38%); animation: flutua-b 4.4s ease-in-out infinite; }
+.a-baloes .balao-d::after { content: ''; position: absolute; top: 100%; left: 50%; width: 2px; height: 70px; background: rgba(20, 58, 102, .5); }
+@keyframes flutua-b { 50% { translate: 8px -16px; } }
+.a-baloes .balao-d.pop { animation: estoura-b .2s ease-out forwards; pointer-events: none; }
+@keyframes estoura-b { to { transform: scale(1.5); opacity: 0; } }
+.a-baloes .texto { min-height: 3.2em; }
+.a-baloes .dest { color: #b3160d; text-shadow: none; }
+
+/* ---------- 63 doze: anel dos doze meses ---------- */
+.a-doze .anel-m { position: relative; width: 300px; height: 300px; max-width: 100%; }
+.a-doze .anel-m i { position: absolute; top: 50%; left: 50%; width: 34px; height: 34px; margin: -17px; display: grid; place-items: center; font: 400 1.7rem/1 serif; font-style: normal; color: var(--borda); transition: color .3s, text-shadow .3s; }
+.a-doze .anel-m i.on { color: var(--ac); text-shadow: 0 0 14px var(--sombra); }
+.a-doze .miolo-m { position: absolute; top: 50%; left: 50%; width: 150px; height: 150px; margin: -75px; display: flex; flex-direction: column; align-items: center; justify-content: center; appearance: none; border: 0; border-radius: 50%; color: var(--btn-tx); background: radial-gradient(circle at 40% 35%, var(--ac2), var(--ac)); box-shadow: 0 0 34px var(--sombra); }
+.a-doze .miolo-m b { font: 800 3.2rem/1 var(--fonte-titulo); }
+.a-doze .miolo-m span { font: 600 .84rem var(--fonte); }
+.a-doze .texto { min-height: 3.2em; font-size: 1.2rem; }
+
+/* ---------- 64 brinde: taças de vinho ---------- */
+.a-brinde .mesa-b { display: flex; justify-content: center; gap: 44px; margin-top: 10px; }
+.a-brinde .taca { position: relative; width: 104px; height: 220px; appearance: none; border: 0; background: radial-gradient(ellipse 44px 7px at 50% 210px, rgba(255, 255, 255, .6) 97%, transparent); }
+.a-brinde .taca::before { content: ''; position: absolute; top: 0; left: 6px; right: 6px; height: 112px; border-radius: 8px 8px 50% 50%; background: linear-gradient(90deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .06)); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .55); }
+.a-brinde .taca i { position: absolute; top: 40px; left: 9px; right: 9px; height: 70px; border-radius: 0 0 50% 50%; background: linear-gradient(180deg, #a3123f, #6d0a2a); }
+.a-brinde .taca::after { content: ''; position: absolute; top: 112px; left: 50%; width: 5px; height: 96px; margin-left: -2px; background: rgba(255, 255, 255, .6); border-radius: 2px; }
+.a-brinde .esq { transition: transform .2s; rotate: 0deg; }
+.a-brinde .dir { transform: rotate(-8deg); transform-origin: bottom; }
+.a-brinde .texto { min-height: 3.2em; }
+
+/* ---------- 65 luas: Lua e trilho do mês ---------- */
+.a-luas .quadro-l { position: relative; width: min(66vw, 250px); aspect-ratio: 1; }
+.a-luas .texto { min-height: 3.2em; }
+.a-luas .trilho-l2 { position: relative; width: 100%; max-width: 320px; height: 54px; border-radius: 27px; background: var(--vidro); border: 1px solid var(--borda); }
+.a-luas .cabo-l { position: absolute; top: 0; left: 0; width: 52px; height: 52px; appearance: none; border: 0; border-radius: 50%; color: var(--btn-tx); background: linear-gradient(120deg, var(--ac), var(--ac2)); font-size: 1.4rem; }
+
+/* ---------- 66 cupido: arco, flecha e coração ---------- */
+.a-cupido .campo-c { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 16px; padding: calc(32px + env(safe-area-inset-top)) 22px 0; text-align: center; background: linear-gradient(180deg, #ffe4ec, #ffc4d8); color: #4a1630; }
+.a-cupido .alvo-c { font: 400 6.4rem/1 serif; color: #e0245e; text-shadow: 0 8px 18px rgba(224, 36, 94, .35); animation: batida-c 1.5s ease-in-out infinite; }
+@keyframes batida-c { 15% { scale: 1.12; } 30% { scale: 1; } }
+.a-cupido .alvo-c.acerto { animation: acerto-c .6s ease; }
+@keyframes acerto-c { 30% { scale: 1.5; } }
+.a-cupido .texto { min-height: 3.2em; }
+.a-cupido .flecha { position: absolute; left: 50%; bottom: 186px; width: 5px; height: 104px; margin-left: -2px; background: #7a4a22; border-radius: 3px; }
+.a-cupido .flecha::before { content: ''; position: absolute; top: -18px; left: -7px; border: 10px solid transparent; border-bottom: 18px solid #e0245e; border-top: 0; }
+.a-cupido .flecha.voa { animation: voa-flecha .5s ease-in; }
+@keyframes voa-flecha { to { transform: translateY(-58vh); opacity: .1; } }
+.a-cupido .arco-c { position: absolute; left: 50%; bottom: 118px; width: 220px; height: 96px; margin-left: -110px; appearance: none; border: 0; background: none; }
+.a-cupido .arco-c svg { width: 100%; height: 100%; overflow: visible; }
+.a-cupido .madeira { fill: none; stroke: #7a4a22; stroke-width: 8; stroke-linecap: round; }
+.a-cupido .corda { fill: none; stroke: #5a3a1e; stroke-width: 2; }
+.a-cupido .dica { position: absolute; bottom: 96px; left: 0; right: 0; color: #4a1630; }
+.a-cupido .campo-c > .btn { position: absolute; bottom: calc(92px + env(safe-area-inset-bottom)); z-index: 3; }
+.a-cupido .dest { color: #b3160d; text-shadow: none; }
+
+/* ---------- 67 cadeado: grade de ponte e cadeado ---------- */
+.a-cadeado .grade-c { position: relative; width: 100%; height: 262px; display: flex; flex-direction: column; align-items: center; background: repeating-linear-gradient(90deg, transparent 0 34px, rgba(255, 255, 255, .2) 34px 38px), repeating-linear-gradient(0deg, transparent 0 34px, rgba(255, 255, 255, .2) 34px 38px); border-radius: 8px; }
+.a-cadeado .trava { position: relative; width: 110px; margin-top: 24px; }
+.a-cadeado .argola { display: block; width: 66px; height: 76px; margin: 0 auto -34px; border: 11px solid #c9ced6; border-bottom: 0; border-radius: 40px 40px 0 0; transform: translateY(-20px); transition: transform .3s ease; }
+.a-cadeado .trava.trancado .argola { transform: none; }
+.a-cadeado .corpo-c { display: grid; place-items: center; height: 92px; border-radius: 12px; color: #4a2a06; background: linear-gradient(145deg, #ffdf8a, #c8912c); box-shadow: 0 8px 14px -6px #000; font: 700 1.5rem var(--fonte-titulo); position: relative; }
+.a-cadeado .chave { position: absolute; bottom: 8px; left: 50%; width: 110px; height: 44px; margin-left: -55px; appearance: none; border: 0; background: none; }
+.a-cadeado .chave::before { content: ''; position: absolute; top: 20px; left: 34px; width: 70px; height: 7px; background: #d9b64f; }
+.a-cadeado .chave i { position: absolute; top: 8px; left: 2px; width: 32px; height: 32px; border: 8px solid #d9b64f; border-radius: 50%; }
+.a-cadeado .chave::after { content: ''; position: absolute; top: 26px; left: 86px; width: 7px; height: 13px; background: #d9b64f; box-shadow: 13px 0 0 #d9b64f; }
+.a-cadeado .texto { min-height: 3.2em; }
+
+/* ---------- 68 pixel: fliperama de 8 bits ---------- */
+.a-pixel.cena { background: #05060f; }
+.a-pixel .score { color: #ff4f4f; font: 400 .72rem/1.5 'Press Start 2P', var(--fonte-mono); }
+.a-pixel .tela-p { display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; width: min(80vw, 300px); }
+.a-pixel .tela-p i { aspect-ratio: 1; background: #161a33; }
+.a-pixel .tela-p i.on { background: #ff2b5e; box-shadow: 0 0 8px #ff2b5e; }
+.a-pixel .msg-p { min-height: 2.6em; color: #fff; font: 400 1.6rem/1.15 'VT323', var(--fonte-mono); }
+.a-pixel .dest { color: #ffe14d; text-shadow: none; font-weight: 400; }
+.a-pixel .btn { color: #05060f; background: #ffe14d; border-radius: 0; font: 400 .72rem 'Press Start 2P', var(--fonte-mono); padding: 13px 16px; box-shadow: 4px 4px 0 #a88d00; }
+
+/* ---------- 69 arvore: pinheiro de Natal ---------- */
+.a-arvore .pinheiro { position: relative; width: min(74vw, 280px); height: 340px; }
+.a-arvore .copa { position: absolute; left: 50%; transform: translateX(-50%); background: linear-gradient(170deg, #2e8b57, #0f5132); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.a-arvore .c1 { top: 30px; width: 60%; height: 130px; z-index: 3; }
+.a-arvore .c2 { top: 92px; width: 80%; height: 140px; z-index: 2; }
+.a-arvore .c3 { top: 158px; width: 100%; height: 150px; z-index: 1; }
+.a-arvore .tronco { position: absolute; bottom: 0; left: 50%; width: 42px; height: 40px; margin-left: -21px; background: #6d4326; }
+.a-arvore .topo-a { position: absolute; top: 0; left: 0; right: 0; z-index: 5; color: #5c5a4a; font: 400 3.2rem/1 serif; transition: color .6s, text-shadow .6s; }
+.a-arvore .topo-a.on { color: #ffd34d; text-shadow: 0 0 22px #ffd34d, 0 0 44px #ffb347; }
+.a-arvore .bola-n { --cor: #f00; position: absolute; z-index: 4; width: 44px; height: 44px; margin: -22px; appearance: none; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .22); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .5); animation: pisca 1.5s ease-in-out infinite; }
+.a-arvore .bola-n.acesa { animation: none; background: radial-gradient(circle at 34% 30%, #fff, var(--cor) 46%); box-shadow: 0 0 16px var(--cor); }
+.a-arvore .pinheiro.brilha .bola-n { animation: pisca 1.1s ease-in-out infinite; }
+.a-arvore .texto { min-height: 3.2em; }
+
+/* ---------- 70 globo: esfera de vidro com neve ---------- */
+.a-globo .esfera { position: relative; width: min(72vw, 270px); aspect-ratio: 1; overflow: hidden; appearance: none; border: 0; border-radius: 50%; background: radial-gradient(circle at 34% 26%, rgba(255, 255, 255, .5), rgba(120, 190, 240, .28) 40%, rgba(16, 60, 110, .85)); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .5), 0 16px 26px -10px #000; }
+.a-globo .esfera.sacode { animation: sacode .5s ease; }
+@keyframes sacode { 20% { transform: rotate(-9deg); } 50% { transform: rotate(8deg); } 80% { transform: rotate(-4deg); } }
+.a-globo .casinha { position: absolute; left: 50%; bottom: 30px; width: 74px; height: 58px; margin-left: -37px; background: #7a2c1c; box-shadow: 0 24px 0 18px #e9f2f8; }
+.a-globo .casinha::before { content: ''; position: absolute; top: -34px; left: -10px; border: 47px solid transparent; border-top: 0; border-bottom: 36px solid #f4f8fb; }
+.a-globo .dentro { position: absolute; top: 22%; left: 0; right: 0; color: #8a1c0e; font: 700 2rem/1 var(--fonte-mao); text-shadow: 0 0 8px #fff, 0 0 3px #fff; }
+.a-globo .base-g { width: min(58vw, 216px); height: 42px; margin-top: -30px; border-radius: 6px 6px 22px 22px; background: linear-gradient(90deg, #6d2b1b, #a9542f 45%, #5a2315); }
+.a-globo .texto { min-height: 3.2em; }
+
+/* ---------- 71 relogio: mostrador e virada ---------- */
+.a-relogio .mostrador { position: relative; width: 270px; height: 270px; max-width: 100%; border-radius: 50%; background: #fbf3df; box-shadow: 0 0 0 9px #c9a24b, 0 18px 30px -12px #000; }
+.a-relogio .marca-r { position: absolute; top: 50%; left: 50%; width: 5px; height: 15px; margin: -7px -2px; background: #2c2214; }
+.a-relogio .ponteiro { position: absolute; bottom: 50%; left: 50%; border-radius: 4px; background: #2c2214; transform-origin: bottom center; }
+.a-relogio .horas { width: 7px; height: 68px; margin-left: -3px; transform: rotate(320deg); }
+.a-relogio .minutos { width: 5px; height: 104px; margin-left: -2px; transform: rotate(250deg); }
+.a-relogio .ponteiro.vai { transition: transform 2.2s cubic-bezier(.5, 0, .2, 1); }
+.a-relogio .horas.vai { transform: rotate(360deg); }
+.a-relogio .minutos.vai { transform: rotate(1080deg); }
+.a-relogio .conta-r { min-height: 1em; color: var(--ac); font: 800 clamp(3rem, 15vw, 4.4rem)/1 var(--fonte-titulo); text-shadow: 0 0 26px var(--sombra); }
+.a-relogio .conta-r.pula { animation: pula-num .5s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes pula-num { from { transform: scale(2.2); opacity: 0; } }
+.a-relogio .texto { min-height: 3.2em; }
+
+/* ---------- 72 ondas: mar da virada ---------- */
+.a-ondas .praia-o { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: calc(44px + env(safe-area-inset-top)) 22px 0; text-align: center; background: linear-gradient(180deg, #120a3a, #3d1a6e 46%, #0e6a8a 46.3%, #0a4a68 70%, #e8cf9c 70.4%); }
+.a-ondas .conta-o { font: 400 2.6rem/1 'Bebas Neue', var(--fonte); color: #ffe14d; }
+.a-ondas .texto { min-height: 3.2em; color: #fff; text-shadow: 0 2px 8px #000; }
+.a-ondas .pessoa { position: absolute; bottom: 31%; left: 50%; width: 24px; height: 62px; margin-left: -12px; border-radius: 12px 12px 3px 3px; background: #fff; }
+.a-ondas .pessoa::before { content: ''; position: absolute; top: -24px; left: 0; width: 24px; height: 24px; border-radius: 50%; background: #ffd9b0; }
+.a-ondas .pessoa.pula-o { animation: pula-o .8s ease-out; }
+@keyframes pula-o { 45% { transform: translateY(-74px); } }
+.a-ondas .onda-o { position: absolute; bottom: 28%; left: 120%; width: 180px; height: 60px; border-radius: 60% 60% 0 0; background: linear-gradient(180deg, #fff, #5ce1ff 30%, #0e6a8a); }
+.a-ondas .onda-o.passa { animation: passa-o 1.2s linear; }
+@keyframes passa-o { from { left: 110%; } to { left: -60%; } }
+.a-ondas .praia-o > .btn { position: absolute; bottom: calc(92px + env(safe-area-inset-bottom)); z-index: 3; }
+
+/* ---------- 73 receita: página de caderno de cozinha ---------- */
+.a-receita .pagina-r { position: relative; width: 100%; padding: 18px 16px; display: flex; flex-direction: column; gap: 3px; text-align: left; color: #3a2a18; background: radial-gradient(circle at 80% 86%, rgba(160, 110, 40, .28), transparent 26%), radial-gradient(circle at 16% 18%, rgba(160, 110, 40, .18), transparent 20%), #fbf1da; box-shadow: 0 16px 28px -14px rgba(0, 0, 0, .55); }
+.a-receita h1 { font: 700 2rem/1 var(--fonte-mao); color: #8a2a1e; }
+.a-receita .rende { font: 500 1.2rem/1.1 var(--fonte-mao); margin-bottom: 4px; }
+.a-receita .ingr { padding: 6px 0 6px 28px; position: relative; appearance: none; border: 0; background: none; color: inherit; font: 500 1.34rem/1.08 var(--fonte-mao); text-align: left; }
+.a-receita .ingr::before { content: ''; position: absolute; left: 2px; top: 8px; width: 16px; height: 16px; border: 2px solid #8a2a1e; border-radius: 3px; }
+.a-receita .ingr.ok::after { content: '✓'; position: absolute; left: 4px; top: 0; color: #8a2a1e; font: 700 1.6rem var(--fonte-mao); }
+.a-receita .preparo { margin-top: 6px; font: 500 1.36rem/1.1 var(--fonte-mao); }
+.a-receita .dest { color: #8a2a1e; text-shadow: none; font-style: normal; }
+
+/* ---------- 74 projeto: planta azul com cotas ---------- */
+.a-projeto .folha-p { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: calc(22px + env(safe-area-inset-top)) 22px 110px; text-align: center; color: #eaf4ff; background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .08) 0 1px, transparent 1px 22px), repeating-linear-gradient(90deg, rgba(255, 255, 255, .08) 0 1px, transparent 1px 22px), #12407a; font-family: var(--fonte-mono); }
+.a-projeto h1 { font: 700 1.1rem var(--fonte-mono); letter-spacing: .1em; }
+.a-projeto .desenho { position: relative; width: min(82vw, 320px); }
+.a-projeto .desenho svg { display: block; width: 100%; }
+.a-projeto .desenho path { fill: none; stroke: #eaf4ff; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.a-projeto .desenho.traca path { stroke-dashoffset: 0; transition: stroke-dashoffset 2s ease-in-out; }
+.a-projeto .cota { position: absolute; width: 44px; height: 44px; margin: -22px; appearance: none; border: 2px solid #ffe14d; border-radius: 50%; background: rgba(18, 64, 122, .85); color: #ffe14d; font: 700 1rem var(--fonte-mono); animation: pisca 1.3s ease-in-out infinite; }
+.a-projeto .cota.lida { animation: none; opacity: .5; }
+.a-projeto .espec { min-height: 5em; font-size: 1rem; line-height: 1.4; }
+.a-projeto .dest { color: #ffe14d; text-shadow: none; font-style: normal; }
+
+/* ---------- 75 rosa: flor de pétalas em camadas ---------- */
+.a-rosa .flor-r { position: relative; width: 240px; height: 240px; appearance: none; border: 0; background: none; }
+.a-rosa .anel-r { --k: 0; position: absolute; inset: calc(var(--k) * 22px); display: block; }
+.a-rosa .anel-r b { position: absolute; top: 0; left: 50%; width: 46%; height: 50%; margin-left: -23%; border-radius: 50% 50% 46% 46%; transform-origin: 50% 100%; background: radial-gradient(ellipse at 50% 100%, #7a0a2e, hsl(calc(340 + var(--k) * 4) 78% calc(36% + var(--k) * 5%))); box-shadow: inset 0 0 12px rgba(0, 0, 0, .3); transition: scale .9s cubic-bezier(.3, 1.4, .5, 1), opacity .9s; scale: .34; opacity: .75; }
+.a-rosa .anel-r.aberto b { scale: 1; opacity: 1; }
+.a-rosa .texto { min-height: 3.2em; }
+
+/* ---------- 76 pulseira: fio e contas com letras ---------- */
+.a-pulseira .chamada { font: 700 1.9rem var(--fonte-mao); }
+.a-pulseira .fio-p { position: relative; width: 100%; min-height: 76px; display: flex; align-items: center; justify-content: center; gap: 4px; background: linear-gradient(0deg, transparent 48%, #c9a24b 48% 52%, transparent 52%); transition: border-radius .9s; }
+.a-pulseira .contas { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.a-pulseira .conta-p { --cor: #e0457b; width: 58px; height: 58px; appearance: none; border: 0; border-radius: 50%; color: #fff; background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, .75), var(--cor) 44%); font: 800 1.35rem var(--fonte); box-shadow: 0 4px 10px rgba(0, 0, 0, .35); }
+.a-pulseira .conta-p.vez { animation: pulsa-conta 1s ease-in-out infinite; }
+@keyframes pulsa-conta { 50% { scale: 1.16; } }
+.a-pulseira .fio-p.pronta .conta-p { animation: brilha-conta 1s ease-in-out 3 alternate; }
+@keyframes brilha-conta { to { box-shadow: 0 0 20px #ffe14d; } }
+.a-pulseira .texto { min-height: 3.2em; }
+
+/* ---------- 77 ovo: ovo de Páscoa ---------- */
+.a-ovo .casca-o { width: min(58vw, 220px); appearance: none; border: 0; background: none; }
+.a-ovo .casca-o svg { display: block; width: 100%; overflow: visible; filter: drop-shadow(0 16px 16px rgba(0, 0, 0, .3)); }
+.a-ovo .ovo-c { fill: #7a3f1c; }
+.a-ovo .faixa { fill: none; stroke: #ffd34d; stroke-width: 7; stroke-dasharray: 14 9; }
+.a-ovo .r { fill: none; stroke: #2a1206; stroke-width: 3.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .3s; }
+.a-ovo .casca-o[data-racha="1"] .r1, .a-ovo .casca-o[data-racha="2"] .r1, .a-ovo .casca-o[data-racha="3"] .r1, .a-ovo .casca-o[data-racha="2"] .r2, .a-ovo .casca-o[data-racha="3"] .r2, .a-ovo .casca-o[data-racha="3"] .r3 { stroke-dashoffset: 0; }
+.a-ovo .casca-o.bate-o { animation: leva-batida .3s ease; }
+@keyframes leva-batida { 40% { rotate: 5deg; scale: .96; } }
+.a-ovo .casca-o.abriu { animation: abre-ovo 1s ease forwards; }
+@keyframes abre-ovo { to { transform: scale(1.5); opacity: 0; } }
+.a-ovo .texto { min-height: 3.2em; }
+
+/* ---------- 78 montanha: serra e trilha ---------- */
+.a-montanha .serra { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: calc(16px + env(safe-area-inset-top)) 22px 0; text-align: center; background: linear-gradient(180deg, #5ea8e0, #cfe8f7 60%); color: #123a5a; }
+.a-montanha .picos { position: absolute; inset: 30% 0 0; }
+.a-montanha .picos svg { width: 100%; height: 100%; }
+.a-montanha .atras { fill: #7d93a8; }
+.a-montanha .frente { fill: #4c6176; }
+.a-montanha .neve-m { fill: #fff; }
+.a-montanha .trilha { fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: 3; stroke-dasharray: 6 6; }
+.a-montanha .alpinista { position: absolute; left: 20%; top: 96%; z-index: 2; width: 18px; height: 18px; margin: -9px; border-radius: 50%; background: #ff5a2a; box-shadow: 0 0 0 3px #fff; }
+.a-montanha .bandeira { position: absolute; top: 25%; left: 50%; margin-left: -8px; z-index: 2; color: #c8102e; font: 400 2.4rem/1 serif; opacity: 0; transition: opacity .6s; }
+.a-montanha .bandeira.on { opacity: 1; }
+.a-montanha .texto { position: relative; z-index: 3; min-height: 3.2em; }
+.a-montanha .dest { color: #b3160d; text-shadow: none; }
+.a-montanha .serra > .btn { position: absolute; bottom: calc(92px + env(safe-area-inset-bottom)); z-index: 3; }
+
+/* ---------- 79 caderno: caderno espiral com estrelinhas ---------- */
+.a-caderno .folha-c { position: relative; width: 100%; padding: 16px 14px 16px 34px; display: flex; flex-direction: column; gap: 5px; text-align: left; color: #22303f; background: repeating-linear-gradient(180deg, #fff 0 29px, #b9d4ee 29px 30px); box-shadow: 0 16px 28px -14px rgba(0, 0, 0, .55); }
+.a-caderno .folha-c::before { content: ''; position: absolute; top: 8px; bottom: 8px; left: 8px; width: 14px; background: repeating-linear-gradient(180deg, #555 0 6px, transparent 6px 20px); border-radius: 7px; }
+.a-caderno h1 { font: 700 1.9rem/1.1 var(--fonte-mao); color: #1b4f8a; }
+.a-caderno .linha-c { display: flex; align-items: flex-start; gap: 8px; min-height: 44px; }
+.a-caderno .estrela-c { flex: none; width: 44px; height: 44px; appearance: none; border: 0; background: none; color: #c9a24b; font: 400 1.9rem/1 serif; animation: pisca 1.3s ease-in-out infinite; }
+.a-caderno .estrela-c.colou { animation: cola-e .35s cubic-bezier(.3, 1.6, .5, 1); color: #e0a818; }
+@keyframes cola-e { from { scale: 2; } }
+.a-caderno .linha-c p { font: 500 1.34rem/1.08 var(--fonte-mao); padding-top: 8px; }
+.a-caderno .assin { text-align: right; font: 700 1.5rem var(--fonte-mao); color: #1b4f8a; }
+.a-caderno .dest { color: #c8102e; text-shadow: none; font-style: normal; }
+
+/* ---------- 80 aliancas: dois anéis de ouro ---------- */
+.a-aliancas .almofada { position: relative; display: flex; justify-content: center; align-items: center; gap: 52px; width: 100%; height: 210px; border-radius: 60px; background: radial-gradient(ellipse, rgba(255, 255, 255, .13), transparent 70%); }
+.a-aliancas .anel-a { position: relative; width: 112px; height: 112px; appearance: none; background: none; border-radius: 50%; border: 14px solid #e8bd5a; box-shadow: 0 0 0 2px #8d6e2b, inset 0 0 0 2px #fff0b8, 0 10px 16px -6px #000; transition: transform .25s; }
+.a-aliancas .dois { border-color: #f5d98a; }
+.a-aliancas .almofada.unidos .anel-a { animation: brilha-anel 1s ease-in-out 4 alternate; }
+@keyframes brilha-anel { to { box-shadow: 0 0 0 2px #8d6e2b, inset 0 0 0 2px #fff0b8, 0 0 30px #ffd34d; } }
+.a-aliancas .texto { min-height: 3.2em; }

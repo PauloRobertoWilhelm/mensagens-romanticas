@@ -54,3 +54,32 @@
 /* temas claros: o rodapé usa o fundo claro e a sombra do texto fica discreta. */
 :root[data-tema="rosa"] #legenda, :root[data-tema="jardim"] #legenda { text-shadow: none; }
 :root[data-tema="rosa"] .term, :root[data-tema="jardim"] .term { background: rgba(255,255,255,.75); }
+
+/* ----- Letra do título final: continua o estilo da arte que veio antes ----- */
+
+/* faroeste */
+:root[data-arte="procurada"] .final .titulo { font-family: 'Rye', var(--fonte-titulo); font-weight: 400; }
+
+/* cartaz e placa */
+:root:is([data-arte="multa"], [data-arte="previsao"], [data-arte="incendio"], [data-arte="raspadinha"], [data-arte="podio"], [data-arte="botao"], [data-arte="cofre"], [data-arte="figurinhas"], [data-arte="garra"], [data-arte="pads"], [data-arte="calendario"]) .final .titulo { font-family: 'Bebas Neue', var(--fonte); font-weight: 400; letter-spacing: .04em; }
+
+/* jornal */
+:root[data-arte="jornal"] .final .titulo { font-family: 'Abril Fatface', var(--fonte-titulo); font-weight: 400; }
+
+/* gravura clássica */
+:root:is([data-arte="tarot"], [data-arte="diploma"], [data-arte="elevador"], [data-arte="museu"], [data-arte="aliancas"]) .final .titulo { font-family: 'Cinzel', var(--fonte-titulo); }
+
+/* letra cursiva de festa */
+:root:is([data-arte="neon"], [data-arte="espelho"], [data-arte="vinil"], [data-arte="postais"], [data-arte="baloes"], [data-arte="bolo"]) .final .titulo { font-family: 'Pacifico', var(--fonte-titulo); font-weight: 400; }
+
+/* escrito à mão */
+:root:is([data-arte="lacre"], [data-arte="cardapio"], [data-arte="retrato"], [data-arte="areia"], [data-arte="geladeira"], [data-arte="receita"], [data-arte="caderno"], [data-arte="biscoito"], [data-arte="pulseira"], [data-arte="garrafa"], [data-arte="prova"]) .final .titulo { font-family: var(--fonte-mao); font-weight: 700; }
+
+/* máquina de escrever */
+:root:is([data-arte="dossie"], [data-arte="bula"], [data-arte="boleto"]) .final .titulo { font-family: 'Special Elite', var(--fonte-mono); font-weight: 400; }
+
+/* tela antiga */
+:root:is([data-arte="vhs"], [data-arte="instalador"], [data-arte="radio"], [data-arte="rpg"], [data-arte="pixel"], [data-arte="gps"]) .final .titulo { font-family: 'VT323', var(--fonte-mono); font-weight: 400; }
+
+/* letreiro luminoso */
+:root:is([data-arte="jackpot"], [data-arte="discoteca"], [data-arte="fogos"]) .final .titulo { font-family: 'Monoton', var(--fonte-titulo); font-weight: 400; font-size: clamp(1.5rem, 6vw, 2.2rem); }

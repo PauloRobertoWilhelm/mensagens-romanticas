@@ -13,8 +13,6 @@
 
   // Cores dos temas só para a bolinha de identificação no cartão.
   const COR = { noite: '#ff5c8a', aurora: '#5af2c6', rosa: '#ffc4d8', fogo: '#ff6a3d', oceano: '#5ce1ff', ouro: '#e8bd5a', neon: '#ff2bd6', jardim: '#9fd18a', crepusculo: '#ffb347', confete: '#ffd23f' };
-  // Nomes legíveis para tipos de cena, aberturas e finais.
-  const NOME = { historia: 'história', constelacao: 'constelação', scanner: 'scanner', cartas: 'cartas', contagem: 'contagem', motivos: 'motivos', escolha: 'escolha', final: 'final' };
 
   // Estado: categoria selecionada ('todas' ou chave de CATEGORIAS) e texto da busca.
   let catAtual = 'todas', termo = '';
@@ -51,11 +49,10 @@
     // Filtra por categoria e por trecho do nome.
     const itens = MENSAGENS.filter((m) => (catAtual === 'todas' || m.cat === catAtual) && m.nome.toLowerCase().includes(termo));
     $('#lista').innerHTML = itens.map((m) => {
-      // Resumo das cenas (sem repetir o final) e o jogo do final.
-      const cenas = m.passos.filter((p) => p.t !== 'final').map((p) => NOME[p.t]).join(' → ');
+      // Último passo da mensagem, para mostrar o título do final.
       const fim = m.passos[m.passos.length - 1];
       return '<article class="card"><h3><span class="pt" style="background:' + COR[m.tema] + '"></span>' + esc(m.nome) + '<span class="id">#' + m.id + '</span></h3>'
-        + '<p class="meta">' + esc(CATEGORIAS[m.cat].nome) + ' · tema ' + esc(m.tema) + '<br>abertura: ' + esc(m.ab.t) + '<br>cenas: ' + esc(cenas) + '<br>final: ' + esc(fim.tp) + (m.carta ? ' · com carta ✉️' : '') + '</p>'
+        + '<p class="meta">' + esc(CATEGORIAS[m.cat].nome) + ' · tema ' + esc(m.tema) + '<br>arte: ' + esc(m.ab.a) + '<br>final: ' + esc(fim.ti) + (m.carta ? ' · com carta ✉️' : '') + '</p>'
         + '<button type="button" data-id="' + m.id + '">Ver link</button></article>';
     }).join('') || '<p class="sub">Nada encontrado.</p>';
     // Liga o botão de cada cartão.

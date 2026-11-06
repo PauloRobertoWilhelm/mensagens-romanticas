@@ -1,0 +1,218 @@
+/* ==========================================================
+   artes-namoro.css — o visual próprio de cada link de namoro.
+   Cada bloco começa com o nome da arte; .a-nome limita o estilo a ela.
+   ========================================================== */
+
+/* ---------- 21 lacre: papel antigo e cera vermelha ---------- */
+.a-lacre .papel { position: relative; width: min(100%, 340px); min-height: 230px; padding: 26px 20px; display: flex; flex-direction: column; gap: 10px; color: #3a2a2a; background: linear-gradient(170deg, #fff6e4, #efdcb9); border-radius: 4px; box-shadow: 0 18px 34px -14px #000; transition: min-height .9s ease; }
+.a-lacre .papel.aberta { min-height: 340px; }
+.a-lacre .cera { --p: 0; position: absolute; top: 50%; left: 50%; width: 96px; height: 96px; margin: -48px; display: grid; place-items: center; appearance: none; border: 0; border-radius: 47% 53% 50% 50%; color: #ffd7c9; font: 400 2.1rem var(--fonte-titulo); background: radial-gradient(circle at 36% 30%, #d4413f, #8c1616 72%); box-shadow: 0 6px 12px rgba(0, 0, 0, .4), inset 0 0 0 5px rgba(0, 0, 0, .12); transform: scale(calc(1 + var(--p) * .18)) rotate(calc(var(--p) * 7deg)); filter: brightness(calc(1 + var(--p) * .7)); }
+.a-lacre .cera.quebrou { animation: cera-cai .9s ease forwards; }
+@keyframes cera-cai { to { transform: translateY(240px) rotate(70deg); opacity: 0; } }
+.a-lacre .mao { font: 500 1.65rem/1.15 var(--fonte-mao); text-align: left; }
+.a-lacre .dest { color: #8c1616; text-shadow: none; }
+
+/* ---------- 22 instalador: janela de sistema antigo ---------- */
+.a-instalador.cena { background: #008080; }
+.a-instalador .janela { width: min(100%, 350px); background: #c3c3c3; color: #111; box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555, 6px 8px 0 rgba(0, 0, 0, .35); font-family: var(--fonte-mono); text-align: left; }
+.a-instalador header { margin: 3px; padding: 5px 8px; color: #fff; background: linear-gradient(90deg, #000080, #1084d0); font: 700 .95rem var(--fonte-mono); }
+.a-instalador .conteudo { padding: 14px; display: flex; flex-direction: column; gap: 12px; font-size: .98rem; line-height: 1.35; min-height: 200px; position: relative; }
+.a-instalador .barra { height: 24px; background: #fff; box-shadow: inset 2px 2px 0 #555; padding: 3px; }
+.a-instalador .barra i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, #000080 0 11px, transparent 11px 14px); transition: width 1s linear; }
+.a-instalador .status { min-height: 1.3em; font-size: .85rem; }
+.a-instalador .ops { display: flex; justify-content: center; gap: 14px; }
+.a-instalador .btn { align-self: center; padding: 8px 26px; border-radius: 0; color: #111; background: #c3c3c3; box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555; font: 700 1rem var(--fonte-mono); transition: transform .12s; }
+.a-instalador .dest { color: #a00000; text-shadow: none; font-style: normal; }
+
+/* ---------- 23 bateria: tela de carregamento ---------- */
+.a-bateria .aviso { font: 600 .85rem var(--fonte); letter-spacing: .08em; color: var(--ac); }
+.a-bateria .pilha { position: relative; width: min(82vw, 300px); height: 120px; padding: 7px; border: 5px solid var(--tx); border-radius: 18px; }
+.a-bateria .pilha::after { content: ''; position: absolute; top: 50%; right: -18px; width: 12px; height: 42px; margin-top: -21px; border-radius: 0 7px 7px 0; background: var(--tx); }
+.a-bateria .pilha i { display: block; height: 100%; width: 3%; border-radius: 9px; background: #e0245e; }
+.a-bateria .pilha.boa i { background: linear-gradient(90deg, #35c46f, #8df0a8); }
+.a-bateria .pilha b { position: absolute; inset: 0; display: grid; place-items: center; font: 800 2.6rem var(--fonte); color: var(--tx); mix-blend-mode: difference; }
+.a-bateria .texto { min-height: 3.2em; }
+.a-bateria .abraco { width: 150px; height: 150px; appearance: none; border: 0; border-radius: 50%; color: var(--btn-tx); background: radial-gradient(circle at 40% 35%, var(--ac2), var(--ac)); font: 700 1rem var(--fonte); box-shadow: 0 0 0 0 var(--sombra); animation: pulsa-abraco 1.8s ease-out infinite; }
+@keyframes pulsa-abraco { to { box-shadow: 0 0 0 30px transparent; } }
+
+/* ---------- 24 caixamusica: caixinha de madeira com coração que gira ---------- */
+.a-caixamusica .caixinha { position: relative; width: min(70vw, 250px); height: 150px; margin: 110px 34px 0 0; border-radius: 6px; background: linear-gradient(120deg, #7b4a2a, #4b2a14); box-shadow: 0 16px 28px -12px #000; }
+.a-caixamusica .tampa { position: absolute; bottom: 100%; left: 0; right: 0; height: 110px; border-radius: 6px 6px 0 0; background: linear-gradient(0deg, #b9d4df, #e7f1f5); border: 8px solid #5d3419; transform: perspective(500px) rotateX(-18deg); transform-origin: bottom; }
+.a-caixamusica .dancarina { position: absolute; top: -66px; left: 50%; margin-left: -30px; width: 60px; font: 400 4rem/1 serif; color: var(--ac); text-shadow: 0 0 16px var(--sombra); }
+.a-caixamusica .caixinha.toca .dancarina { animation: dancar 2s linear infinite; }
+@keyframes dancar { to { transform: rotateY(360deg); } }
+.a-caixamusica .manivela { position: absolute; top: 44%; right: -44px; width: 60px; height: 60px; appearance: none; border: 0; background: none; transition: transform .35s ease; }
+.a-caixamusica .manivela::before { content: ''; position: absolute; top: 26px; left: 0; width: 44px; height: 8px; background: #d9b64f; }
+.a-caixamusica .manivela::after { content: ''; position: absolute; top: 14px; left: 34px; width: 22px; height: 22px; border-radius: 50%; background: #d9b64f; }
+.a-caixamusica .texto { min-height: 3.2em; }
+
+/* ---------- 25 aurora: céu polar pintado no canvas ---------- */
+.a-aurora .sobre { position: absolute; inset: auto 0 0; padding: 24px 24px calc(100px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.a-aurora .texto { text-shadow: 0 2px 10px #000; min-height: 3em; }
+
+/* ---------- 26 janelas: prédio à noite ---------- */
+.a-janelas .chamada { font: 600 1.1rem var(--fonte-titulo); }
+.a-janelas .fachada { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; width: min(100%, 340px); padding: 12px; background: #10122a; box-shadow: 0 0 0 3px #2b2f55, 0 18px 30px -14px #000; }
+.a-janelas .jan { aspect-ratio: 3 / 3.4; appearance: none; border: 0; border-radius: 2px; background: #23264a; transition: background .3s, box-shadow .3s; }
+.a-janelas .jan.quente { background: #ffb347; animation: pisca 1.3s ease-in-out infinite; }
+.a-janelas .jan.acesa { background: #ffe9a8; box-shadow: 0 0 10px #ffd98a; }
+.a-janelas .texto { min-height: 3.6em; font-size: 1.15rem; }
+
+/* ---------- 27 pordosol: céu que muda de cor ---------- */
+.a-pordosol .ceu { --p: 0; position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; background: linear-gradient(180deg, #ff9a56, #ffd18b 60%, #ffe8b8); }
+.a-pordosol .ceu::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #0b0a2c, #3d1a5e 55%, #c2506a); opacity: var(--p); }
+.a-pordosol .estrelas { position: absolute; inset: 0 0 45%; opacity: calc(var(--p) * var(--p)); background: radial-gradient(circle at 20% 30%, #fff 1px, transparent 2px), radial-gradient(circle at 70% 18%, #fff 1px, transparent 2px), radial-gradient(circle at 45% 52%, #fff 1px, transparent 2px), radial-gradient(circle at 86% 44%, #fff 1px, transparent 2px), radial-gradient(circle at 12% 66%, #fff 1px, transparent 2px), radial-gradient(circle at 60% 74%, #fff 1px, transparent 2px); }
+.a-pordosol .astro { position: absolute; top: 12%; width: 110px; height: 110px; appearance: none; border: 0; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #fff3c4, #ffb347 70%); box-shadow: 0 0 60px 20px rgba(255, 179, 71, .7); }
+.a-pordosol .mar { position: absolute; inset: 62% 0 0; background: linear-gradient(180deg, #14506b, #06243a); z-index: 1; }
+.a-pordosol .texto { position: absolute; top: 67%; left: 0; right: 0; z-index: 2; padding: 0 24px; color: #fff; text-shadow: 0 2px 10px #000; }
+.a-pordosol .dest { color: #ffd98a; }
+.a-pordosol .ceu > .btn { position: absolute; bottom: calc(92px + env(safe-area-inset-bottom)); z-index: 2; }
+
+/* ---------- 28 calendario: bloco de folhas de arrancar ---------- */
+.a-calendario.cena { overflow: hidden; }
+.a-calendario .bloco { position: relative; width: min(84vw, 300px); height: 340px; }
+.a-calendario .bloco::before { content: ''; position: absolute; top: -14px; left: 0; right: 0; height: 26px; border-radius: 4px; background: #c8102e; z-index: 30; box-shadow: 0 3px 6px rgba(0, 0, 0, .3); }
+.a-calendario .folha { position: absolute; inset: 0; padding: 26px 18px 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #2a2a2a; background: #fff; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .5); transform-origin: top left; }
+.a-calendario .folha.foi { animation: arranca .8s ease-in forwards; }
+@keyframes arranca { to { transform: translate(60px, 520px) rotate(34deg); opacity: 0; } }
+.a-calendario .sem { font: 600 1rem var(--fonte); text-transform: uppercase; letter-spacing: .1em; color: #c8102e; }
+.a-calendario strong { font: 400 6rem/1 'Bebas Neue', var(--fonte); }
+.a-calendario .msg { font: italic 1.12rem/1.3 var(--fonte-titulo); }
+.a-calendario .ultima { justify-content: center; }
+.a-calendario .dest { color: #c8102e; text-shadow: none; }
+
+/* ---------- 29 vela: chama no escuro ---------- */
+.a-vela .castical { --p: 0; position: relative; width: 120px; height: 250px; }
+.a-vela .luz { position: absolute; top: -100px; left: 50%; width: 320px; height: 320px; margin-left: -160px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 180, 90, .5), transparent 65%); opacity: calc(.3 + var(--p) * .7); transform: scale(calc(.7 + var(--p) * .7)); }
+.a-vela .chama { position: absolute; top: 20px; left: 50%; width: 40px; height: 74px; margin-left: -20px; border-radius: 50% 50% 46% 46% / 72% 72% 28% 28%; background: radial-gradient(ellipse at 50% 72%, #fff 8%, #ffd34d 34%, #ff7a1a 68%, rgba(255, 60, 10, 0) 76%); transform-origin: bottom; transform: scale(calc(.45 + var(--p) * .75)); animation: tremula .35s ease-in-out infinite alternate; }
+@keyframes tremula { to { rotate: 3deg; filter: brightness(1.15); } }
+.a-vela .cera-v { position: absolute; bottom: 0; left: 50%; width: 62px; height: 150px; margin-left: -31px; border-radius: 6px 6px 2px 2px; background: linear-gradient(90deg, #d8cfc0, #fff7e8 45%, #cfc4b1); }
+.a-vela .texto { min-height: 3.2em; }
+.a-vela .mao-v { padding: 18px 26px; appearance: none; border: 1px solid var(--borda); border-radius: 999px; background: var(--vidro); color: var(--tx); font: 600 1rem var(--fonte); }
+
+/* ---------- 30 cofre: porta de aço e rodas ---------- */
+.a-cofre .chamada { font: 400 1.5rem 'Bebas Neue', var(--fonte); letter-spacing: .1em; }
+.a-cofre .porta { width: min(84vw, 300px); padding: 34px 14px; border-radius: 14px; background: linear-gradient(145deg, #565d68, #2b3038); box-shadow: 0 0 0 6px #1a1d22, inset 0 0 0 3px #7a828e, 0 20px 30px -14px #000; transform-origin: left center; transition: transform 1s ease; }
+.a-cofre .porta.aberta { transform: perspective(700px) rotateY(-70deg); }
+.a-cofre .rodas { display: flex; justify-content: center; gap: 10px; }
+.a-cofre .roda { width: 74px; height: 96px; appearance: none; border: 0; border-radius: 8px; color: #0e1013; background: linear-gradient(180deg, #8b929d, #eef1f5 50%, #8b929d); font: 400 2.5rem serif; }
+.a-cofre .roda.gira { animation: gira-roda .25s ease; }
+@keyframes gira-roda { from { transform: translateY(-14px); opacity: .4; } }
+.a-cofre .bilhete-c { width: 100%; padding: 18px; color: #2a2118; background: #fff6e4; border-radius: 4px; font: 500 1.5rem/1.2 var(--fonte-mao); min-height: 112px; }
+.a-cofre .dest { color: #a3123f; text-shadow: none; }
+
+/* ---------- 31 garrafa: mar em ondas e pergaminho ---------- */
+.a-garrafa .vidro-g { position: absolute; top: 49%; left: 50%; width: 60px; height: 130px; margin-left: -30px; appearance: none; border: 0; border-radius: 16px 16px 12px 12px; background: linear-gradient(90deg, rgba(180, 240, 220, .55), rgba(255, 255, 255, .25) 40%, rgba(120, 210, 190, .55)); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .5); transform: rotate(18deg); animation: boia 3s ease-in-out infinite; }
+@keyframes boia { 50% { translate: 0 14px; rotate: -6deg; } }
+.a-garrafa .vidro-g i { position: absolute; top: -18px; left: 20px; width: 20px; height: 22px; border-radius: 3px; background: #b5834f; }
+.a-garrafa .vidro-g::after { content: ''; position: absolute; inset: 30px 16px 16px; border-radius: 3px; background: #f3e3bb; }
+.a-garrafa .vidro-g.pescada { animation: none; transition: transform .8s, opacity .8s; transform: translateY(-220px) rotate(0); opacity: 0; }
+.a-garrafa .dica { position: absolute; left: 0; right: 0; top: 26%; color: #eaf9ff; }
+.a-garrafa .rolo-p { position: absolute; inset: 12% 22px auto; padding: 26px 20px; display: flex; flex-direction: column; align-items: center; gap: 16px; color: #3a2a18; background: linear-gradient(180deg, #dcc48f, #f6e9c6 8%, #f6e9c6 92%, #dcc48f); box-shadow: 0 16px 30px -12px #000; font: 500 1.6rem/1.2 var(--fonte-mao); animation: desenrola .9s ease both; transform-origin: top; }
+@keyframes desenrola { from { transform: scaleY(.05); } }
+.a-garrafa .rolo-p p { min-height: 4em; }
+.a-garrafa .dest { color: #8a1c0e; text-shadow: none; }
+
+/* ---------- 32 areia: praia com onda ---------- */
+.a-areia .praia { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 24px 22px 110px; background: #e8cf9c; color: #5a3d1c; }
+.a-areia .escrita { position: relative; width: 100%; min-height: 200px; display: grid; place-items: center; padding: 16px; border-radius: 12px; background: #b58f5c; color: #fff4dd; font: 700 2.1rem/1.1 var(--fonte-mao); }
+.a-areia .escrita canvas { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; }
+.a-areia .onda { position: absolute; left: -10%; right: -10%; top: 100%; height: 130%; border-radius: 45% 55% 0 0 / 12% 10% 0 0; background: linear-gradient(180deg, #fff, #8fd3e8 8%, #2a9fc4); animation: onda-vem 2.1s ease-in-out forwards; }
+@keyframes onda-vem { 50% { transform: translateY(-100%); } 100% { transform: translateY(0); } }
+.a-areia .dica { color: #5a3d1c; }
+.a-areia .dest { color: #a3123f; text-shadow: none; }
+
+/* ---------- 33 extrato: aplicativo de banco ---------- */
+.a-extrato .banco { width: 100%; padding: 18px; display: flex; flex-direction: column; gap: 12px; text-align: left; border-radius: 18px; background: linear-gradient(150deg, #1d1a3a, #3a2470); box-shadow: 0 20px 40px -18px #000; color: #fff; }
+.a-extrato .nome { font: 700 .95rem var(--fonte); color: #cdb8ff; }
+.a-extrato .saldo { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
+.a-extrato .saldo span { grid-column: 1 / -1; font-size: .78rem; opacity: .75; }
+.a-extrato .saldo b { font: 800 1.9rem var(--fonte); }
+.a-extrato .saldo b.rico { color: #6df0a8; animation: brilha-saldo 1s ease-in-out 3 alternate; }
+@keyframes brilha-saldo { to { text-shadow: 0 0 22px #6df0a8; } }
+.a-extrato .olho { width: 44px; height: 44px; appearance: none; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); font-size: 1.2rem; animation: pisca 1.3s ease-in-out infinite; }
+.a-extrato .mov { list-style: none; display: flex; flex-direction: column; gap: 8px; min-height: 40px; }
+.a-extrato .mov li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 10px; border-radius: 10px; background: rgba(255, 255, 255, .07); font-size: .94rem; }
+.a-extrato .mais { color: #6df0a8; }
+.a-extrato .menos { color: #ff8a8a; }
+.a-extrato .nota { font-size: .98rem; line-height: 1.35; }
+.a-extrato .dest { color: #6df0a8; text-shadow: none; }
+
+/* ---------- 34 ampulheta: vidro e areia caindo ---------- */
+.a-ampulheta .vidro-a { width: min(50vw, 190px); appearance: none; border: 0; background: none; transition: transform .7s cubic-bezier(.5, 0, .3, 1); }
+.a-ampulheta svg { display: block; width: 100%; overflow: visible; }
+.a-ampulheta .moldura-a { fill: none; stroke: #c9a24b; stroke-width: 10; stroke-linecap: round; }
+.a-ampulheta .casca { fill: rgba(255, 255, 255, .1); stroke: rgba(255, 255, 255, .5); stroke-width: 2.5; }
+.a-ampulheta .sup, .a-ampulheta .inf { fill: #f0c56a; }
+.a-ampulheta .sup { transform-origin: 60px 98px; transform: scaleY(.04); }
+.a-ampulheta .inf { transform-origin: 60px 186px; }
+.a-ampulheta .fio-a { stroke: #f0c56a; stroke-width: 2.5; opacity: 0; }
+.a-ampulheta .vidro-a.cai .sup { animation: sup-desce 3.4s linear reverse both; }
+.a-ampulheta .vidro-a.cai .inf { animation: sup-desce 3.4s linear both; }
+.a-ampulheta .vidro-a.cai .fio-a { animation: fio-cai 3.4s linear both; }
+@keyframes sup-desce { from { transform: scaleY(.04); } to { transform: scaleY(1); } }
+@keyframes fio-cai { 4%, 92% { opacity: 1; } to { opacity: 0; } }
+.a-ampulheta .texto { min-height: 3.2em; }
+
+/* ---------- 35 broto: árvore que cresce ---------- */
+.a-broto .quadro { position: relative; width: 100%; height: min(44vh, 340px); }
+.a-broto .texto { min-height: 3.2em; }
+
+/* ---------- 36 borboletas: campina clara ---------- */
+.a-borboletas .campina { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 16px 22px 110px; text-align: center; background: linear-gradient(180deg, #d9f3ff, #f3fbe8 50%, #cfeab6); color: #24452b; }
+.a-borboletas .varal { position: absolute; top: calc(18px + env(safe-area-inset-top)); left: 12px; right: 12px; min-height: 44px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.a-borboletas .varal span { padding: 5px 12px; border-radius: 999px; background: #fff; color: #a3123f; font: 600 .95rem var(--fonte); box-shadow: 0 3px 8px rgba(0, 0, 0, .12); }
+.a-borboletas .borb { --cor: #e0457b; position: absolute; width: 74px; height: 66px; appearance: none; border: 0; background: none; animation: voa 5s ease-in-out infinite; }
+@keyframes voa { 25% { translate: 16px -18px; } 50% { translate: -10px -8px; } 75% { translate: 12px 14px; } }
+.a-borboletas .borb svg { display: block; width: 100%; overflow: visible; fill: var(--cor); }
+.a-borboletas .borb .ae, .a-borboletas .borb .ad { transform-origin: 40px 32px; animation: bate .28s ease-in-out infinite alternate; }
+.a-borboletas .borb .corpo { fill: #3a2410; }
+@keyframes bate { to { transform: scaleX(.38); } }
+.a-borboletas .borb.pega { transition: top 1s, opacity 1s; top: -12% !important; opacity: 0; pointer-events: none; }
+.a-borboletas .dest { color: #a3123f; text-shadow: none; }
+.a-borboletas .dica { color: #24452b; }
+
+/* ---------- 37 discoteca: bola de espelhos e pista ---------- */
+.a-discoteca .salao { --h: 0; position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 22px; background: #0c0416; filter: hue-rotate(calc(var(--h) * 1deg)); transition: filter .4s; }
+.a-discoteca .feixes { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg at 50% 38%, rgba(255, 43, 214, .28) 0 7deg, transparent 7deg 40deg, rgba(43, 240, 255, .25) 40deg 46deg, transparent 46deg 90deg, rgba(255, 210, 63, .26) 90deg 97deg, transparent 97deg 150deg, rgba(255, 43, 214, .25) 150deg 157deg, transparent 157deg 215deg, rgba(43, 240, 255, .25) 215deg 222deg, transparent 222deg 290deg, rgba(255, 210, 63, .25) 290deg 297deg, transparent 297deg); animation: gira-feixes 11s linear infinite; }
+@keyframes gira-feixes { to { transform: rotate(360deg); } }
+.a-discoteca .bola { position: relative; flex: none; width: 150px; height: 150px; margin-top: calc(38px + env(safe-area-inset-top)); appearance: none; border: 0; border-radius: 50%; background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 15px), repeating-linear-gradient(0deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 15px), radial-gradient(circle at 36% 30%, #fff, #b8c2d6 42%, #3f4a66); box-shadow: 0 0 40px rgba(255, 255, 255, .5); animation: rola-bola 3s linear infinite; }
+@keyframes rola-bola { to { background-position: 150px 0, 0 0, 0 0; } }
+.a-discoteca .bola::before { content: ''; position: absolute; top: -60px; left: 50%; width: 3px; height: 60px; background: #d8d8e0; }
+.a-discoteca .piso { position: absolute; left: 0; right: 0; bottom: 0; height: 38%; display: grid; grid-template-columns: repeat(8, 1fr); transform: perspective(330px) rotateX(46deg); transform-origin: bottom; opacity: .75; }
+.a-discoteca .piso i { background: #ff2bd6; box-shadow: inset 0 0 0 1px #000; animation: pisca-piso 1.1s steps(2) infinite; }
+@keyframes pisca-piso { 50% { background: #2bf0ff; opacity: .35; } }
+.a-discoteca .texto, .a-discoteca .dica, .a-discoteca .btn { position: relative; z-index: 2; }
+.a-discoteca .texto { min-height: 3.2em; text-shadow: 0 2px 8px #000; }
+
+/* ---------- 38 fogos: céu de festa ---------- */
+.a-fogos.cena { background: #050414; }
+.a-fogos .sobre { position: absolute; inset: auto 0 0; z-index: 2; padding: 0 24px calc(100px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.a-fogos .toque-ceu { position: absolute; inset: 0 0 96px; z-index: 3; }
+.a-fogos .texto { text-shadow: 0 2px 8px #000; min-height: 3em; }
+
+/* ---------- 39 neon: letreiro em parede de tijolos ---------- */
+.a-neon .muro { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 20px 96px; text-align: center; background: repeating-linear-gradient(0deg, #16101c 0 2px, transparent 2px 28px), repeating-linear-gradient(90deg, #16101c 0 2px, transparent 2px 60px), #2a1f33; }
+.a-neon .placa { font: 400 clamp(2.5rem, 13vw, 4rem)/1 'Monoton', var(--fonte-titulo); color: #4a3a55; white-space: nowrap; }
+.a-neon .placa span.liga { color: #ff4fa8; text-shadow: 0 0 6px #fff, 0 0 20px #ff2bd6, 0 0 44px #ff2bd6; animation: falha .9s steps(2) 1; }
+@keyframes falha { 15%, 45% { opacity: .2; } 30%, 60% { opacity: 1; } }
+.a-neon .sub-n { font: 400 1.9rem 'Pacifico', var(--fonte-titulo); color: #4a3a55; transition: color .4s, text-shadow .4s; }
+.a-neon .sub-n.liga { color: #7df9ff; text-shadow: 0 0 12px #2bf0ff, 0 0 30px #2bf0ff; }
+.a-neon .cordinha { position: absolute; top: 0; right: 42px; width: 44px; height: 200px; appearance: none; border: 0; background: none; }
+.a-neon .cordinha::before { content: ''; position: absolute; top: 0; bottom: 18px; left: 21px; width: 2px; background: #bdb7c9; }
+.a-neon .cordinha i { position: absolute; bottom: 0; left: 11px; width: 22px; height: 22px; border-radius: 50%; background: #e7c65a; }
+.a-neon .dica { color: #e7dff0; }
+.a-neon .texto { min-height: 3.2em; }
+
+/* ---------- 40 abajur: quarto que escurece ---------- */
+.a-abajur .quarto { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 0 22px 108px; background: linear-gradient(180deg, #e8c28c, #c98f54); color: #3a2410; transition: background 1.4s; }
+.a-abajur .quarto.apagou { background: linear-gradient(180deg, #04041a, #0d0a2c); color: #eef; }
+.a-abajur .teto { position: absolute; inset: 0; opacity: 0; transition: opacity 2s .6s; }
+.a-abajur .quarto.apagou .teto { opacity: 1; }
+.a-abajur .teto i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #d8ffb0; box-shadow: 0 0 8px #baff7a; animation: pisca 2.6s ease-in-out infinite; }
+.a-abajur .lampada { position: relative; width: 170px; height: 220px; appearance: none; border: 0; background: none; }
+.a-abajur .lampada i { position: absolute; top: 0; left: 15px; width: 140px; height: 96px; background: #fff0c9; clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); box-shadow: 0 0 40px #ffe9a8; transition: background 1s; }
+.a-abajur .quarto.apagou .lampada i { background: #2a2740; }
+.a-abajur .lampada b { position: absolute; top: 96px; left: 80px; width: 10px; height: 112px; background: #5a3a1e; }
+.a-abajur .lampada::after { content: ''; position: absolute; bottom: 0; left: 45px; width: 80px; height: 14px; border-radius: 50%; background: #5a3a1e; }
+.a-abajur .texto { min-height: 3.2em; }

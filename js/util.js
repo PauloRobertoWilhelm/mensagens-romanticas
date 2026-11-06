@@ -86,6 +86,8 @@
         if (li > 0) alvo.appendChild(document.createElement('br'));
         // Cada palavra vira um <span class="w"> com atraso próprio.
         linha.split(/\s+/).filter(Boolean).forEach((palavra) => {
+          // Pontuação logo depois de um destaque gruda na palavra anterior, sem espaço no meio.
+          if (/^[.,;:!?…)]/.test(palavra) && alvo.lastChild && alvo.lastChild.nodeType === 3) alvo.lastChild.remove();
           // Cria o span; se for destaque, ganha a classe dest.
           const s = U.el('span', 'w' + (dest ? ' dest' : ''), U.esc(palavra));
           // Atraso de animação proporcional à posição da palavra.

@@ -2,19 +2,12 @@
    base.js — "ferramentas" para escrever mensagens de forma curta.
    Carregue ESTE arquivo antes dos mensagens-*.js.
 
-   Para criar uma mensagem nova, copie uma existente e troque os textos:
-   M(id, categoria, tema, 'nome no catálogo', ABERTURA, [CENAS..., FINAL], 'carta opcional');
+   Cada link tem uma arte própria (js/artes-*.js) e um final:
+   M(id, categoria, tema, 'nome no catálogo', abArte('arte', {textos}, {fundo}), [F('título', 'mensagem')], 'carta opcional');
 
-   ABERTURAS: abTerminal(titulo, [linhas]) | abCoracao(titulo, dica)
-              abEnvelope(titulo, emoji)    | abPresente(titulo, dica)
-   CENAS:     H(titulo, [frases])                   história (frase por frase)
-              C('coracao'|'estrela'|'infinito', msg) constelação
-              S(titulo, [[rótulo, %]], veredito)     scanner (barras)
-              K(titulo, [[frente, verso]])           cartas que viram
-              N(titulo, [[número, rótulo]], fecho)   contagem
-              L(titulo, [itens])                     lista de motivos
-              E(pergunta, [[opção, resposta]])       escolha
-   FINAL:     F('segurar'|'toques'|'deslizar', titulo, mensagem, {n, dica, dica2, pre})
+   abArte: o 1º valor é o nome da arte, o 2º traz os textos que ela usa e o 3º
+           (opcional) muda as partículas do fundo, ex.: { forma: '✦', qtd: 12 }.
+   F:      o final, sempre o último passo da mensagem.
    Texto com *asteriscos* ganha destaque. "\n" quebra linha.
    IDs: 1 a 255, únicos, e NUNCA mude o id de uma mensagem já enviada (os links usam o id).
    ========================================================== */
@@ -32,20 +25,8 @@ window.M = (id, cat, tema, nome, ab, passos, carta) => {
   return m;
 };
 
-// Aberturas.
-window.abTerminal = (ti, l) => ({ t: 'terminal', ti, l });
-window.abCoracao = (ti, sub) => ({ t: 'coracao', ti, sub });
-window.abEnvelope = (ti, selo) => ({ t: 'envelope', ti, selo });
-window.abPresente = (ti, sub) => ({ t: 'presente', ti, sub });
+// Abertura: a arte própria do link, com os textos dela e as partículas opcionais.
+window.abArte = (a, d, fundo) => ({ t: 'arte', a, d, fundo });
 
-// Cenas.
-window.H = (ti, f) => ({ t: 'historia', ti, f });
-window.C = (f, m) => ({ t: 'constelacao', f, m });
-window.S = (ti, i, v) => ({ t: 'scanner', ti, i, v });
-window.K = (ti, c) => ({ t: 'cartas', ti, c });
-window.N = (ti, n, fim) => ({ t: 'contagem', ti, n, fim });
-window.L = (ti, i) => ({ t: 'motivos', ti, i });
-window.E = (q, o) => ({ t: 'escolha', q, o });
-
-// Final: tp = tipo do jogo; extra pode ter n (toques), dica, dica2 (texto do deslizar), pre (rótulo).
-window.F = (tp, ti, m, extra) => Object.assign({ t: 'final', tp, ti, m }, extra || {});
+// Final: título e mensagem da última tela.
+window.F = (ti, m) => ({ t: 'final', ti, m });
