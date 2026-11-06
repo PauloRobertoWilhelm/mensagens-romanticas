@@ -1,0 +1,457 @@
+/* ==========================================================
+   acabamento.css — o polimento moderno: fundo animado, leitor de digital,
+   brilhos, papel com textura e inclinação 3D.
+   ========================================================== */
+
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
+/* ---------- Valores usados em vários lugares ---------- */
+/* PEÇA: os valores do site inteiro. */
+:root {
+  /* Valor inicial guardado com o nome --papel. O código muda esse valor enquanto a animação roda. */
+  --papel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .18 0 0 0 0 .04 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Valor inicial guardado com o nome --inc-x. O código muda esse valor enquanto a animação roda. */
+  --inc-x: 0deg;
+  /* Valor inicial guardado com o nome --inc-y. O código muda esse valor enquanto a animação roda. */
+  --inc-y: 0deg;
+}
+
+/* ---------- Fundo animado: fica atrás de tudo e deixa o toque passar ---------- */
+/* PEÇA: o fundo animado. */
+#cenario {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (fundo animado): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (fundo animado): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 0;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* ---------- Inclinação 3D: o conteúdo acompanha o mouse ou o giro do celular ---------- */
+/* PEÇA: a caixa central dentro de: a tela. */
+.cena:not(.cheia) > .caixa {
+  /* Movimento (caixa central): ganha profundidade 3D, tomba para trás um valor guardado em --inc-x e vira de lado um valor guardado em --inc-y. */
+  transform: perspective(1100px) rotateX(var(--inc-x)) rotateY(var(--inc-y));
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,25 segundos. Número maior = mais lento. */
+  transition: transform .25s ease-out;
+}
+
+/* ---------- Troca de tela: entra saindo do borrado e sai se apagando ---------- */
+/* PEÇA: a tela. */
+.cena {
+  /* Usa a animação "tela-entra". */
+  animation-name: tela-entra;
+}
+
+/* PEÇA: a tela com "saindo" ligado. */
+.cena.saindo {
+  /* Usa a animação "tela-sai". */
+  animation-name: tela-sai;
+}
+
+/* ANIMAÇÃO "tela-entra": a tela entra saindo do borrado. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes tela-entra {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: fica 1,04 vezes maior. */
+    transform: scale(1.04);
+    /* Efeito visual: borrão. */
+    filter: blur(10px);
+  }
+}
+
+/* ANIMAÇÃO "tela-sai": a tela vai embora se apagando. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes tela-sai {
+  /* Como a animação termina: */
+  to {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: encolhe para 96% do tamanho. */
+    transform: scale(.96);
+    /* Efeito visual: borrão. */
+    filter: blur(8px);
+  }
+}
+
+/* ---------- Textos: sombra para ler bem por cima do fundo animado ---------- */
+/* PEÇA: o texto principal dentro de: a tela de capítulo e peças parecidas. */
+.capitulo .texto, .final .texto, .capitulo .titulo, .final .titulo, .abertura .texto, .dica {
+  /* Brilho em volta das letras (texto principal), na cor: a 1ª cor de fundo do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 1px 12px var(--bg-a), 0 0 3px var(--bg-a);
+}
+
+/* PEÇA: a dica piscando. */
+.dica {
+  /* Cor das letras (dica piscando): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+}
+
+/* ---------- Etiqueta de progresso dos capítulos ---------- */
+/* PEÇA: a etiqueta do capítulo. */
+.hud-cap {
+  /* Cor das letras (etiqueta do capítulo): a 2ª cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac2);
+  /* Letra (etiqueta do capítulo): letra de computador (Space Mono), tamanho 0,7. Número maior = letra maior. */
+  font: .7rem var(--fonte-mono);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .24em;
+  /* Brilho em volta das letras (etiqueta do capítulo), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 8px var(--sombra);
+}
+
+/* ---------- Botões: faixa de luz passando ---------- */
+/* PEÇA: o botão dentro de: a tela de capítulo, o botão (com exceções) dentro de: a tela final e o botão dentro de: a tela do leitor. */
+.capitulo .btn, .final .btn:not(.leve), .abertura .btn {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Corta o que passar para fora (botão). */
+  overflow: hidden;
+}
+
+/* PEÇA: enfeite desenhado em: o botão dentro de: a tela de capítulo e enfeite desenhado em: o botão (com exceções) dentro de: a tela final. */
+.capitulo .btn::after, .final .btn:not(.leve)::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: menos 60% do espaço. */
+  left: -60%;
+  /* Largura (enfeite desenhado em: o botão): 40% do espaço. Número maior = mais largo. */
+  width: 40%;
+  /* Fundo em degradê (enfeite desenhado em: o botão), nas cores: transparente, branco, meio transparente e transparente. Troque os códigos para mudar as cores. */
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+  /* Movimento (enfeite desenhado em: o botão): skewX. */
+  transform: skewX(-20deg);
+  /* Liga a animação "faixa-luz": dura 3,2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: faixa-luz 3.2s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "faixa-luz": uma faixa de luz passa pelo botão. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes faixa-luz {
+  /* Como está quando já passou 60% e  100% do tempo da animação: */
+  60%, 100% {
+    /* Distância da esquerda: 130% do espaço. */
+    left: 130%;
+  }
+}
+
+/* ---------- Capítulos: vidro fosco e linha de luz ---------- */
+/* PEÇA: a opção dentro de: o capítulo de perguntas. */
+.c-quiz .op-q {
+  /* Borra o que está atrás, como um vidro fosco. */
+  backdrop-filter: blur(12px);
+  /* Borra o que está atrás, como um vidro fosco. */
+  -webkit-backdrop-filter: blur(12px);
+  /* Sombra ou brilho em volta (opção), na cor: a cor de destaque do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 3px 0 0 var(--ac);
+}
+
+/* PEÇA: o quadrinho dentro de: o capítulo de quadrinhos. */
+.c-grade .quadrinho {
+  /* Sombra ou brilho em volta (quadrinho), na cor: a cor de brilho do tema e branco, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 22px -6px var(--sombra), inset 0 0 0 1px rgba(255, 255, 255, .25);
+}
+
+/* PEÇA: a bolha dentro de: o capítulo de bolhas. */
+.c-bolhas .bolha {
+  /* Borra o que está atrás, como um vidro fosco. */
+  backdrop-filter: blur(6px);
+  /* Borra o que está atrás, como um vidro fosco. */
+  -webkit-backdrop-filter: blur(6px);
+  /* Sombra ou brilho em volta (bolha), na cor: a cor de brilho do tema e branco, quase invisível. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 20px -6px var(--sombra), inset 0 0 18px rgba(255, 255, 255, .12);
+}
+
+/* PEÇA: a carta dentro de: o jogo da memória. */
+.c-memoria .carta-m {
+  /* Sombra ou brilho em volta (carta), na cor: a cor de brilho do tema e branco, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 18px -6px var(--sombra), inset 0 0 0 1px rgba(255, 255, 255, .25);
+}
+
+/* ---------- Abertura: leitor de digital ---------- */
+/* PEÇA: a frase pequena de cima dentro de: a tela do leitor. */
+.abertura .hud-topo {
+  /* Cor das letras (frase pequena de cima): a 2ª cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac2);
+  /* Letra (frase pequena de cima): letra de computador (Space Mono), tamanho 0,72. Número maior = letra maior. */
+  font: .72rem var(--fonte-mono);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .24em;
+  /* Brilho em volta das letras (frase pequena de cima), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 8px var(--sombra);
+}
+
+/* PEÇA: o título dentro de: a tela do leitor. */
+.abertura .titulo {
+  /* Tipo de letra (título): fonte 700 clamp(1.25rem, 6vw, 1.9rem)/1.2 var(--fonte-mono). */
+  font: 700 clamp(1.25rem, 6vw, 1.9rem)/1.2 var(--fonte-mono);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .05em;
+  /* Altura mínima (título): 2,4 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 2.4em;
+}
+
+/* PEÇA: o leitor de digital dentro de: a tela do leitor. */
+.abertura .leitor {
+  /* Valor inicial guardado com o nome --p. O código muda esse valor enquanto a animação roda. */
+  --p: 0;
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (leitor de digital): 196 pontinhos. Número maior = mais largo. */
+  width: 196px;
+  /* Altura (leitor de digital): 196 pontinhos. Número maior = mais alto. */
+  height: 196px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (leitor de digital). */
+  border: 0;
+  /* Arredonda os cantos (leitor de digital). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (leitor de digital), nas cores: o vidro translúcido do tema e transparente. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle, var(--vidro), transparent 72%);
+}
+
+/* PEÇA: enfeite desenhado em: o leitor de digital dentro de: a tela do leitor. */
+.abertura .leitor::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: menos 6 pontinhos em todos os lados. */
+  inset: -6px;
+  /* Arredonda os cantos (enfeite desenhado em: o leitor de digital). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Contorno (enfeite desenhado em: o leitor de digital): lisa, 1 pontinhos de grossura, cor a cor de destaque do tema. */
+  border: 1px solid var(--ac);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,6. */
+  opacity: .6;
+  /* Liga a animação "leitor-chama": dura 2,2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: leitor-chama 2.2s ease-out infinite;
+}
+
+/* ANIMAÇÃO "leitor-chama": um círculo de luz sai do leitor, chamando o dedo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes leitor-chama {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: fica 1,3 vezes maior. */
+    transform: scale(1.3);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* PEÇA: o anel do leitor dentro de: a tela do leitor. */
+.abertura .anel-l {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (anel do leitor): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (anel do leitor): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Movimento (anel do leitor): gira 90 graus para a esquerda. */
+  transform: rotate(-90deg);
+}
+
+/* PEÇA: o trilho de atender dentro de: a tela do leitor. */
+.abertura .trilho-l {
+  /* Sem cor por dentro do desenho (só o traço). */
+  fill: none;
+  /* Cor do traço (trilho de atender): a cor de borda do tema. Troque o código para mudar a cor. */
+  stroke: var(--borda);
+  /* Grossura do traço: 2. Número maior = traço mais grosso. */
+  stroke-width: 2;
+}
+
+/* PEÇA: o progresso do anel dentro de: a tela do leitor. */
+.abertura .prog-l {
+  /* Sem cor por dentro do desenho (só o traço). */
+  fill: none;
+  /* Cor do traço (progresso do anel): a cor de destaque do tema. Troque o código para mudar a cor. */
+  stroke: var(--ac);
+  /* Grossura do traço: 3,5. Número maior = traço mais grosso. */
+  stroke-width: 3.5;
+  /* Pontas do traço arredondadas. */
+  stroke-linecap: round;
+  /* Divide o traço em pedaços; é o truque para ele parecer se desenhar sozinho. */
+  stroke-dasharray: 1;
+  /* Quanto do traço está escondido: 0 = aparece inteiro. */
+  stroke-dashoffset: 1;
+  /* Efeito visual (progresso do anel): sombra em volta. */
+  filter: drop-shadow(0 0 6px var(--ac));
+}
+
+/* PEÇA: a digital dentro de: a tela do leitor. */
+.abertura .digital {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: 34 pontinhos em todos os lados. */
+  inset: 34px;
+  /* Largura (digital): uma conta feita pelo navegador. Número maior = mais largo. */
+  width: calc(100% - 68px);
+  /* Altura (digital): uma conta feita pelo navegador. Número maior = mais alto. */
+  height: calc(100% - 68px);
+  /* Deixa aparecer o que passar para fora. */
+  overflow: visible;
+}
+
+/* PEÇA: o traço do desenho dentro de: a digital. */
+.abertura .digital path {
+  /* Sem cor por dentro do desenho (só o traço). */
+  fill: none;
+  /* Cor do traço (traço do desenho): a 2ª cor de destaque do tema. Troque o código para mudar a cor. */
+  stroke: var(--ac2);
+  /* Grossura do traço: 2,4. Número maior = traço mais grosso. */
+  stroke-width: 2.4;
+  /* Pontas do traço arredondadas. */
+  stroke-linecap: round;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: calc(.4 + var(--p) * .6);
+  /* Efeito visual (traço do desenho): sombra em volta. */
+  filter: drop-shadow(0 0 4px var(--ac2));
+}
+
+/* PEÇA: a luz que varre dentro de: a tela do leitor. */
+.abertura .varre {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 34 pontinhos. */
+  left: 34px;
+  /* Distância da direita: 34 pontinhos. */
+  right: 34px;
+  /* Distância de cima: 34 pontinhos. */
+  top: 34px;
+  /* Altura (luz que varre): 3 pontinhos. Número maior = mais alto. */
+  height: 3px;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Cor de fundo (luz que varre): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Sombra ou brilho em volta (luz que varre), na cor: a cor de destaque do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 14px 3px var(--ac);
+}
+
+/* PEÇA: a luz que varre quando o leitor de digital estiver com "lendo" ligado. */
+.abertura .leitor.lendo .varre {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+  /* Liga a animação "varre-digital": dura 0,75 segundos, repetindo para sempre, indo e voltando. Número menor = mais rápida. */
+  animation: varre-digital .75s ease-in-out infinite alternate;
+}
+
+/* ANIMAÇÃO "varre-digital": a luz do leitor sobe e desce pela digital. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes varre-digital {
+  /* Como a animação termina: */
+  to {
+    /* Distância de cima: uma conta feita pelo navegador. */
+    top: calc(100% - 37px);
+  }
+}
+
+/* PEÇA: o traço do desenho dentro de: a digital. */
+.abertura .leitor.ok .digital path {
+  /* Cor do traço (traço do desenho): verde claro. Troque o código para mudar a cor. */
+  stroke: #6df0a8;
+  /* Efeito visual (traço do desenho): sombra em volta. */
+  filter: drop-shadow(0 0 6px #6df0a8);
+}
+
+/* PEÇA: o progresso do anel quando o leitor de digital estiver com "ok" ligado. */
+.abertura .leitor.ok .prog-l {
+  /* Cor do traço (progresso do anel): verde claro. Troque o código para mudar a cor. */
+  stroke: #6df0a8;
+}
+
+/* PEÇA: enfeite desenhado em: o leitor de digital com "ok" ligado dentro de: a tela do leitor. */
+.abertura .leitor.ok::before {
+  /* Desliga a animação desta peça. */
+  animation: none;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+}
+
+/* ---------- Papéis: textura de fibra por cima ---------- */
+/* PEÇA: talao e peças parecidas. */
+.a-multa .talao, .a-bula .papel, .a-jornal .folha, .a-biscoito .sorte, .a-cofre .bilhete-c {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+}
+
+/* PEÇA: enfeite desenhado em: talao e peças parecidas. */
+.a-multa .talao::after, .a-bula .papel::after, .a-jornal .folha::after, .a-dicionario .pag::after, .a-dicionario .ultima::after, .a-lacre .papel::after, .a-calendario .folha::after, .a-garrafa .rolo-p::after, .a-prova .prova::after, .a-boleto .recibo::after, .a-dossie .pasta::after, .a-postais .postal::after, .a-diploma .certificado::after, .a-receita .pagina-r::after, .a-caderno .folha-c::after, .a-biscoito .sorte::after, .a-cofre .bilhete-c::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arredonda os cantos (enfeite desenhado em: talao). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: inherit;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Fundo (enfeite desenhado em: talao). */
+  background: var(--papel);
+  /* Mistura a cor com o que está atrás, como tinta. */
+  mix-blend-mode: multiply;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,32. */
+  opacity: .32;
+}
+
+/* ---------- Retrato: as manchas de cor só aparecem no cartaz ---------- */
+/* PEÇA: o cabelo do retrato e peças parecidas. */
+.a-jornal .massa, .a-jornal .pele, .a-retrato .massa, .a-retrato .pele {
+  /* Esconde esta peça da tela. */
+  display: none;
+}
+
+/* ---------- Rodapé: não atrapalha o toque nos botões que ficam embaixo dele ---------- */
+
+/* PEÇA: o rodapé da música. */
+#rodape {
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: o botão de mudo. */
+#mudo {
+  /* Recebe toques: só este botão do rodapé funciona ao tocar. */
+  pointer-events: auto;
+}

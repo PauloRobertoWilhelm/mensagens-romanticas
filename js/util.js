@@ -4,6 +4,23 @@
    sem módulos, para funcionar abrindo o arquivo direto no navegador).
    ========================================================== */
 
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é o "cérebro": diz o que acontece e em que ordem.
+   As cores e os tamanhos NÃO ficam aqui; ficam nos arquivos da pasta css.
+
+   Cada linha que começa com // é só uma explicação: o computador ignora.
+   Ela sempre fala da linha de código logo abaixo.
+
+   Coisas que dá para mudar com segurança:
+     U.esperar(1300)  = espera 1,3 segundos. Número maior = mais demora.
+     K.som(440, 120)  = sonzinho. Número maior = mais agudo; o 2º é a duração.
+
+   Mude uma coisa de cada vez, salve e olhe no navegador.
+   Se algo parar de funcionar, desfaça a última mudança.
+   ========================================================== */
+
 // Envolve o código numa função que roda na hora, para não "vazar" variáveis soltas.
 (function (g) {
   // Ativa o modo estrito: o navegador avisa de erros bobos (variável não declarada etc.).
@@ -31,7 +48,8 @@
   U.esperar = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // Troca caracteres perigosos de HTML por versões seguras (evita que um texto quebre a página).
-  U.esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  U.esc = (s) =>
+    String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
   // Número aleatório entre a e b.
   U.rand = (a, b) => a + Math.random() * (b - a);
@@ -40,10 +58,20 @@
   U.sorteia = (lista) => lista[Math.floor(Math.random() * lista.length)];
 
   // Faz o aparelho vibrar (só celulares que suportam); try/catch porque alguns navegadores bloqueiam.
-  U.vibra = (padrao) => { try { if (navigator.vibrate) navigator.vibrate(padrao); } catch (e) { /* sem vibração: tudo bem */ } };
+  U.vibra = (padrao) => {
+    // Tenta fazer isto; se der erro, o site não trava.
+    try {
+      // Se a condição entre parênteses valer: pede ao celular para vibrar.
+      if (navigator.vibrate) navigator.vibrate(padrao);
+      // Se deu erro, cai aqui e o site continua funcionando.
+    } catch (e) {
+      /* sem vibração: tudo bem */
+    }
+  };
 
   // Detecta se estamos rodando local (arquivo aberto, localhost) — nesses casos o ?m=ID é permitido.
-  U.ehLocal = () => location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  U.ehLocal = () =>
+    location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 
   // Mostra um aviso rápido (toast) na parte de baixo da tela por 3 segundos.
   U.aviso = (texto) => {
@@ -52,7 +80,9 @@
     // Se não existir, não faz nada.
     if (!a) return;
     // Coloca o texto (seguro) e liga a classe que faz aparecer.
-    a.textContent = texto; a.classList.add('on');
+    a.textContent = texto;
+    // Liga o visual "on" (veja .on no CSS).
+    a.classList.add('on');
     // Guarda o temporizador anterior para não apagar o aviso novo cedo demais.
     clearTimeout(U._avisoT);
     // Depois de 3 s, esconde.
@@ -68,7 +98,9 @@
     // Intervalo padrão: 190 ms por palavra (leitura calma).
     const p = passo || 190;
     // Limpa o conteúdo anterior e remove o estado "pronto".
-    alvo.innerHTML = ''; alvo.classList.remove('pronto');
+    alvo.innerHTML = '';
+    // Desliga o visual "pronto".
+    alvo.classList.remove('pronto');
     // Divide o texto em pedaços: o que está entre *...* e o resto.
     const partes = String(texto).split(/(\*[^*]+\*)/);
     // Contador de palavras para calcular o atraso de cada uma.
@@ -79,24 +111,30 @@
       if (!parte) return;
       // Descobre se o pedaço é destaque e tira os asteriscos.
       const dest = parte.charAt(0) === '*' && parte.charAt(parte.length - 1) === '*';
+      // Guarda este valor com o nome "limpo".
       const limpo = dest ? parte.slice(1, -1) : parte;
       // Divide em linhas e depois em palavras.
       limpo.split('\n').forEach((linha, li) => {
         // Se não é a primeira linha do pedaço, insere uma quebra.
         if (li > 0) alvo.appendChild(document.createElement('br'));
         // Cada palavra vira um <span class="w"> com atraso próprio.
-        linha.split(/\s+/).filter(Boolean).forEach((palavra) => {
-          // Pontuação logo depois de um destaque gruda na palavra anterior, sem espaço no meio.
-          if (/^[.,;:!?…)]/.test(palavra) && alvo.lastChild && alvo.lastChild.nodeType === 3) alvo.lastChild.remove();
-          // Cria o span; se for destaque, ganha a classe dest.
-          const s = U.el('span', 'w' + (dest ? ' dest' : ''), U.esc(palavra));
-          // Atraso de animação proporcional à posição da palavra.
-          s.style.animationDelay = (i * p) + 'ms';
-          // Coloca na tela e um espaço depois (espaço normal para quebrar linha direito).
-          alvo.appendChild(s); alvo.appendChild(document.createTextNode(' '));
-          // Próxima palavra.
-          i++;
-        });
+        linha
+          .split(/\s+/)
+          .filter(Boolean)
+          .forEach((palavra) => {
+            // Pontuação logo depois de um destaque gruda na palavra anterior, sem espaço no meio.
+            if (/^[.,;:!?…)]/.test(palavra) && alvo.lastChild && alvo.lastChild.nodeType === 3) alvo.lastChild.remove();
+            // Cria o span; se for destaque, ganha a classe dest.
+            const s = U.el('span', 'w' + (dest ? ' dest' : ''), U.esc(palavra));
+            // Atraso de animação proporcional à posição da palavra.
+            s.style.animationDelay = i * p + 'ms';
+            // Coloca na tela e um espaço depois (espaço normal para quebrar linha direito).
+            alvo.appendChild(s);
+            // Coloca a peça nova dentro de alvo.
+            alvo.appendChild(document.createTextNode(' '));
+            // Próxima palavra.
+            i++;
+          });
       });
     });
     // Duração total = tempo da última palavra + tempo da animação dela (700 ms).
@@ -104,25 +142,28 @@
   };
 
   // Anima um número de 0 até 'fim' em 'dur' ms, chamando 'cada(valor)' a cada quadro. Devolve Promise.
-  U.contar = (fim, dur, cada) => new Promise((resolve) => {
-    // Marca o instante de início.
-    const t0 = performance.now();
-    // Função chamada a cada quadro da tela.
-    const passo = (t) => {
-      // Progresso de 0 a 1.
-      const k = Math.min(1, (t - t0) / dur);
-      // Easing: começa rápido e desacelera no fim.
-      const e = 1 - Math.pow(1 - k, 3);
-      // Entrega o valor atual arredondado.
-      cada(Math.round(fim * e));
-      // Continua até terminar; no fim resolve a Promise.
-      if (k < 1) requestAnimationFrame(passo); else resolve();
-    };
-    // Dispara o primeiro quadro.
-    requestAnimationFrame(passo);
-  });
+  U.contar = (fim, dur, cada) =>
+    new Promise((resolve) => {
+      // Marca o instante de início.
+      const t0 = performance.now();
+      // Função chamada a cada quadro da tela.
+      const passo = (t) => {
+        // Progresso de 0 a 1.
+        const k = Math.min(1, (t - t0) / dur);
+        // Easing: começa rápido e desacelera no fim.
+        const e = 1 - Math.pow(1 - k, 3);
+        // Entrega o valor atual arredondado.
+        cada(Math.round(fim * e));
+        // Continua até terminar; no fim resolve a Promise.
+        if (k < 1) requestAnimationFrame(passo);
+        // Se o caso de cima não valeu, faz isto.
+        else resolve();
+      };
+      // Dispara o primeiro quadro.
+      requestAnimationFrame(passo);
+    });
 
   // Publica U como variável global (window.U).
   g.U = U;
-// Executa passando a janela como 'g'.
+  // Executa passando a janela como 'g'.
 })(window);

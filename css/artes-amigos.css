@@ -3,235 +3,2545 @@
    Cada bloco começa com o nome da arte; .a-nome limita o estilo a ela.
    ========================================================== */
 
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
 /* ---------- 41 figurinhas: álbum e pacote ---------- */
-.a-figurinhas .chamada { font: 400 1.7rem 'Bebas Neue', var(--fonte); letter-spacing: .06em; }
-.a-figurinhas .album { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 16px 30px -14px #000; }
-.a-figurinhas .vaga { min-height: 112px; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: #b8b0a0; background: #efe9dc; border: 2px dashed #c9c0ad; border-radius: 6px; font: 400 2rem 'Bebas Neue', var(--fonte); }
-.a-figurinhas .vaga.colada { color: #2b2b2b; background: linear-gradient(160deg, #ffe88a, #ffc2d6); border: 3px solid #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .3); font: 400 .9rem/1.2 var(--fonte); animation: cola .35s cubic-bezier(.3, 1.6, .5, 1); }
-@keyframes cola { from { transform: scale(1.4) rotate(6deg); } }
-.a-figurinhas .vaga > b { font-size: 1.8rem; line-height: 1; font-weight: 400; }
-.a-figurinhas .dest { color: #a3123f; text-shadow: none; }
-.a-figurinhas .pacote { padding: 22px 30px; appearance: none; border: 0; color: #fff; background: repeating-linear-gradient(45deg, #e0245e 0 14px, #c8102e 14px 28px); font: 400 1.4rem 'Bebas Neue', var(--fonte); letter-spacing: .06em; box-shadow: 0 10px 18px -8px #000; animation: balanca-p 1.4s ease-in-out infinite; }
-@keyframes balanca-p { 50% { rotate: 3deg; } }
-.a-figurinhas .mesa { display: flex; gap: 8px; }
-.a-figurinhas .fig { width: 58px; height: 74px; appearance: none; border: 3px solid #fff; border-radius: 6px; background: linear-gradient(160deg, #ffe88a, #ffc2d6); font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0, 0, 0, .35); }
+/* PEÇA: a frase de cima (link 41, figurinhas). */
+.a-figurinhas .chamada {
+  /* Letra (frase de cima): fonte Bebas Neue, tamanho 1,7, grossura 400. Número maior = letra maior. */
+  font: 400 1.7rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .06em;
+}
+
+/* PEÇA: album (link 41, figurinhas). */
+.a-figurinhas .album {
+  /* Largura (album): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: 1fr 1fr;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (album): 10 pontinhos em todos os lados. */
+  padding: 10px;
+  /* Cor de fundo (album): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Arredonda os cantos (album). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 8px;
+  /* Sombra ou brilho em volta (album), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 30px -14px #000;
+}
+
+/* PEÇA: vaga (link 41, figurinhas). */
+.a-figurinhas .vaga {
+  /* Altura mínima (vaga): 112 pontinhos. Número maior = mais alto. */
+  min-height: 112px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (vaga): 8 pontinhos em todos os lados. */
+  padding: 8px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 3 pontinhos. Número maior = mais separadas. */
+  gap: 3px;
+  /* Cor das letras (vaga): laranja claro. Troque o código para mudar a cor. */
+  color: #b8b0a0;
+  /* Cor de fundo (vaga): laranja bem clarinho. Troque o código para mudar a cor. */
+  background: #efe9dc;
+  /* Contorno (vaga): tracejada, 2 pontinhos de grossura, cor laranja claro. */
+  border: 2px dashed #c9c0ad;
+  /* Arredonda os cantos (vaga). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Letra (vaga): fonte Bebas Neue, tamanho 2, grossura 400. Número maior = letra maior. */
+  font: 400 2rem 'Bebas Neue', var(--fonte);
+}
+
+/* PEÇA: vaga com "colada" ligado (link 41, figurinhas). */
+.a-figurinhas .vaga.colada {
+  /* Cor das letras (vaga): cinza escuro. Troque o código para mudar a cor. */
+  color: #2b2b2b;
+  /* Fundo em degradê (vaga), nas cores: dourado claro e rosa bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(160deg, #ffe88a, #ffc2d6);
+  /* Contorno (vaga): lisa, 3 pontinhos de grossura, cor branco. */
+  border: 3px solid #fff;
+  /* Sombra ou brilho em volta (vaga), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+  /* Letra (vaga): letra normal (Inter), tamanho 0,9, grossura 400. Número maior = letra maior. */
+  font: 400 .9rem/1.2 var(--fonte);
+  /* Liga a animação "cola": dura 0,35 segundos. Número menor = mais rápida. */
+  animation: cola .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+/* ANIMAÇÃO "cola": a figurinha ou o selo cola com um pulinho. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes cola {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: fica 1,4 vezes maior e gira 6 graus para a direita. */
+    transform: scale(1.4) rotate(6deg);
+  }
+}
+
+/* PEÇA: o texto forte dentro de: vaga (link 41, figurinhas). */
+.a-figurinhas .vaga > b {
+  /* Tamanho da letra (texto forte): 1,8 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.8rem;
+  /* Espaço entre as linhas do texto: 1. Número maior = linhas mais separadas. */
+  line-height: 1;
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
+
+/* PEÇA: as palavras em destaque (link 41, figurinhas). */
+.a-figurinhas .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
+
+/* PEÇA: pacote (link 41, figurinhas). */
+.a-figurinhas .pacote {
+  /* Espaço de dentro, entre a borda e o conteúdo, (pacote): 22 pontinhos em cima e embaixo, 30 pontinhos nos lados. */
+  padding: 22px 30px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (pacote). */
+  border: 0;
+  /* Cor das letras (pacote): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Fundo (pacote) em listras repetidas, nas cores: rosa e vermelho. */
+  background: repeating-linear-gradient(45deg, #e0245e 0 14px, #c8102e 14px 28px);
+  /* Letra (pacote): fonte Bebas Neue, tamanho 1,4, grossura 400. Número maior = letra maior. */
+  font: 400 1.4rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .06em;
+  /* Sombra ou brilho em volta (pacote), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 10px 18px -8px #000;
+  /* Liga a animação "balanca-p": dura 1,4 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: balanca-p 1.4s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "balanca-p": o pacote balança. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes balanca-p {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Giro: 3 graus. */
+    rotate: 3deg;
+  }
+}
+
+/* PEÇA: mesa (link 41, figurinhas). */
+.a-figurinhas .mesa {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+}
+
+/* PEÇA: a figurinha solta (link 41, figurinhas). */
+.a-figurinhas .fig {
+  /* Largura (figurinha solta): 58 pontinhos. Número maior = mais largo. */
+  width: 58px;
+  /* Altura (figurinha solta): 74 pontinhos. Número maior = mais alto. */
+  height: 74px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (figurinha solta): lisa, 3 pontinhos de grossura, cor branco. */
+  border: 3px solid #fff;
+  /* Arredonda os cantos (figurinha solta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Fundo em degradê (figurinha solta), nas cores: dourado claro e rosa bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(160deg, #ffe88a, #ffc2d6);
+  /* Tamanho da letra (figurinha solta): 1,5 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.5rem;
+  /* Sombra ou brilho em volta (figurinha solta), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .35);
+}
 
 /* ---------- 42 rpg: ficha de personagem em pixels ---------- */
-.a-rpg.cena { background: #101820; }
-.a-rpg .ficha { width: 100%; padding: 14px; display: flex; flex-direction: column; gap: 9px; text-align: left; color: #e8f6d4; background: #1c2a33; box-shadow: 0 0 0 4px #e8f6d4, 0 0 0 8px #3b6e4f; font-family: 'Press Start 2P', var(--fonte-mono); }
-.a-rpg h1 { font: 400 .95rem/1.4 'Press Start 2P', var(--fonte-mono); color: #ffe14d; }
-.a-rpg .nivel { font: 400 1.25rem/1.1 'VT323', var(--fonte-mono); color: #8df0a8; }
-.a-rpg .attr { display: grid; grid-template-columns: 1fr 36px; gap: 3px 6px; align-items: center; font: 400 1.15rem/1 'VT323', var(--fonte-mono); }
-.a-rpg .attr span { grid-column: 1 / -1; }
-.a-rpg .trilho-r { height: 11px; background: #0b1118; box-shadow: inset 0 0 0 2px #e8f6d4; padding: 2px; }
-.a-rpg .trilho-r i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, #8df0a8 0 6px, #3b6e4f 6px 8px); transition: width .7s steps(12); }
-.a-rpg .attr b { font-weight: 400; font-size: .6rem; text-align: right; }
-.a-rpg .conquista { padding: 7px; font-size: .55rem; line-height: 1.5; color: #1c2a33; background: #ffe14d; }
-.a-rpg .dest { color: inherit; text-shadow: none; font-weight: 400; }
-.a-rpg .btn { font: 400 .68rem 'Press Start 2P', var(--fonte-mono); border-radius: 0; padding: 12px 14px; color: #1c2a33; background: #8df0a8; box-shadow: 4px 4px 0 #3b6e4f; }
+/* PEÇA: a tela inteira desta arte (link 42, rpg). */
+.a-rpg.cena {
+  /* Cor de fundo (tela inteira desta arte): azul bem escuro. Troque o código para mudar a cor. */
+  background: #101820;
+}
+
+/* PEÇA: ficha (link 42, rpg). */
+.a-rpg .ficha {
+  /* Largura (ficha): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (ficha): 14 pontinhos em todos os lados. */
+  padding: 14px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 9 pontinhos. Número maior = mais separadas. */
+  gap: 9px;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Cor das letras (ficha): verde bem clarinho. Troque o código para mudar a cor. */
+  color: #e8f6d4;
+  /* Cor de fundo (ficha): azul bem escuro. Troque o código para mudar a cor. */
+  background: #1c2a33;
+  /* Sombra ou brilho em volta (ficha), na cor: verde bem clarinho e verde escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 4px #e8f6d4, 0 0 0 8px #3b6e4f;
+  /* Tipo de letra (ficha): fonte Press Start 2P. */
+  font-family: 'Press Start 2P', var(--fonte-mono);
+}
+
+/* PEÇA: o título grande (link 42, rpg). */
+.a-rpg h1 {
+  /* Letra (título grande): fonte Press Start 2P, tamanho 0,95, grossura 400. Número maior = letra maior. */
+  font: 400 .95rem/1.4 'Press Start 2P', var(--fonte-mono);
+  /* Cor das letras (título grande): dourado claro. Troque o código para mudar a cor. */
+  color: #ffe14d;
+}
+
+/* PEÇA: nivel (link 42, rpg). */
+.a-rpg .nivel {
+  /* Letra (nivel): fonte VT323, tamanho 1,25, grossura 400. Número maior = letra maior. */
+  font: 400 1.25rem/1.1 'VT323', var(--fonte-mono);
+  /* Cor das letras (nivel): verde claro. Troque o código para mudar a cor. */
+  color: #8df0a8;
+}
+
+/* PEÇA: attr (link 42, rpg). */
+.a-rpg .attr {
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: 1fr 36px;
+  /* Espaço entre as peças de dentro: 3 pontinhos. Número maior = mais separadas. */
+  gap: 3px 6px;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Letra (attr): fonte VT323, tamanho 1,15, grossura 400. Número maior = letra maior. */
+  font: 400 1.15rem/1 'VT323', var(--fonte-mono);
+}
+
+/* PEÇA: o pedacinho de texto dentro de: attr (link 42, rpg). */
+.a-rpg .attr span {
+  /* Esta peça ocupa a largura da grade inteira. */
+  grid-column: 1 / -1;
+}
+
+/* PEÇA: a barra do atributo (link 42, rpg). */
+.a-rpg .trilho-r {
+  /* Altura (barra do atributo): 11 pontinhos. Número maior = mais alto. */
+  height: 11px;
+  /* Cor de fundo (barra do atributo): preto. Troque o código para mudar a cor. */
+  background: #0b1118;
+  /* Sombra ou brilho em volta (barra do atributo), na cor: verde bem clarinho. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 0 0 2px #e8f6d4;
+  /* Espaço de dentro, entre a borda e o conteúdo, (barra do atributo): 2 pontinhos em todos os lados. */
+  padding: 2px;
+}
+
+/* PEÇA: a peça dentro de: a barra do atributo (link 42, rpg). */
+.a-rpg .trilho-r i {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Altura (peça): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Largura (peça): zero. Número maior = mais largo. */
+  width: 0;
+  /* Fundo (peça) em listras repetidas, nas cores: verde claro e verde escuro. */
+  background: repeating-linear-gradient(90deg, #8df0a8 0 6px, #3b6e4f 6px 8px);
+  /* Faz a mudança acontecer devagar, sem pular: a largura em 0,7 segundos. Número maior = mais lento. */
+  transition: width .7s steps(12);
+}
+
+/* PEÇA: o texto forte dentro de: attr (link 42, rpg). */
+.a-rpg .attr b {
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+  /* Tamanho da letra (texto forte): 0,6 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .6rem;
+  /* Texto encostado à direita. */
+  text-align: right;
+}
+
+/* PEÇA: conquista (link 42, rpg). */
+.a-rpg .conquista {
+  /* Espaço de dentro, entre a borda e o conteúdo, (conquista): 7 pontinhos em todos os lados. */
+  padding: 7px;
+  /* Tamanho da letra (conquista): 0,55 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .55rem;
+  /* Espaço entre as linhas do texto: 1,5. Número maior = linhas mais separadas. */
+  line-height: 1.5;
+  /* Cor das letras (conquista): azul bem escuro. Troque o código para mudar a cor. */
+  color: #1c2a33;
+  /* Cor de fundo (conquista): dourado claro. Troque o código para mudar a cor. */
+  background: #ffe14d;
+}
+
+/* PEÇA: as palavras em destaque (link 42, rpg). */
+.a-rpg .dest {
+  /* Cor das letras (palavras em destaque): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
+
+/* PEÇA: o botão (link 42, rpg). */
+.a-rpg .btn {
+  /* Letra (botão): fonte Press Start 2P, tamanho 0,68, grossura 400. Número maior = letra maior. */
+  font: 400 .68rem 'Press Start 2P', var(--fonte-mono);
+  /* Arredonda os cantos (botão). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão): 12 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 12px 14px;
+  /* Cor das letras (botão): azul bem escuro. Troque o código para mudar a cor. */
+  color: #1c2a33;
+  /* Cor de fundo (botão): verde claro. Troque o código para mudar a cor. */
+  background: #8df0a8;
+  /* Sombra ou brilho em volta (botão), na cor: verde escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 4px 4px 0 #3b6e4f;
+}
 
 /* ---------- 43 prova: folha pautada e caneta vermelha ---------- */
-.a-prova .prova { position: relative; width: 100%; min-height: 340px; padding: 16px 16px 16px 34px; text-align: left; color: #22303f; background: repeating-linear-gradient(180deg, #fff 0 25px, #cfe0f2 25px 26px); box-shadow: 0 16px 30px -14px #000; font-family: var(--fonte); }
-.a-prova .prova::before { content: ''; position: absolute; top: 0; bottom: 0; left: 24px; width: 2px; background: #f2a8a8; }
-.a-prova h1 { font: 700 1.05rem var(--fonte); }
-.a-prova .aluno { font: 500 1.4rem var(--fonte-mao); }
-.a-prova .questoes { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
-.a-prova .perg { font-weight: 600; font-size: 1rem; line-height: 1.3; }
-.a-prova .op { appearance: none; border: 1px solid #b6c6d6; border-radius: 6px; padding: 9px 10px; background: rgba(255, 255, 255, .85); color: inherit; font: 400 .95rem var(--fonte); text-align: left; }
-.a-prova .op.certa { border-color: #c8102e; }
-.a-prova .op.certa::after { content: ' ✓'; color: #c8102e; font: 700 1.4rem var(--fonte-mao); }
-.a-prova .caneta { color: #c8102e; font: 700 1.45rem/1.1 var(--fonte-mao); }
-.a-prova .nota { position: absolute; bottom: 14px; right: 14px; width: 76px; height: 76px; display: grid; place-items: center; opacity: 0; color: #c8102e; border: 4px solid #c8102e; border-radius: 50%; font: 700 2.8rem var(--fonte-mao); transform: rotate(-10deg) scale(2); transition: opacity .35s, transform .35s; }
-.a-prova .nota.on { opacity: 1; transform: rotate(-10deg); }
-.a-prova .dest { color: #c8102e; text-shadow: none; font-style: normal; }
+/* PEÇA: prova (link 43, prova). */
+.a-prova .prova {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (prova): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura mínima (prova): 340 pontinhos. Número maior = mais alto. */
+  min-height: 340px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (prova): 16 pontinhos em cima, 16 pontinhos à direita, 16 pontinhos embaixo, 34 pontinhos à esquerda. */
+  padding: 16px 16px 16px 34px;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Cor das letras (prova): azul bem escuro. Troque o código para mudar a cor. */
+  color: #22303f;
+  /* Fundo (prova) em listras repetidas, nas cores: branco e azul bem clarinho. */
+  background: repeating-linear-gradient(180deg, #fff 0 25px, #cfe0f2 25px 26px);
+  /* Sombra ou brilho em volta (prova), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 30px -14px #000;
+  /* Tipo de letra (prova): letra normal (Inter). */
+  font-family: var(--fonte);
+}
+
+/* PEÇA: enfeite desenhado em: prova (link 43, prova). */
+.a-prova .prova::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: 24 pontinhos. */
+  left: 24px;
+  /* Largura (enfeite desenhado em: prova): 2 pontinhos. Número maior = mais largo. */
+  width: 2px;
+  /* Cor de fundo (enfeite desenhado em: prova): vermelho bem clarinho. Troque o código para mudar a cor. */
+  background: #f2a8a8;
+}
+
+/* PEÇA: o título grande (link 43, prova). */
+.a-prova h1 {
+  /* Letra (título grande): letra normal (Inter), tamanho 1,05, grossura 700. Número maior = letra maior. */
+  font: 700 1.05rem var(--fonte);
+}
+
+/* PEÇA: aluno (link 43, prova). */
+.a-prova .aluno {
+  /* Letra (aluno): letra de mão (Caveat), tamanho 1,4, grossura 500. Número maior = letra maior. */
+  font: 500 1.4rem var(--fonte-mao);
+}
+
+/* PEÇA: questoes (link 43, prova). */
+.a-prova .questoes {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 6 pontinhos. Número maior = mais separadas. */
+  gap: 6px;
+  /* Espaço de fora, em cima: 6 pontinhos. */
+  margin-top: 6px;
+}
+
+/* PEÇA: perg (link 43, prova). */
+.a-prova .perg {
+  /* Grossura da letra: 600. Número maior = letra mais grossa. */
+  font-weight: 600;
+  /* Tamanho da letra (perg): 1 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1rem;
+  /* Espaço entre as linhas do texto: 1,3. Número maior = linhas mais separadas. */
+  line-height: 1.3;
+}
+
+/* PEÇA: a opção de resposta (link 43, prova). */
+.a-prova .op {
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (opção de resposta): lisa, 1 pontinhos de grossura, cor azul claro. */
+  border: 1px solid #b6c6d6;
+  /* Arredonda os cantos (opção de resposta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (opção de resposta): 9 pontinhos em cima e embaixo, 10 pontinhos nos lados. */
+  padding: 9px 10px;
+  /* Cor de fundo (opção de resposta): branco, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(255, 255, 255, .85);
+  /* Cor das letras (opção de resposta): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+  /* Letra (opção de resposta): letra normal (Inter), tamanho 0,95, grossura 400. Número maior = letra maior. */
+  font: 400 .95rem var(--fonte);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: a opção de resposta com "certa" ligado (link 43, prova). */
+.a-prova .op.certa {
+  /* Cor da borda (opção de resposta): vermelho. Troque o código para mudar a cor. */
+  border-color: #c8102e;
+}
+
+/* PEÇA: enfeite desenhado em: a opção de resposta com "certa" ligado (link 43, prova). */
+.a-prova .op.certa::after {
+  /* Escreve este texto ou símbolo: ' ✓'. */
+  content: ' ✓';
+  /* Cor das letras (enfeite desenhado em: a opção de resposta): vermelho. Troque o código para mudar a cor. */
+  color: #c8102e;
+  /* Letra (enfeite desenhado em: a opção de resposta): letra de mão (Caveat), tamanho 1,4, grossura 700. Número maior = letra maior. */
+  font: 700 1.4rem var(--fonte-mao);
+}
+
+/* PEÇA: caneta (link 43, prova). */
+.a-prova .caneta {
+  /* Cor das letras (caneta): vermelho. Troque o código para mudar a cor. */
+  color: #c8102e;
+  /* Letra (caneta): letra de mão (Caveat), tamanho 1,45, grossura 700. Número maior = letra maior. */
+  font: 700 1.45rem/1.1 var(--fonte-mao);
+}
+
+/* PEÇA: nota (link 43, prova). */
+.a-prova .nota {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: 14 pontinhos. */
+  bottom: 14px;
+  /* Distância da direita: 14 pontinhos. */
+  right: 14px;
+  /* Largura (nota): 76 pontinhos. Número maior = mais largo. */
+  width: 76px;
+  /* Altura (nota): 76 pontinhos. Número maior = mais alto. */
+  height: 76px;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Coloca o conteúdo bem no centro. */
+  place-items: center;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Cor das letras (nota): vermelho. Troque o código para mudar a cor. */
+  color: #c8102e;
+  /* Contorno (nota): lisa, 4 pontinhos de grossura, cor vermelho. */
+  border: 4px solid #c8102e;
+  /* Arredonda os cantos (nota). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Letra (nota): letra de mão (Caveat), tamanho 2,8, grossura 700. Número maior = letra maior. */
+  font: 700 2.8rem var(--fonte-mao);
+  /* Movimento (nota): gira 10 graus para a esquerda e fica 2 vezes maior. */
+  transform: rotate(-10deg) scale(2);
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,35 segundos e o movimento em 0,35 segundos. Número maior = mais lento. */
+  transition: opacity .35s, transform .35s;
+}
+
+/* PEÇA: nota com "on" ligado (link 43, prova). */
+.a-prova .nota.on {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+  /* Movimento (nota): gira 10 graus para a esquerda. */
+  transform: rotate(-10deg);
+}
+
+/* PEÇA: as palavras em destaque (link 43, prova). */
+.a-prova .dest {
+  /* Cor das letras (palavras em destaque): vermelho. Troque o código para mudar a cor. */
+  color: #c8102e;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
 
 /* ---------- 44 pesca: água e linha ---------- */
-.a-pesca .agua { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 0 22px 110px; text-align: center; background: linear-gradient(180deg, #bfe9ff 0 16%, #0d7fa8 16.5%, #073f63 70%, #03233d); }
-.a-pesca .linha { position: absolute; top: 0; left: 50%; width: 2px; height: 66%; background: #eef; transition: height .15s linear; }
-.a-pesca .linha::after { content: ''; position: absolute; bottom: -12px; left: -7px; width: 12px; height: 14px; border: 3px solid #e7e7ee; border-top: 0; border-radius: 0 0 10px 10px; }
-.a-pesca .presa { position: absolute; top: 15%; left: 50%; margin-left: -40px; width: 80px; font: 400 3.6rem/1 serif; }
-.a-pesca .presa.sobe { animation: pula-peixe .5s cubic-bezier(.3, 1.6, .5, 1); }
-@keyframes pula-peixe { from { transform: translateY(70px) rotate(-20deg); } }
-.a-pesca .texto { color: #fff; text-shadow: 0 2px 8px #000; min-height: 3.2em; }
+/* PEÇA: agua (link 44, pesca). */
+.a-pesca .agua {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Empurra as peças para o fim. */
+  justify-content: flex-end;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (agua): zero em cima, 22 pontinhos nos lados, 110 pontinhos embaixo. */
+  padding: 0 22px 110px;
+  /* Texto no meio. */
+  text-align: center;
+  /* Fundo em degradê (agua), nas cores: azul bem clarinho, azul escuro e azul bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #bfe9ff 0 16%, #0d7fa8 16.5%, #073f63 70%, #03233d);
+}
+
+/* PEÇA: linha (link 44, pesca). */
+.a-pesca .linha {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (linha): 2 pontinhos. Número maior = mais largo. */
+  width: 2px;
+  /* Altura (linha): 66% do espaço. Número maior = mais alto. */
+  height: 66%;
+  /* Cor de fundo (linha): branco. Troque o código para mudar a cor. */
+  background: #eef;
+  /* Faz a mudança acontecer devagar, sem pular: a altura em 0,15 segundos. Número maior = mais lento. */
+  transition: height .15s linear;
+}
+
+/* PEÇA: enfeite desenhado em: linha (link 44, pesca). */
+.a-pesca .linha::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: menos 12 pontinhos. */
+  bottom: -12px;
+  /* Distância da esquerda: menos 7 pontinhos. */
+  left: -7px;
+  /* Largura (enfeite desenhado em: linha): 12 pontinhos. Número maior = mais largo. */
+  width: 12px;
+  /* Altura (enfeite desenhado em: linha): 14 pontinhos. Número maior = mais alto. */
+  height: 14px;
+  /* Contorno (enfeite desenhado em: linha): lisa, 3 pontinhos de grossura, cor azul bem clarinho. */
+  border: 3px solid #e7e7ee;
+  /* Tira o contorno (enfeite desenhado em: linha). */
+  border-top: 0;
+  /* Arredonda os cantos (enfeite desenhado em: linha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 0 0 10px 10px;
+}
+
+/* PEÇA: presa (link 44, pesca). */
+.a-pesca .presa {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 15% do espaço. */
+  top: 15%;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Espaço de fora, à esquerda: menos 40 pontinhos. */
+  margin-left: -40px;
+  /* Largura (presa): 80 pontinhos. Número maior = mais largo. */
+  width: 80px;
+  /* Letra (presa): fonte serif, tamanho 3,6, grossura 400. Número maior = letra maior. */
+  font: 400 3.6rem/1 serif;
+}
+
+/* PEÇA: presa com "sobe" ligado (link 44, pesca). */
+.a-pesca .presa.sobe {
+  /* Liga a animação "pula-peixe": dura 0,5 segundos. Número menor = mais rápida. */
+  animation: pula-peixe .5s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+/* ANIMAÇÃO "pula-peixe": o que foi pescado pula. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes pula-peixe {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: desce 70 pontinhos e gira 20 graus para a esquerda. */
+    transform: translateY(70px) rotate(-20deg);
+  }
+}
+
+/* PEÇA: o texto principal (link 44, pesca). */
+.a-pesca .texto {
+  /* Cor das letras (texto principal): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Brilho em volta das letras (texto principal), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 8px #000;
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 45 pads: bateria eletrônica ---------- */
-.a-pads.cena { background: #0c0d12; }
-.a-pads .marca { font: 400 1.9rem 'Bebas Neue', var(--fonte); letter-spacing: .14em; color: #e8e8f0; }
-.a-pads .grade-p { width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 12px; border-radius: 12px; background: #1b1d26; box-shadow: inset 0 0 0 2px #2d3040; }
-.a-pads .pad { --h: 0; aspect-ratio: 1; appearance: none; border: 0; border-radius: 8px; color: #fff; background: hsl(calc(var(--h) * 1) 62% 26%); box-shadow: inset 0 -5px 0 rgba(0, 0, 0, .35); font: 700 .78rem var(--fonte); }
-.a-pads .pad.bate { animation: luz-pad .35s ease-out; }
-@keyframes luz-pad { from { background: hsl(calc(var(--h) * 1) 100% 66%); box-shadow: 0 0 30px hsl(calc(var(--h) * 1) 100% 60%); transform: scale(.95); } }
-.a-pads .texto { min-height: 3.2em; }
+/* PEÇA: a tela inteira desta arte (link 45, pads). */
+.a-pads.cena {
+  /* Cor de fundo (tela inteira desta arte): preto. Troque o código para mudar a cor. */
+  background: #0c0d12;
+}
+
+/* PEÇA: marca (link 45, pads). */
+.a-pads .marca {
+  /* Letra (marca): fonte Bebas Neue, tamanho 1,9, grossura 400. Número maior = letra maior. */
+  font: 400 1.9rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .14em;
+  /* Cor das letras (marca): azul bem clarinho. Troque o código para mudar a cor. */
+  color: #e8e8f0;
+}
+
+/* PEÇA: a grade de pads (link 45, pads). */
+.a-pads .grade-p {
+  /* Largura (grade de pads): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: repeat(3, 1fr);
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (grade de pads): 12 pontinhos em todos os lados. */
+  padding: 12px;
+  /* Arredonda os cantos (grade de pads). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 12px;
+  /* Cor de fundo (grade de pads): azul bem escuro. Troque o código para mudar a cor. */
+  background: #1b1d26;
+  /* Sombra ou brilho em volta (grade de pads), na cor: azul bem escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 0 0 2px #2d3040;
+}
+
+/* PEÇA: o pad de bateria (link 45, pads). */
+.a-pads .pad {
+  /* Valor inicial guardado com o nome --h. O código muda esse valor enquanto a animação roda. */
+  --h: 0;
+  /* Mantém a proporção entre largura e altura (1). */
+  aspect-ratio: 1;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (pad de bateria). */
+  border: 0;
+  /* Arredonda os cantos (pad de bateria). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 8px;
+  /* Cor das letras (pad de bateria): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Fundo (pad de bateria). */
+  background: hsl(calc(var(--h) * 1) 62% 26%);
+  /* Sombra ou brilho em volta (pad de bateria), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 -5px 0 rgba(0, 0, 0, .35);
+  /* Letra (pad de bateria): letra normal (Inter), tamanho 0,78, grossura 700. Número maior = letra maior. */
+  font: 700 .78rem var(--fonte);
+}
+
+/* PEÇA: o pad de bateria com "bate" ligado (link 45, pads). */
+.a-pads .pad.bate {
+  /* Liga a animação "luz-pad": dura 0,35 segundos. Número menor = mais rápida. */
+  animation: luz-pad .35s ease-out;
+}
+
+/* ANIMAÇÃO "luz-pad": o pad acende e apaga. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes luz-pad {
+  /* Como a animação começa: */
+  from {
+    /* Fundo. */
+    background: hsl(calc(var(--h) * 1) 100% 66%);
+    /* Sombra ou brilho em volta. Os números dizem o tamanho; o código diz a cor. */
+    box-shadow: 0 0 30px hsl(calc(var(--h) * 1) 100% 60%);
+    /* Movimento: encolhe para 95% do tamanho. */
+    transform: scale(.95);
+  }
+}
+
+/* PEÇA: o texto principal (link 45, pads). */
+.a-pads .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 46 boleto: papel de banco e código de barras ---------- */
-.a-boleto .recibo { position: relative; width: 100%; padding: 12px; color: #1a1a1a; background: #fff; box-shadow: 0 14px 26px -14px #000; font: 400 .85rem var(--fonte); text-align: left; }
-.a-boleto h1 { padding-bottom: 6px; border-bottom: 2px solid #1a1a1a; font: 800 1.1rem var(--fonte); }
-.a-boleto .cel-b { padding: 5px 0; border-bottom: 1px solid #c5c5c5; line-height: 1.25; }
-.a-boleto .cel-b span { display: block; font-size: .62rem; text-transform: uppercase; letter-spacing: .05em; color: #666; }
-.a-boleto .cel-b b { font-weight: 600; }
-.a-boleto .barras { display: flex; gap: 2px; justify-content: center; height: 46px; margin-top: 10px; overflow: hidden; }
-.a-boleto .barras i { background: #111; flex: none; }
-.a-boleto .pago { position: absolute; top: 34%; left: 50%; padding: 4px 16px; border: 5px solid #1a8a3f; border-radius: 6px; color: #1a8a3f; font: 400 2.6rem 'Bebas Neue', var(--fonte); letter-spacing: .08em; transform: translate(-50%, -50%) rotate(-11deg); animation: carimba-b .28s ease both; }
-@keyframes carimba-b { from { transform: translate(-50%, -50%) rotate(-11deg) scale(3); opacity: 0; } }
-.a-boleto .recibo .dest { color: #1a8a3f; text-shadow: none; }
+/* PEÇA: recibo (link 46, boleto). */
+.a-boleto .recibo {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (recibo): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (recibo): 12 pontinhos em todos os lados. */
+  padding: 12px;
+  /* Cor das letras (recibo): cinza escuro. Troque o código para mudar a cor. */
+  color: #1a1a1a;
+  /* Cor de fundo (recibo): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Sombra ou brilho em volta (recibo), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 14px 26px -14px #000;
+  /* Letra (recibo): letra normal (Inter), tamanho 0,85, grossura 400. Número maior = letra maior. */
+  font: 400 .85rem var(--fonte);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: o título grande (link 46, boleto). */
+.a-boleto h1 {
+  /* Espaço de dentro, embaixo: 6 pontinhos. */
+  padding-bottom: 6px;
+  /* Contorno de baixo (título grande): lisa, 2 pontinhos de grossura, cor cinza escuro. */
+  border-bottom: 2px solid #1a1a1a;
+  /* Letra (título grande): letra normal (Inter), tamanho 1,1, grossura 800. Número maior = letra maior. */
+  font: 800 1.1rem var(--fonte);
+}
+
+/* PEÇA: o campo do boleto (link 46, boleto). */
+.a-boleto .cel-b {
+  /* Espaço de dentro, entre a borda e o conteúdo, (campo do boleto): 5 pontinhos em cima e embaixo, zero nos lados. */
+  padding: 5px 0;
+  /* Contorno de baixo (campo do boleto): lisa, 1 pontinhos de grossura, cor cinza claro. */
+  border-bottom: 1px solid #c5c5c5;
+  /* Espaço entre as linhas do texto: 1,25. Número maior = linhas mais separadas. */
+  line-height: 1.25;
+}
+
+/* PEÇA: o pedacinho de texto dentro de: o campo do boleto (link 46, boleto). */
+.a-boleto .cel-b span {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Tamanho da letra (pedacinho de texto): 0,62 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .62rem;
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .05em;
+  /* Cor das letras (pedacinho de texto): cinza. Troque o código para mudar a cor. */
+  color: #666;
+}
+
+/* PEÇA: o texto forte dentro de: o campo do boleto (link 46, boleto). */
+.a-boleto .cel-b b {
+  /* Grossura da letra: 600. Número maior = letra mais grossa. */
+  font-weight: 600;
+}
+
+/* PEÇA: barras (link 46, boleto). */
+.a-boleto .barras {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espaço entre as peças de dentro: 2 pontinhos. Número maior = mais separadas. */
+  gap: 2px;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Altura (barras): 46 pontinhos. Número maior = mais alto. */
+  height: 46px;
+  /* Espaço de fora, em cima: 10 pontinhos. */
+  margin-top: 10px;
+  /* Corta o que passar para fora (barras). */
+  overflow: hidden;
+}
+
+/* PEÇA: a peça dentro de: barras (link 46, boleto). */
+.a-boleto .barras i {
+  /* Cor de fundo (peça): preto. Troque o código para mudar a cor. */
+  background: #111;
+  /* Mantém o tamanho, sem encolher nem esticar. */
+  flex: none;
+}
+
+/* PEÇA: pago (link 46, boleto). */
+.a-boleto .pago {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 34% do espaço. */
+  top: 34%;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (pago): 4 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 4px 16px;
+  /* Contorno (pago): lisa, 5 pontinhos de grossura, cor verde escuro. */
+  border: 5px solid #1a8a3f;
+  /* Arredonda os cantos (pago). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Cor das letras (pago): verde escuro. Troque o código para mudar a cor. */
+  color: #1a8a3f;
+  /* Letra (pago): fonte Bebas Neue, tamanho 2,6, grossura 400. Número maior = letra maior. */
+  font: 400 2.6rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .08em;
+  /* Movimento (pago): vai para a esquerda 50% do espaço, sobe 50% do espaço e gira 11 graus para a esquerda. */
+  transform: translate(-50%, -50%) rotate(-11deg);
+  /* Liga a animação "carimba-b": dura 0,28 segundos. Número menor = mais rápida. */
+  animation: carimba-b .28s ease both;
+}
+
+/* ANIMAÇÃO "carimba-b": o carimbo desce com força. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes carimba-b {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: vai para a esquerda 50% do espaço, sobe 50% do espaço, gira 11 graus para a esquerda e fica 3 vezes maior. */
+    transform: translate(-50%, -50%) rotate(-11deg) scale(3);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* PEÇA: as palavras em destaque dentro de: recibo (link 46, boleto). */
+.a-boleto .recibo .dest {
+  /* Cor das letras (palavras em destaque): verde escuro. Troque o código para mudar a cor. */
+  color: #1a8a3f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 47 podio: blocos que sobem ---------- */
-.a-podio .chamada { font: 400 1.6rem 'Bebas Neue', var(--fonte); letter-spacing: .08em; }
-.a-podio .degraus { width: 100%; height: 280px; display: flex; align-items: flex-end; justify-content: center; gap: 4px; }
-.a-podio .bloco-p { position: relative; flex: 1; height: 26px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; color: #2a1d04; background: linear-gradient(180deg, #f3d98b, #b58c34); transition: height .8s cubic-bezier(.3, 1.4, .5, 1); }
-.a-podio .bloco-p b { font: 400 3rem/1 'Bebas Neue', var(--fonte); opacity: 0; }
-.a-podio .quem { position: absolute; bottom: 100%; left: 0; right: 0; padding-bottom: 4px; color: var(--tx); font: 600 .84rem/1.15 var(--fonte); opacity: 0; transition: opacity .5s .5s; }
-.a-podio .bloco-p.sobe .quem, .a-podio .bloco-p.sobe b { opacity: 1; }
-.a-podio .b1.sobe { height: 180px; }
-.a-podio .b2.sobe { height: 124px; }
-.a-podio .b3.sobe { height: 84px; }
-.a-podio .medalha { position: absolute; top: -118px; left: 50%; width: 46px; height: 46px; margin-left: -23px; border-radius: 50%; background: radial-gradient(circle at 36% 30%, #fff3b0, #e0a818); box-shadow: 0 0 18px #ffd34d; animation: cai-medalha .7s cubic-bezier(.3, 1.5, .5, 1) both; }
-@keyframes cai-medalha { from { transform: translateY(-160px); } }
-.a-podio .texto { min-height: 3em; }
+/* PEÇA: a frase de cima (link 47, podio). */
+.a-podio .chamada {
+  /* Letra (frase de cima): fonte Bebas Neue, tamanho 1,6, grossura 400. Número maior = letra maior. */
+  font: 400 1.6rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .08em;
+}
+
+/* PEÇA: degraus (link 47, podio). */
+.a-podio .degraus {
+  /* Largura (degraus): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (degraus): 280 pontinhos. Número maior = mais alto. */
+  height: 280px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Encosta as peças no fim. */
+  align-items: flex-end;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 4 pontinhos. Número maior = mais separadas. */
+  gap: 4px;
+}
+
+/* PEÇA: o bloco do pódio (link 47, podio). */
+.a-podio .bloco-p {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Estica para ocupar o espaço que sobrar. */
+  flex: 1;
+  /* Altura (bloco do pódio): 26 pontinhos. Número maior = mais alto. */
+  height: 26px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Empurra as peças para o fim. */
+  justify-content: flex-end;
+  /* Cor das letras (bloco do pódio): marrom. Troque o código para mudar a cor. */
+  color: #2a1d04;
+  /* Fundo em degradê (bloco do pódio), nas cores: dourado claro e laranja. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #f3d98b, #b58c34);
+  /* Faz a mudança acontecer devagar, sem pular: a altura em 0,8 segundos. Número maior = mais lento. */
+  transition: height .8s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+/* PEÇA: o texto forte dentro de: o bloco do pódio (link 47, podio). */
+.a-podio .bloco-p b {
+  /* Letra (texto forte): fonte Bebas Neue, tamanho 3, grossura 400. Número maior = letra maior. */
+  font: 400 3rem/1 'Bebas Neue', var(--fonte);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+}
+
+/* PEÇA: quem (link 47, podio). */
+.a-podio .quem {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: 100% do espaço. */
+  bottom: 100%;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Espaço de dentro, embaixo: 4 pontinhos. */
+  padding-bottom: 4px;
+  /* Cor das letras (quem): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Letra (quem): letra normal (Inter), tamanho 0,84, grossura 600. Número maior = letra maior. */
+  font: 600 .84rem/1.15 var(--fonte);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,5 segundos. Número maior = mais lento. */
+  transition: opacity .5s .5s;
+}
+
+/* PEÇA: quem quando o bloco do pódio estiver com "sobe" ligado e o texto forte quando o bloco do pódio estiver com "sobe" ligado (link 47, podio). */
+.a-podio .bloco-p.sobe .quem, .a-podio .bloco-p.sobe b {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+}
+
+/* PEÇA: o bloco do 1º lugar com "sobe" ligado (link 47, podio). */
+.a-podio .b1.sobe {
+  /* Altura (bloco do 1º lugar): 180 pontinhos. Número maior = mais alto. */
+  height: 180px;
+}
+
+/* PEÇA: o bloco do 2º lugar com "sobe" ligado (link 47, podio). */
+.a-podio .b2.sobe {
+  /* Altura (bloco do 2º lugar): 124 pontinhos. Número maior = mais alto. */
+  height: 124px;
+}
+
+/* PEÇA: o bloco do 3º lugar com "sobe" ligado (link 47, podio). */
+.a-podio .b3.sobe {
+  /* Altura (bloco do 3º lugar): 84 pontinhos. Número maior = mais alto. */
+  height: 84px;
+}
+
+/* PEÇA: medalha (link 47, podio). */
+.a-podio .medalha {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 118 pontinhos. */
+  top: -118px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (medalha): 46 pontinhos. Número maior = mais largo. */
+  width: 46px;
+  /* Altura (medalha): 46 pontinhos. Número maior = mais alto. */
+  height: 46px;
+  /* Espaço de fora, à esquerda: menos 23 pontinhos. */
+  margin-left: -23px;
+  /* Arredonda os cantos (medalha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (medalha), nas cores: amarelo bem clarinho e dourado. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 36% 30%, #fff3b0, #e0a818);
+  /* Sombra ou brilho em volta (medalha), na cor: dourado claro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 18px #ffd34d;
+  /* Liga a animação "cai-medalha": dura 0,7 segundos. Número menor = mais rápida. */
+  animation: cai-medalha .7s cubic-bezier(.3, 1.5, .5, 1) both;
+}
+
+/* ANIMAÇÃO "cai-medalha": a medalha cai. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes cai-medalha {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: sobe 160 pontinhos. */
+    transform: translateY(-160px);
+  }
+}
+
+/* PEÇA: o texto principal (link 47, podio). */
+.a-podio .texto {
+  /* Altura mínima (texto principal): 3 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3em;
+}
 
 /* ---------- 48 estrada: canvas e placa verde ---------- */
-.a-estrada .sobre { position: absolute; inset: auto 0 calc(92px + env(safe-area-inset-bottom)); display: flex; justify-content: center; z-index: 3; }
-.a-estrada .placa-e { position: absolute; top: 42%; left: 50%; width: 76vw; max-width: 340px; padding: 16px 14px; border: 3px solid #fff; border-radius: 8px; color: #fff; background: #0f6b3f; font: 700 1.2rem/1.25 var(--fonte); opacity: 0; transform: translate(-50%, -50%) scale(.05); }
-.a-estrada .placa-e.vem { animation: placa-vem 3.2s cubic-bezier(.4, .1, .4, 1) forwards; }
-@keyframes placa-vem { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.05); } 18% { opacity: 1; } 42%, 92% { opacity: 1; transform: translate(-50%, -30%) scale(1); } 100% { opacity: 0; transform: translate(10%, 40%) scale(1.5); } }
-.a-estrada .placa-e .dest { color: #ffe14d; text-shadow: none; font-style: normal; }
+/* PEÇA: sobre (link 48, estrada). */
+.a-estrada .sobre {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: automático em cima, zero nos lados, uma conta feita pelo navegador embaixo. */
+  inset: auto 0 calc(92px + env(safe-area-inset-bottom));
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+}
+
+/* PEÇA: a placa da estrada (link 48, estrada). */
+.a-estrada .placa-e {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 42% do espaço. */
+  top: 42%;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (placa da estrada): 76% da largura da tela. Número maior = mais largo. */
+  width: 76vw;
+  /* Largura máxima (placa da estrada): 340 pontinhos. Número maior = mais largo. */
+  max-width: 340px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (placa da estrada): 16 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 16px 14px;
+  /* Contorno (placa da estrada): lisa, 3 pontinhos de grossura, cor branco. */
+  border: 3px solid #fff;
+  /* Arredonda os cantos (placa da estrada). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 8px;
+  /* Cor das letras (placa da estrada): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (placa da estrada): verde bem escuro. Troque o código para mudar a cor. */
+  background: #0f6b3f;
+  /* Letra (placa da estrada): letra normal (Inter), tamanho 1,2, grossura 700. Número maior = letra maior. */
+  font: 700 1.2rem/1.25 var(--fonte);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Movimento (placa da estrada): vai para a esquerda 50% do espaço, sobe 50% do espaço e encolhe para 5% do tamanho. */
+  transform: translate(-50%, -50%) scale(.05);
+}
+
+/* PEÇA: a placa da estrada com "vem" ligado (link 48, estrada). */
+.a-estrada .placa-e.vem {
+  /* Liga a animação "placa-vem": dura 3,2 segundos. Número menor = mais rápida. */
+  animation: placa-vem 3.2s cubic-bezier(.4, .1, .4, 1) forwards;
+}
+
+/* ANIMAÇÃO "placa-vem": a placa vem de longe, passa e vai embora. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes placa-vem {
+  /* Como está quando já passou 0% do tempo da animação: */
+  0% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: vai para a esquerda 50% do espaço, sobe 50% do espaço e encolhe para 5% do tamanho. */
+    transform: translate(-50%, -50%) scale(.05);
+  }
+  /* Como está quando já passou 18% do tempo da animação: */
+  18% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+  }
+  /* Como está quando já passou 42% e  92% do tempo da animação: */
+  42%, 92% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+    /* Movimento: vai para a esquerda 50% do espaço, sobe 30% do espaço e fica do tamanho normal. */
+    transform: translate(-50%, -30%) scale(1);
+  }
+  /* Como está quando já passou 100% do tempo da animação: */
+  100% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: vai para a direita 10% do espaço, desce 40% do espaço e fica 1,5 vezes maior. */
+    transform: translate(10%, 40%) scale(1.5);
+  }
+}
+
+/* PEÇA: as palavras em destaque dentro de: a placa da estrada (link 48, estrada). */
+.a-estrada .placa-e .dest {
+  /* Cor das letras (palavras em destaque): dourado claro. Troque o código para mudar a cor. */
+  color: #ffe14d;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
 
 /* ---------- 49 cacto: vaso e planta que cresce ---------- */
-.a-cacto .vaso { position: relative; width: 150px; height: 300px; }
-.a-cacto .vaso::after { content: ''; position: absolute; bottom: 0; left: 18px; right: 18px; height: 80px; border-radius: 4px 4px 22px 22px; background: linear-gradient(90deg, #b5552a, #d9805a 40%, #9c4520); }
-.a-cacto .planta { position: absolute; bottom: 72px; left: 50%; width: 56px; height: 84px; margin-left: -28px; border-radius: 28px 28px 0 0; background: repeating-linear-gradient(90deg, #2d7a44 0 7px, #3f9a52 7px 14px); transition: height .8s cubic-bezier(.3, 1.4, .5, 1); }
-.a-cacto .planta[data-fase="1"] { height: 124px; }
-.a-cacto .planta[data-fase="2"] { height: 160px; }
-.a-cacto .planta[data-fase="3"], .a-cacto .planta[data-fase="4"] { height: 196px; }
-.a-cacto .braco-e, .a-cacto .braco-d { position: absolute; bottom: 62px; width: 44px; height: 0; border: 15px solid #348a4b; border-top: 0; transition: height .7s; opacity: 0; }
-.a-cacto .braco-e { left: -40px; border-right: 0; border-radius: 0 0 0 22px; }
-.a-cacto .braco-d { right: -40px; border-left: 0; border-radius: 0 0 22px 0; }
-.a-cacto .planta[data-fase="2"] .braco-e, .a-cacto .planta[data-fase="3"] .braco-e, .a-cacto .planta[data-fase="4"] .braco-e { height: 60px; opacity: 1; }
-.a-cacto .planta[data-fase="3"] .braco-d, .a-cacto .planta[data-fase="4"] .braco-d { height: 74px; opacity: 1; }
-.a-cacto .flor { position: absolute; top: -32px; left: 0; right: 0; font: 400 2.5rem/1 serif; color: #f05a8a; opacity: 0; transition: opacity .6s; }
-.a-cacto .planta[data-fase="4"] .flor { opacity: 1; }
-.a-cacto .texto { min-height: 3.2em; }
+/* PEÇA: vaso (link 49, cacto). */
+.a-cacto .vaso {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (vaso): 150 pontinhos. Número maior = mais largo. */
+  width: 150px;
+  /* Altura (vaso): 300 pontinhos. Número maior = mais alto. */
+  height: 300px;
+}
+
+/* PEÇA: enfeite desenhado em: vaso (link 49, cacto). */
+.a-cacto .vaso::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: 18 pontinhos. */
+  left: 18px;
+  /* Distância da direita: 18 pontinhos. */
+  right: 18px;
+  /* Altura (enfeite desenhado em: vaso): 80 pontinhos. Número maior = mais alto. */
+  height: 80px;
+  /* Arredonda os cantos (enfeite desenhado em: vaso). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px 4px 22px 22px;
+  /* Fundo em degradê (enfeite desenhado em: vaso), nas cores: vermelho-alaranjado e vermelho-alaranjado escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, #b5552a, #d9805a 40%, #9c4520);
+}
+
+/* PEÇA: planta (link 49, cacto). */
+.a-cacto .planta {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: 72 pontinhos. */
+  bottom: 72px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (planta): 56 pontinhos. Número maior = mais largo. */
+  width: 56px;
+  /* Altura (planta): 84 pontinhos. Número maior = mais alto. */
+  height: 84px;
+  /* Espaço de fora, à esquerda: menos 28 pontinhos. */
+  margin-left: -28px;
+  /* Arredonda os cantos (planta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 28px 28px 0 0;
+  /* Fundo (planta) em listras repetidas, nas cores: verde escuro e verde. */
+  background: repeating-linear-gradient(90deg, #2d7a44 0 7px, #3f9a52 7px 14px);
+  /* Faz a mudança acontecer devagar, sem pular: a altura em 0,8 segundos. Número maior = mais lento. */
+  transition: height .8s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+/* PEÇA: planta na fase 1 (link 49, cacto). */
+.a-cacto .planta[data-fase="1"] {
+  /* Altura (planta na fase 1): 124 pontinhos. Número maior = mais alto. */
+  height: 124px;
+}
+
+/* PEÇA: planta na fase 2 (link 49, cacto). */
+.a-cacto .planta[data-fase="2"] {
+  /* Altura (planta na fase 2): 160 pontinhos. Número maior = mais alto. */
+  height: 160px;
+}
+
+/* PEÇA: planta na fase 3 e planta na fase 4 (link 49, cacto). */
+.a-cacto .planta[data-fase="3"], .a-cacto .planta[data-fase="4"] {
+  /* Altura (planta na fase 3 e planta na fase 4): 196 pontinhos. Número maior = mais alto. */
+  height: 196px;
+}
+
+/* PEÇA: braco e e braco d (link 49, cacto). */
+.a-cacto .braco-e, .a-cacto .braco-d {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: 62 pontinhos. */
+  bottom: 62px;
+  /* Largura (braco e e braco d): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (braco e e braco d): zero. Número maior = mais alto. */
+  height: 0;
+  /* Contorno (braco e e braco d): lisa, 15 pontinhos de grossura, cor verde escuro. */
+  border: 15px solid #348a4b;
+  /* Tira o contorno (braco e e braco d). */
+  border-top: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a altura em 0,7 segundos. Número maior = mais lento. */
+  transition: height .7s;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+}
+
+/* PEÇA: braco e (link 49, cacto). */
+.a-cacto .braco-e {
+  /* Distância da esquerda: menos 40 pontinhos. */
+  left: -40px;
+  /* Tira o contorno (braco e). */
+  border-right: 0;
+  /* Arredonda os cantos (braco e). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 0 0 0 22px;
+}
+
+/* PEÇA: braco d (link 49, cacto). */
+.a-cacto .braco-d {
+  /* Distância da direita: menos 40 pontinhos. */
+  right: -40px;
+  /* Tira o contorno (braco d). */
+  border-left: 0;
+  /* Arredonda os cantos (braco d). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 0 0 22px 0;
+}
+
+/* PEÇA: braco e dentro de: planta, braco e dentro de: planta e braco e dentro de: planta (link 49, cacto). */
+.a-cacto .planta[data-fase="2"] .braco-e, .a-cacto .planta[data-fase="3"] .braco-e, .a-cacto .planta[data-fase="4"] .braco-e {
+  /* Altura (braco e): 60 pontinhos. Número maior = mais alto. */
+  height: 60px;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+}
+
+/* PEÇA: braco d dentro de: planta e braco d dentro de: planta (link 49, cacto). */
+.a-cacto .planta[data-fase="3"] .braco-d, .a-cacto .planta[data-fase="4"] .braco-d {
+  /* Altura (braco d): 74 pontinhos. Número maior = mais alto. */
+  height: 74px;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+}
+
+/* PEÇA: flor (link 49, cacto). */
+.a-cacto .flor {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 32 pontinhos. */
+  top: -32px;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Letra (flor): fonte serif, tamanho 2,5, grossura 400. Número maior = letra maior. */
+  font: 400 2.5rem/1 serif;
+  /* Cor das letras (flor): rosa claro. Troque o código para mudar a cor. */
+  color: #f05a8a;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,6 segundos. Número maior = mais lento. */
+  transition: opacity .6s;
+}
+
+/* PEÇA: flor dentro de: planta (link 49, cacto). */
+.a-cacto .planta[data-fase="4"] .flor {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+}
+
+/* PEÇA: o texto principal (link 49, cacto). */
+.a-cacto .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 50 vhs: fita antiga ---------- */
-.a-vhs.cena { background: #0a0c14; }
-.a-vhs .sobre { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 44px 22px 110px; color: #fff; font-family: 'VT323', var(--fonte-mono); text-shadow: 2px 0 #f0f, -2px 0 #0ff; }
-.a-vhs .modo { position: absolute; top: calc(18px + env(safe-area-inset-top)); left: 18px; font: 400 1.7rem 'VT323', var(--fonte-mono); }
-.a-vhs .tempo { position: absolute; top: calc(18px + env(safe-area-inset-top)); right: 18px; font: 400 1.5rem 'VT323', var(--fonte-mono); }
-.a-vhs .legenda-v { min-height: 4em; font: 400 1.75rem/1.15 'VT323', var(--fonte-mono); }
-.a-vhs .dest { color: #ffe14d; text-shadow: none; font-style: normal; font-weight: 400; }
-.a-vhs .btn { font: 400 1.4rem 'VT323', var(--fonte-mono); color: #000; background: #fff; border-radius: 2px; padding: 6px 22px; }
+/* PEÇA: a tela inteira desta arte (link 50, vhs). */
+.a-vhs.cena {
+  /* Cor de fundo (tela inteira desta arte): preto. Troque o código para mudar a cor. */
+  background: #0a0c14;
+}
+
+/* PEÇA: sobre (link 50, vhs). */
+.a-vhs .sobre {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (sobre): 44 pontinhos em cima, 22 pontinhos nos lados, 110 pontinhos embaixo. */
+  padding: 44px 22px 110px;
+  /* Cor das letras (sobre): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Tipo de letra (sobre): fonte VT323. */
+  font-family: 'VT323', var(--fonte-mono);
+  /* Brilho em volta das letras (sobre), na cor: lilás-rosado e verde-água. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 2px 0 #f0f, -2px 0 #0ff;
+}
+
+/* PEÇA: modo (link 50, vhs). */
+.a-vhs .modo {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: uma conta feita pelo navegador. */
+  top: calc(18px + env(safe-area-inset-top));
+  /* Distância da esquerda: 18 pontinhos. */
+  left: 18px;
+  /* Letra (modo): fonte VT323, tamanho 1,7, grossura 400. Número maior = letra maior. */
+  font: 400 1.7rem 'VT323', var(--fonte-mono);
+}
+
+/* PEÇA: tempo (link 50, vhs). */
+.a-vhs .tempo {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: uma conta feita pelo navegador. */
+  top: calc(18px + env(safe-area-inset-top));
+  /* Distância da direita: 18 pontinhos. */
+  right: 18px;
+  /* Letra (tempo): fonte VT323, tamanho 1,5, grossura 400. Número maior = letra maior. */
+  font: 400 1.5rem 'VT323', var(--fonte-mono);
+}
+
+/* PEÇA: legenda v (link 50, vhs). */
+.a-vhs .legenda-v {
+  /* Altura mínima (legenda v): 4 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 4em;
+  /* Letra (legenda v): fonte VT323, tamanho 1,75, grossura 400. Número maior = letra maior. */
+  font: 400 1.75rem/1.15 'VT323', var(--fonte-mono);
+}
+
+/* PEÇA: as palavras em destaque (link 50, vhs). */
+.a-vhs .dest {
+  /* Cor das letras (palavras em destaque): dourado claro. Troque o código para mudar a cor. */
+  color: #ffe14d;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
+
+/* PEÇA: o botão (link 50, vhs). */
+.a-vhs .btn {
+  /* Letra (botão): fonte VT323, tamanho 1,4, grossura 400. Número maior = letra maior. */
+  font: 400 1.4rem 'VT323', var(--fonte-mono);
+  /* Cor das letras (botão): preto. Troque o código para mudar a cor. */
+  color: #000;
+  /* Cor de fundo (botão): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Arredonda os cantos (botão). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 2px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão): 6 pontinhos em cima e embaixo, 22 pontinhos nos lados. */
+  padding: 6px 22px;
+}
 
 /* ---------- 51 garra: máquina de pegar prêmio ---------- */
-.a-garra .chamada { font: 400 1.5rem 'Bebas Neue', var(--fonte); letter-spacing: .1em; color: #ffe14d; }
-.a-garra .vitrine { position: relative; width: min(84vw, 300px); height: 270px; overflow: hidden; border: 8px solid #ff2bd6; border-radius: 12px; background: linear-gradient(180deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .02)); box-shadow: 0 0 26px rgba(255, 43, 214, .6); }
-.a-garra .gancho { position: absolute; top: 0; left: 8%; width: 44px; height: 70px; animation: varre 2.6s ease-in-out infinite alternate; transition: height .8s ease; }
-@keyframes varre { to { left: 74%; } }
-.a-garra .gancho.desce { animation-play-state: paused; height: 192px; }
-.a-garra .gancho::before { content: ''; position: absolute; top: 0; bottom: 18px; left: 21px; width: 3px; background: #dcdce6; }
-.a-garra .gancho::after { content: ''; position: absolute; bottom: 0; left: 6px; width: 32px; height: 24px; border: 5px solid #dcdce6; border-bottom: 0; border-radius: 16px 16px 0 0; }
-.a-garra .bolas { position: absolute; left: 6px; right: 6px; bottom: 6px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
-.a-garra .bolas i { width: 46px; height: 46px; border-radius: 50%; box-shadow: inset -5px -6px 0 rgba(0, 0, 0, .18), inset 4px 5px 0 rgba(255, 255, 255, .4); }
-.a-garra .texto { min-height: 3.2em; }
+/* PEÇA: a frase de cima (link 51, garra). */
+.a-garra .chamada {
+  /* Letra (frase de cima): fonte Bebas Neue, tamanho 1,5, grossura 400. Número maior = letra maior. */
+  font: 400 1.5rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .1em;
+  /* Cor das letras (frase de cima): dourado claro. Troque o código para mudar a cor. */
+  color: #ffe14d;
+}
+
+/* PEÇA: vitrine (link 51, garra). */
+.a-garra .vitrine {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (vitrine): o menor entre 84% da largura da tela e 300 pontinhos. Número maior = mais largo. */
+  width: min(84vw, 300px);
+  /* Altura (vitrine): 270 pontinhos. Número maior = mais alto. */
+  height: 270px;
+  /* Corta o que passar para fora (vitrine). */
+  overflow: hidden;
+  /* Contorno (vitrine): lisa, 8 pontinhos de grossura, cor lilás-rosado. */
+  border: 8px solid #ff2bd6;
+  /* Arredonda os cantos (vitrine). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 12px;
+  /* Fundo em degradê (vitrine), nas cores: branco, quase invisível. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .02));
+  /* Sombra ou brilho em volta (vitrine), na cor: lilás-rosado, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 26px rgba(255, 43, 214, .6);
+}
+
+/* PEÇA: gancho (link 51, garra). */
+.a-garra .gancho {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância da esquerda: 8% do espaço. */
+  left: 8%;
+  /* Largura (gancho): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (gancho): 70 pontinhos. Número maior = mais alto. */
+  height: 70px;
+  /* Liga a animação "varre": dura 2,6 segundos, repetindo para sempre, indo e voltando. Número menor = mais rápida. */
+  animation: varre 2.6s ease-in-out infinite alternate;
+  /* Faz a mudança acontecer devagar, sem pular: a altura em 0,8 segundos. Número maior = mais lento. */
+  transition: height .8s ease;
+}
+
+/* ANIMAÇÃO "varre": a garra anda de um lado ao outro. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes varre {
+  /* Como a animação termina: */
+  to {
+    /* Distância da esquerda: 74% do espaço. */
+    left: 74%;
+  }
+}
+
+/* PEÇA: gancho com "desce" ligado (link 51, garra). */
+.a-garra .gancho.desce {
+  /* Pausa a animação. */
+  animation-play-state: paused;
+  /* Altura (gancho): 192 pontinhos. Número maior = mais alto. */
+  height: 192px;
+}
+
+/* PEÇA: enfeite desenhado em: gancho (link 51, garra). */
+.a-garra .gancho::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância de baixo: 18 pontinhos. */
+  bottom: 18px;
+  /* Distância da esquerda: 21 pontinhos. */
+  left: 21px;
+  /* Largura (enfeite desenhado em: gancho): 3 pontinhos. Número maior = mais largo. */
+  width: 3px;
+  /* Cor de fundo (enfeite desenhado em: gancho): azul bem clarinho. Troque o código para mudar a cor. */
+  background: #dcdce6;
+}
+
+/* PEÇA: enfeite desenhado em: gancho (link 51, garra). */
+.a-garra .gancho::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: 6 pontinhos. */
+  left: 6px;
+  /* Largura (enfeite desenhado em: gancho): 32 pontinhos. Número maior = mais largo. */
+  width: 32px;
+  /* Altura (enfeite desenhado em: gancho): 24 pontinhos. Número maior = mais alto. */
+  height: 24px;
+  /* Contorno (enfeite desenhado em: gancho): lisa, 5 pontinhos de grossura, cor azul bem clarinho. */
+  border: 5px solid #dcdce6;
+  /* Tira o contorno (enfeite desenhado em: gancho). */
+  border-bottom: 0;
+  /* Arredonda os cantos (enfeite desenhado em: gancho). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 16px 16px 0 0;
+}
+
+/* PEÇA: bolas (link 51, garra). */
+.a-garra .bolas {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 6 pontinhos. */
+  left: 6px;
+  /* Distância da direita: 6 pontinhos. */
+  right: 6px;
+  /* Distância de baixo: 6 pontinhos. */
+  bottom: 6px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+  /* Espaço entre as peças de dentro: 4 pontinhos. Número maior = mais separadas. */
+  gap: 4px;
+  /* Junta as peças no meio. */
+  justify-content: center;
+}
+
+/* PEÇA: a peça dentro de: bolas (link 51, garra). */
+.a-garra .bolas i {
+  /* Largura (peça): 46 pontinhos. Número maior = mais largo. */
+  width: 46px;
+  /* Altura (peça): 46 pontinhos. Número maior = mais alto. */
+  height: 46px;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Sombra ou brilho em volta (peça), na cor: preto, meio transparente e branco, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset -5px -6px 0 rgba(0, 0, 0, .18), inset 4px 5px 0 rgba(255, 255, 255, .4);
+}
+
+/* PEÇA: o texto principal (link 51, garra). */
+.a-garra .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 52 dossie: pasta parda confidencial ---------- */
-.a-dossie .pasta { position: relative; width: 100%; padding: 16px; display: flex; flex-direction: column; gap: 9px; text-align: left; color: #2c2214; background: #d9b983; box-shadow: 0 16px 30px -14px #000; font-family: 'Special Elite', var(--fonte-mono); }
-.a-dossie h1 { font: 400 1.7rem 'Special Elite', var(--fonte-mono); }
-.a-dossie .codigo { font-size: .78rem; }
-.a-dossie .lin-d { font-size: 1rem; line-height: 1.5; }
-.a-dossie .tarja { appearance: none; border: 0; padding: 0 5px; color: #111; background: #111; font: 400 1rem 'Special Elite', var(--fonte-mono); transition: color .3s, background .3s; }
-.a-dossie .tarja.lida { color: #2c2214; background: rgba(255, 255, 255, .35); }
-.a-dossie .dest { color: inherit; text-shadow: none; font-weight: 700; }
-.a-dossie .secreto { position: absolute; top: 50%; left: 50%; padding: 4px 12px; border: 4px solid #a11a12; color: #a11a12; font: 400 1.7rem 'Special Elite', var(--fonte-mono); white-space: nowrap; transform: translate(-50%, -50%) rotate(-12deg); mix-blend-mode: multiply; animation: carimba-b .28s ease both; }
+/* PEÇA: pasta (link 52, dossie). */
+.a-dossie .pasta {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (pasta): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (pasta): 16 pontinhos em todos os lados. */
+  padding: 16px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 9 pontinhos. Número maior = mais separadas. */
+  gap: 9px;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Cor das letras (pasta): marrom. Troque o código para mudar a cor. */
+  color: #2c2214;
+  /* Cor de fundo (pasta): laranja claro. Troque o código para mudar a cor. */
+  background: #d9b983;
+  /* Sombra ou brilho em volta (pasta), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 30px -14px #000;
+  /* Tipo de letra (pasta): fonte Special Elite. */
+  font-family: 'Special Elite', var(--fonte-mono);
+}
+
+/* PEÇA: o título grande (link 52, dossie). */
+.a-dossie h1 {
+  /* Letra (título grande): fonte Special Elite, tamanho 1,7, grossura 400. Número maior = letra maior. */
+  font: 400 1.7rem 'Special Elite', var(--fonte-mono);
+}
+
+/* PEÇA: codigo (link 52, dossie). */
+.a-dossie .codigo {
+  /* Tamanho da letra (codigo): 0,78 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .78rem;
+}
+
+/* PEÇA: a linha do dossiê (link 52, dossie). */
+.a-dossie .lin-d {
+  /* Tamanho da letra (linha do dossiê): 1 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1rem;
+  /* Espaço entre as linhas do texto: 1,5. Número maior = linhas mais separadas. */
+  line-height: 1.5;
+}
+
+/* PEÇA: tarja (link 52, dossie). */
+.a-dossie .tarja {
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (tarja). */
+  border: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (tarja): zero em cima e embaixo, 5 pontinhos nos lados. */
+  padding: 0 5px;
+  /* Cor das letras (tarja): preto. Troque o código para mudar a cor. */
+  color: #111;
+  /* Cor de fundo (tarja): preto. Troque o código para mudar a cor. */
+  background: #111;
+  /* Letra (tarja): fonte Special Elite, tamanho 1, grossura 400. Número maior = letra maior. */
+  font: 400 1rem 'Special Elite', var(--fonte-mono);
+  /* Faz a mudança acontecer devagar, sem pular: a cor em 0,3 segundos e o fundo em 0,3 segundos. Número maior = mais lento. */
+  transition: color .3s, background .3s;
+}
+
+/* PEÇA: tarja com "lida" ligado (link 52, dossie). */
+.a-dossie .tarja.lida {
+  /* Cor das letras (tarja): marrom. Troque o código para mudar a cor. */
+  color: #2c2214;
+  /* Cor de fundo (tarja): branco, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(255, 255, 255, .35);
+}
+
+/* PEÇA: as palavras em destaque (link 52, dossie). */
+.a-dossie .dest {
+  /* Cor das letras (palavras em destaque): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Grossura da letra: 700. Número maior = letra mais grossa. */
+  font-weight: 700;
+}
+
+/* PEÇA: secreto (link 52, dossie). */
+.a-dossie .secreto {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (secreto): 4 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 4px 12px;
+  /* Contorno (secreto): lisa, 4 pontinhos de grossura, cor vermelho escuro. */
+  border: 4px solid #a11a12;
+  /* Cor das letras (secreto): vermelho escuro. Troque o código para mudar a cor. */
+  color: #a11a12;
+  /* Letra (secreto): fonte Special Elite, tamanho 1,7, grossura 400. Número maior = letra maior. */
+  font: 400 1.7rem 'Special Elite', var(--fonte-mono);
+  /* Não deixa o texto quebrar de linha. */
+  white-space: nowrap;
+  /* Movimento (secreto): vai para a esquerda 50% do espaço, sobe 50% do espaço e gira 12 graus para a esquerda. */
+  transform: translate(-50%, -50%) rotate(-12deg);
+  /* Mistura a cor com o que está atrás, como tinta. */
+  mix-blend-mode: multiply;
+  /* Liga a animação "carimba-b": dura 0,28 segundos. Número menor = mais rápida. */
+  animation: carimba-b .28s ease both;
+}
 
 /* ---------- 53 postais: pilha de cartões ---------- */
-.a-postais.cena { overflow: hidden; }
-.a-postais .pilha-p { position: relative; width: 100%; height: 250px; }
-.a-postais .postal { --h: 190; --r: 0deg; position: absolute; inset: 0; padding: 14px; display: flex; flex-direction: column; gap: 6px; text-align: left; color: #2c2214; background: linear-gradient(90deg, hsl(calc(var(--h) * 1) 62% 74%) 0 8px, #fbf3e0 8px); box-shadow: 0 10px 22px -12px #000; border-radius: 4px; rotate: var(--r); }
-.a-postais .lugar { font: 400 1.7rem 'Pacifico', var(--fonte-titulo); }
-.a-postais .mao-p { font: 500 1.5rem/1.15 var(--fonte-mao); }
-.a-postais .selo-p { position: absolute; top: 12px; right: 12px; width: 44px; height: 54px; border: 3px dotted #fff; background: hsl(calc(var(--h) * 1) 62% 54%); }
-.a-postais .ultimo { justify-content: center; text-align: center; background: #fbf3e0; }
-.a-postais .dest { color: #a3123f; text-shadow: none; font-style: normal; }
+/* PEÇA: a tela inteira desta arte (link 53, postais). */
+.a-postais.cena {
+  /* Corta o que passar para fora (tela inteira desta arte). */
+  overflow: hidden;
+}
+
+/* PEÇA: pilha p (link 53, postais). */
+.a-postais .pilha-p {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (pilha p): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (pilha p): 250 pontinhos. Número maior = mais alto. */
+  height: 250px;
+}
+
+/* PEÇA: postal (link 53, postais). */
+.a-postais .postal {
+  /* Valor inicial guardado com o nome --h. O código muda esse valor enquanto a animação roda. */
+  --h: 190;
+  /* Valor inicial guardado com o nome --r. O código muda esse valor enquanto a animação roda. */
+  --r: 0deg;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (postal): 14 pontinhos em todos os lados. */
+  padding: 14px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 6 pontinhos. Número maior = mais separadas. */
+  gap: 6px;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Cor das letras (postal): marrom. Troque o código para mudar a cor. */
+  color: #2c2214;
+  /* Fundo em degradê (postal), nas cores: branco. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, hsl(calc(var(--h) * 1) 62% 74%) 0 8px, #fbf3e0 8px);
+  /* Sombra ou brilho em volta (postal), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 10px 22px -12px #000;
+  /* Arredonda os cantos (postal). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px;
+  /* Giro (postal): um valor guardado em --r. */
+  rotate: var(--r);
+}
+
+/* PEÇA: lugar (link 53, postais). */
+.a-postais .lugar {
+  /* Letra (lugar): fonte Pacifico, tamanho 1,7, grossura 400. Número maior = letra maior. */
+  font: 400 1.7rem 'Pacifico', var(--fonte-titulo);
+}
+
+/* PEÇA: o texto à mão do postal (link 53, postais). */
+.a-postais .mao-p {
+  /* Letra (texto à mão do postal): letra de mão (Caveat), tamanho 1,5, grossura 500. Número maior = letra maior. */
+  font: 500 1.5rem/1.15 var(--fonte-mao);
+}
+
+/* PEÇA: o selo do postal (link 53, postais). */
+.a-postais .selo-p {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 12 pontinhos. */
+  top: 12px;
+  /* Distância da direita: 12 pontinhos. */
+  right: 12px;
+  /* Largura (selo do postal): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (selo do postal): 54 pontinhos. Número maior = mais alto. */
+  height: 54px;
+  /* Contorno (selo do postal): pontilhada, 3 pontinhos de grossura, cor branco. */
+  border: 3px dotted #fff;
+  /* Fundo (selo do postal). */
+  background: hsl(calc(var(--h) * 1) 62% 54%);
+}
+
+/* PEÇA: ultimo (link 53, postais). */
+.a-postais .ultimo {
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Texto no meio. */
+  text-align: center;
+  /* Cor de fundo (ultimo): branco. Troque o código para mudar a cor. */
+  background: #fbf3e0;
+}
+
+/* PEÇA: as palavras em destaque (link 53, postais). */
+.a-postais .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
 
 /* ---------- 54 botao: botão vermelho e faixa de perigo ---------- */
-.a-botao.cena { background: repeating-linear-gradient(-45deg, #17140c 0 30px, #2a2410 30px 60px); }
-.a-botao.cena.treme { animation: treme-tela .35s linear; }
-@keyframes treme-tela { 20% { transform: translate(-7px, 3px); } 40% { transform: translate(7px, -4px); } 60% { transform: translate(-5px, -3px); } 80% { transform: translate(4px, 3px); } }
-.a-botao .aviso-b { padding: 8px 16px; color: #111; background: repeating-linear-gradient(-45deg, #ffd23f 0 14px, #ffe88a 14px 28px); font: 400 1.4rem 'Bebas Neue', var(--fonte); letter-spacing: .08em; }
-.a-botao .vermelho { width: 196px; height: 196px; appearance: none; border: 10px solid #5a5a60; border-radius: 50%; color: #fff; background: radial-gradient(circle at 36% 30%, #ff7a7a, #c8102e 62%, #7a0a1e); box-shadow: 0 12px 0 #7a0a1e, 0 22px 30px -8px #000; font: 400 1.7rem/1.05 'Bebas Neue', var(--fonte); transition: transform .08s, box-shadow .08s; }
-.a-botao .vermelho:active { transform: translateY(10px); box-shadow: 0 2px 0 #7a0a1e; }
-.a-botao .texto { min-height: 3.2em; }
+/* PEÇA: a tela inteira desta arte (link 54, botao). */
+.a-botao.cena {
+  /* Fundo (tela inteira desta arte) em listras repetidas, nas cores: preto e dourado bem escuro. */
+  background: repeating-linear-gradient(-45deg, #17140c 0 30px, #2a2410 30px 60px);
+}
+
+/* PEÇA: a tela inteira desta arte (link 54, botao). */
+.a-botao.cena.treme {
+  /* Liga a animação "treme-tela": dura 0,35 segundos. Número menor = mais rápida. */
+  animation: treme-tela .35s linear;
+}
+
+/* ANIMAÇÃO "treme-tela": a tela inteira treme. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes treme-tela {
+  /* Como está quando já passou 20% do tempo da animação: */
+  20% {
+    /* Movimento: vai para a esquerda 7 pontinhos e desce 3 pontinhos. */
+    transform: translate(-7px, 3px);
+  }
+  /* Como está quando já passou 40% do tempo da animação: */
+  40% {
+    /* Movimento: vai para a direita 7 pontinhos e sobe 4 pontinhos. */
+    transform: translate(7px, -4px);
+  }
+  /* Como está quando já passou 60% do tempo da animação: */
+  60% {
+    /* Movimento: vai para a esquerda 5 pontinhos e sobe 3 pontinhos. */
+    transform: translate(-5px, -3px);
+  }
+  /* Como está quando já passou 80% do tempo da animação: */
+  80% {
+    /* Movimento: vai para a direita 4 pontinhos e desce 3 pontinhos. */
+    transform: translate(4px, 3px);
+  }
+}
+
+/* PEÇA: a faixa de aviso (link 54, botao). */
+.a-botao .aviso-b {
+  /* Espaço de dentro, entre a borda e o conteúdo, (faixa de aviso): 8 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 8px 16px;
+  /* Cor das letras (faixa de aviso): preto. Troque o código para mudar a cor. */
+  color: #111;
+  /* Fundo (faixa de aviso) em listras repetidas, nas cores: dourado claro. */
+  background: repeating-linear-gradient(-45deg, #ffd23f 0 14px, #ffe88a 14px 28px);
+  /* Letra (faixa de aviso): fonte Bebas Neue, tamanho 1,4, grossura 400. Número maior = letra maior. */
+  font: 400 1.4rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .08em;
+}
+
+/* PEÇA: vermelho (link 54, botao). */
+.a-botao .vermelho {
+  /* Largura (vermelho): 196 pontinhos. Número maior = mais largo. */
+  width: 196px;
+  /* Altura (vermelho): 196 pontinhos. Número maior = mais alto. */
+  height: 196px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (vermelho): lisa, 10 pontinhos de grossura, cor cinza. */
+  border: 10px solid #5a5a60;
+  /* Arredonda os cantos (vermelho). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor das letras (vermelho): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Fundo redondo (vermelho), nas cores: vermelho claro, vermelho e vermelho escuro. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 36% 30%, #ff7a7a, #c8102e 62%, #7a0a1e);
+  /* Sombra ou brilho em volta (vermelho), na cor: vermelho escuro e preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 12px 0 #7a0a1e, 0 22px 30px -8px #000;
+  /* Letra (vermelho): fonte Bebas Neue, tamanho 1,7, grossura 400. Número maior = letra maior. */
+  font: 400 1.7rem/1.05 'Bebas Neue', var(--fonte);
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,08 segundos e a sombra em 0,08 segundos. Número maior = mais lento. */
+  transition: transform .08s, box-shadow .08s;
+}
+
+/* PEÇA: vermelho enquanto o dedo aperta (link 54, botao). */
+.a-botao .vermelho:active {
+  /* Movimento (vermelho enquanto o dedo aperta): desce 10 pontinhos. */
+  transform: translateY(10px);
+  /* Sombra ou brilho em volta (vermelho enquanto o dedo aperta), na cor: vermelho escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 2px 0 #7a0a1e;
+}
+
+/* PEÇA: o texto principal (link 54, botao). */
+.a-botao .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 55 radio: rádio comunicador ---------- */
-.a-radio .walkie { position: relative; width: min(74vw, 260px); padding: 20px 16px; display: flex; flex-direction: column; align-items: center; gap: 12px; border-radius: 18px; background: linear-gradient(160deg, #39424a, #1d2328); box-shadow: 0 20px 34px -14px #000; }
-.a-radio .antena { position: absolute; top: -66px; left: 26px; width: 12px; height: 70px; border-radius: 6px 6px 0 0; background: #15191d; }
-.a-radio .visor-r { width: 100%; min-height: 128px; padding: 10px; border-radius: 6px; color: #173a14; background: #a8d088; box-shadow: inset 0 0 12px rgba(0, 0, 0, .35); font: 400 1.35rem/1.1 'VT323', var(--fonte-mono); text-align: left; }
-.a-radio .dest { color: inherit; text-shadow: none; }
-.a-radio .grade-r { width: 100%; height: 36px; opacity: .3; background: repeating-linear-gradient(90deg, #0d1012 0 4px, #6a757d 4px 7px); border-radius: 4px; }
-.a-radio .ptt { width: 100%; padding: 20px 8px; appearance: none; border: 0; border-radius: 10px; color: #fff; background: #d65a1f; font: 700 .95rem var(--fonte); box-shadow: 0 6px 0 #8a3a12; }
-.a-radio .ptt:active { transform: translateY(4px); box-shadow: 0 2px 0 #8a3a12; }
+/* PEÇA: walkie (link 55, radio). */
+.a-radio .walkie {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (walkie): o menor entre 74% da largura da tela e 260 pontinhos. Número maior = mais largo. */
+  width: min(74vw, 260px);
+  /* Espaço de dentro, entre a borda e o conteúdo, (walkie): 20 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 20px 16px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+  /* Arredonda os cantos (walkie). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 18px;
+  /* Fundo em degradê (walkie), nas cores: cinza escuro e azul bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(160deg, #39424a, #1d2328);
+  /* Sombra ou brilho em volta (walkie), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 20px 34px -14px #000;
+}
+
+/* PEÇA: antena (link 55, radio). */
+.a-radio .antena {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 66 pontinhos. */
+  top: -66px;
+  /* Distância da esquerda: 26 pontinhos. */
+  left: 26px;
+  /* Largura (antena): 12 pontinhos. Número maior = mais largo. */
+  width: 12px;
+  /* Altura (antena): 70 pontinhos. Número maior = mais alto. */
+  height: 70px;
+  /* Arredonda os cantos (antena). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px 6px 0 0;
+  /* Cor de fundo (antena): azul bem escuro. Troque o código para mudar a cor. */
+  background: #15191d;
+}
+
+/* PEÇA: o visor do rádio (link 55, radio). */
+.a-radio .visor-r {
+  /* Largura (visor do rádio): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura mínima (visor do rádio): 128 pontinhos. Número maior = mais alto. */
+  min-height: 128px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (visor do rádio): 10 pontinhos em todos os lados. */
+  padding: 10px;
+  /* Arredonda os cantos (visor do rádio). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Cor das letras (visor do rádio): verde bem escuro. Troque o código para mudar a cor. */
+  color: #173a14;
+  /* Cor de fundo (visor do rádio): verde claro. Troque o código para mudar a cor. */
+  background: #a8d088;
+  /* Sombra ou brilho em volta (visor do rádio), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, .35);
+  /* Letra (visor do rádio): fonte VT323, tamanho 1,35, grossura 400. Número maior = letra maior. */
+  font: 400 1.35rem/1.1 'VT323', var(--fonte-mono);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: as palavras em destaque (link 55, radio). */
+.a-radio .dest {
+  /* Cor das letras (palavras em destaque): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
+
+/* PEÇA: a grade de som (link 55, radio). */
+.a-radio .grade-r {
+  /* Largura (grade de som): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (grade de som): 36 pontinhos. Número maior = mais alto. */
+  height: 36px;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,3. */
+  opacity: .3;
+  /* Fundo (grade de som) em listras repetidas, nas cores: preto e cinza. */
+  background: repeating-linear-gradient(90deg, #0d1012 0 4px, #6a757d 4px 7px);
+  /* Arredonda os cantos (grade de som). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px;
+}
+
+/* PEÇA: o botão de falar (link 55, radio). */
+.a-radio .ptt {
+  /* Largura (botão de falar): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão de falar): 20 pontinhos em cima e embaixo, 8 pontinhos nos lados. */
+  padding: 20px 8px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (botão de falar). */
+  border: 0;
+  /* Arredonda os cantos (botão de falar). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 10px;
+  /* Cor das letras (botão de falar): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (botão de falar): vermelho-alaranjado. Troque o código para mudar a cor. */
+  background: #d65a1f;
+  /* Letra (botão de falar): letra normal (Inter), tamanho 0,95, grossura 700. Número maior = letra maior. */
+  font: 700 .95rem var(--fonte);
+  /* Sombra ou brilho em volta (botão de falar), na cor: vermelho-alaranjado escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 6px 0 #8a3a12;
+}
+
+/* PEÇA: o botão de falar enquanto o dedo aperta (link 55, radio). */
+.a-radio .ptt:active {
+  /* Movimento (botão de falar enquanto o dedo aperta): desce 4 pontinhos. */
+  transform: translateY(4px);
+  /* Sombra ou brilho em volta (botão de falar enquanto o dedo aperta), na cor: vermelho-alaranjado escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 2px 0 #8a3a12;
+}
 
 /* ---------- 56 ligacao: tela de chamada ---------- */
-.a-ligacao .chamada-t { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: calc(28px + env(safe-area-inset-top)) 22px 110px; text-align: center; color: #fff; background: linear-gradient(180deg, #0d0d15, #1d2333); }
-.a-ligacao .hora { font: 400 3.4rem var(--fonte); letter-spacing: -.02em; }
-.a-ligacao .foto-l { width: 110px; height: 110px; margin-top: 12px; border-radius: 50%; background: linear-gradient(135deg, #5ce1ff, #ff5fa2); box-shadow: 0 0 0 0 rgba(92, 225, 255, .5); animation: chama 1.4s ease-out infinite; }
-@keyframes chama { to { box-shadow: 0 0 0 26px transparent; } }
-.a-ligacao h1 { font: 600 1.6rem var(--fonte); }
-.a-ligacao .estado { color: #9fb0c8; }
-.a-ligacao .trilho-l { position: relative; width: 100%; max-width: 320px; height: 68px; margin-top: auto; border-radius: 34px; background: rgba(255, 255, 255, .12); }
-.a-ligacao .trilho-l span { position: absolute; inset: 0; display: grid; place-items: center; padding-left: 40px; font-size: .92rem; }
-.a-ligacao .atende { position: absolute; top: 5px; left: 5px; width: 58px; height: 58px; appearance: none; border: 0; border-radius: 50%; background: #2ecc71; font-size: 1.5rem; }
-.a-ligacao .texto { min-height: 4em; margin-top: auto; }
+/* PEÇA: a tela de chamada (link 56, ligacao). */
+.a-ligacao .chamada-t {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (tela de chamada): calculado para não ficar atrás do rodapé. */
+  padding: calc(28px + env(safe-area-inset-top)) 22px 110px;
+  /* Texto no meio. */
+  text-align: center;
+  /* Cor das letras (tela de chamada): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Fundo em degradê (tela de chamada), nas cores: preto e azul bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #0d0d15, #1d2333);
+}
+
+/* PEÇA: hora (link 56, ligacao). */
+.a-ligacao .hora {
+  /* Letra (hora): letra normal (Inter), tamanho 3,4, grossura 400. Número maior = letra maior. */
+  font: 400 3.4rem var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.02em;
+}
+
+/* PEÇA: a foto da chamada (link 56, ligacao). */
+.a-ligacao .foto-l {
+  /* Largura (foto da chamada): 110 pontinhos. Número maior = mais largo. */
+  width: 110px;
+  /* Altura (foto da chamada): 110 pontinhos. Número maior = mais alto. */
+  height: 110px;
+  /* Espaço de fora, em cima: 12 pontinhos. */
+  margin-top: 12px;
+  /* Arredonda os cantos (foto da chamada). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo em degradê (foto da chamada), nas cores: verde-água claro e rosa claro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(135deg, #5ce1ff, #ff5fa2);
+  /* Sombra ou brilho em volta (foto da chamada), na cor: verde-água claro, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 0 rgba(92, 225, 255, .5);
+  /* Liga a animação "chama": dura 1,4 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: chama 1.4s ease-out infinite;
+}
+
+/* ANIMAÇÃO "chama": um círculo de luz se espalha em volta da foto. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes chama {
+  /* Como a animação termina: */
+  to {
+    /* Sombra ou brilho em volta, na cor: transparente. Os números dizem o tamanho; o código diz a cor. */
+    box-shadow: 0 0 0 26px transparent;
+  }
+}
+
+/* PEÇA: o título grande (link 56, ligacao). */
+.a-ligacao h1 {
+  /* Letra (título grande): letra normal (Inter), tamanho 1,6, grossura 600. Número maior = letra maior. */
+  font: 600 1.6rem var(--fonte);
+}
+
+/* PEÇA: estado (link 56, ligacao). */
+.a-ligacao .estado {
+  /* Cor das letras (estado): azul claro. Troque o código para mudar a cor. */
+  color: #9fb0c8;
+}
+
+/* PEÇA: o trilho de atender (link 56, ligacao). */
+.a-ligacao .trilho-l {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (trilho de atender): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Largura máxima (trilho de atender): 320 pontinhos. Número maior = mais largo. */
+  max-width: 320px;
+  /* Altura (trilho de atender): 68 pontinhos. Número maior = mais alto. */
+  height: 68px;
+  /* Espaço de fora, em cima: automático. */
+  margin-top: auto;
+  /* Arredonda os cantos (trilho de atender). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 34px;
+  /* Cor de fundo (trilho de atender): branco, quase invisível. Troque o código para mudar a cor. */
+  background: rgba(255, 255, 255, .12);
+}
+
+/* PEÇA: o pedacinho de texto dentro de: o trilho de atender (link 56, ligacao). */
+.a-ligacao .trilho-l span {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Coloca o conteúdo bem no centro. */
+  place-items: center;
+  /* Espaço de dentro, à esquerda: 40 pontinhos. */
+  padding-left: 40px;
+  /* Tamanho da letra (pedacinho de texto): 0,92 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .92rem;
+}
+
+/* PEÇA: atende (link 56, ligacao). */
+.a-ligacao .atende {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 5 pontinhos. */
+  top: 5px;
+  /* Distância da esquerda: 5 pontinhos. */
+  left: 5px;
+  /* Largura (atende): 58 pontinhos. Número maior = mais largo. */
+  width: 58px;
+  /* Altura (atende): 58 pontinhos. Número maior = mais alto. */
+  height: 58px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (atende). */
+  border: 0;
+  /* Arredonda os cantos (atende). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (atende): verde. Troque o código para mudar a cor. */
+  background: #2ecc71;
+  /* Tamanho da letra (atende): 1,5 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.5rem;
+}
+
+/* PEÇA: o texto principal (link 56, ligacao). */
+.a-ligacao .texto {
+  /* Altura mínima (texto principal): 4 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 4em;
+  /* Espaço de fora, em cima: automático. */
+  margin-top: auto;
+}
 
 /* ---------- 57 diploma: papel nobre, moldura e selo ---------- */
-.a-diploma .certificado { position: relative; width: 100%; padding: 26px 18px; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #33261a; background: #fdf7e6; outline: 3px double #b8903f; outline-offset: -10px; box-shadow: 0 18px 34px -14px #000; }
-.a-diploma .inst { font: 500 .78rem 'Cinzel', var(--fonte-titulo); letter-spacing: .14em; }
-.a-diploma h1 { font: 400 2rem/1.05 'Pacifico', var(--fonte-titulo); color: #8a6a1f; }
-.a-diploma .corpo-d { font: italic 1.05rem/1.4 var(--fonte-titulo); }
-.a-diploma .assina { width: 170px; }
-.a-diploma .assina svg { display: block; width: 100%; }
-.a-diploma .assina path { fill: none; stroke: #1b2a6b; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.a-diploma .assina.traca path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s ease-in-out; }
-.a-diploma .quem-d { padding-top: 3px; border-top: 1px solid #33261a; font-size: .8rem; }
-.a-diploma .selo-d { position: absolute; right: 16px; bottom: 16px; width: 66px; height: 66px; border-radius: 50%; background: repeating-conic-gradient(#e0a818 0 12deg, #b8861a 12deg 24deg); box-shadow: 0 3px 8px rgba(0, 0, 0, .35); animation: cola .4s cubic-bezier(.3, 1.6, .5, 1); }
-.a-diploma .dest { color: #8a1c0e; text-shadow: none; font-style: normal; }
+/* PEÇA: certificado (link 57, diploma). */
+.a-diploma .certificado {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (certificado): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (certificado): 26 pontinhos em cima e embaixo, 18 pontinhos nos lados. */
+  padding: 26px 18px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+  /* Cor das letras (certificado): marrom. Troque o código para mudar a cor. */
+  color: #33261a;
+  /* Cor de fundo (certificado): branco. Troque o código para mudar a cor. */
+  background: #fdf7e6;
+  /* Contorno de destaque em volta (certificado), cor laranja. */
+  outline: 3px double #b8903f;
+  /* Distância entre a peça e esse contorno. */
+  outline-offset: -10px;
+  /* Sombra ou brilho em volta (certificado), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 18px 34px -14px #000;
+}
+
+/* PEÇA: nome da escola (link 57, diploma). */
+.a-diploma .inst {
+  /* Letra (nome da escola): fonte Cinzel, tamanho 0,78, grossura 500. Número maior = letra maior. */
+  font: 500 .78rem 'Cinzel', var(--fonte-titulo);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .14em;
+}
+
+/* PEÇA: o título grande (link 57, diploma). */
+.a-diploma h1 {
+  /* Letra (título grande): fonte Pacifico, tamanho 2, grossura 400. Número maior = letra maior. */
+  font: 400 2rem/1.05 'Pacifico', var(--fonte-titulo);
+  /* Cor das letras (título grande): dourado escuro. Troque o código para mudar a cor. */
+  color: #8a6a1f;
+}
+
+/* PEÇA: o texto do diploma (link 57, diploma). */
+.a-diploma .corpo-d {
+  /* Letra (texto do diploma): letra de título (Playfair), tamanho 1,05, inclinada. Número maior = letra maior. */
+  font: italic 1.05rem/1.4 var(--fonte-titulo);
+}
+
+/* PEÇA: assina (link 57, diploma). */
+.a-diploma .assina {
+  /* Largura (assina): 170 pontinhos. Número maior = mais largo. */
+  width: 170px;
+}
+
+/* PEÇA: o desenho dentro de: assina (link 57, diploma). */
+.a-diploma .assina svg {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+}
+
+/* PEÇA: o traço do desenho dentro de: assina (link 57, diploma). */
+.a-diploma .assina path {
+  /* Sem cor por dentro do desenho (só o traço). */
+  fill: none;
+  /* Cor do traço (traço do desenho): azul escuro. Troque o código para mudar a cor. */
+  stroke: #1b2a6b;
+  /* Grossura do traço: 2,2. Número maior = traço mais grosso. */
+  stroke-width: 2.2;
+  /* Pontas do traço arredondadas. */
+  stroke-linecap: round;
+  /* Divide o traço em pedaços; é o truque para ele parecer se desenhar sozinho. */
+  stroke-dasharray: 1;
+  /* Quanto do traço está escondido: 0 = aparece inteiro. */
+  stroke-dashoffset: 1;
+}
+
+/* PEÇA: o traço do desenho quando assina estiver com "traca" ligado (link 57, diploma). */
+.a-diploma .assina.traca path {
+  /* Quanto do traço está escondido: 0 = aparece inteiro. */
+  stroke-dashoffset: 0;
+  /* Faz a mudança acontecer devagar, sem pular: o desenho do traço em 1,3 segundos. Número maior = mais lento. */
+  transition: stroke-dashoffset 1.3s ease-in-out;
+}
+
+/* PEÇA: quem assina (link 57, diploma). */
+.a-diploma .quem-d {
+  /* Espaço de dentro, em cima: 3 pontinhos. */
+  padding-top: 3px;
+  /* Contorno de cima (quem assina): lisa, 1 pontinhos de grossura, cor marrom. */
+  border-top: 1px solid #33261a;
+  /* Tamanho da letra (quem assina): 0,8 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .8rem;
+}
+
+/* PEÇA: o selo dourado (link 57, diploma). */
+.a-diploma .selo-d {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da direita: 16 pontinhos. */
+  right: 16px;
+  /* Distância de baixo: 16 pontinhos. */
+  bottom: 16px;
+  /* Largura (selo dourado): 66 pontinhos. Número maior = mais largo. */
+  width: 66px;
+  /* Altura (selo dourado): 66 pontinhos. Número maior = mais alto. */
+  height: 66px;
+  /* Arredonda os cantos (selo dourado). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo (selo dourado) em fatias de pizza repetidas, nas cores: dourado e marrom. */
+  background: repeating-conic-gradient(#e0a818 0 12deg, #b8861a 12deg 24deg);
+  /* Sombra ou brilho em volta (selo dourado), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .35);
+  /* Liga a animação "cola": dura 0,4 segundos. Número menor = mais rápida. */
+  animation: cola .4s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+/* PEÇA: as palavras em destaque (link 57, diploma). */
+.a-diploma .dest {
+  /* Cor das letras (palavras em destaque): vermelho escuro. Troque o código para mudar a cor. */
+  color: #8a1c0e;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
 
 /* ---------- 58 geladeira: porta branca e recados ---------- */
-.a-geladeira .porta-g { position: absolute; inset: 0; overflow: hidden; background: linear-gradient(100deg, #e4e7ea, #fafbfc 50%, #d3d7db); color: #2c2c2c; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 22px 108px; }
-.a-geladeira .puxador { position: absolute; top: 18%; right: 14px; width: 11px; height: 170px; border-radius: 6px; background: linear-gradient(90deg, #9aa0a6, #e2e5e8); }
-.a-geladeira .recado { --r: 0deg; position: absolute; width: 40%; min-height: 124px; padding: 14px 8px; appearance: none; border: 0; color: #2c2c2c; font: 500 1.28rem/1.08 var(--fonte-mao); box-shadow: 0 7px 12px -5px rgba(0, 0, 0, .4); rotate: var(--r); }
-.a-geladeira .recado::before { content: ''; position: absolute; top: -8px; left: 50%; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ff9a9a, #c8102e); }
-.a-geladeira .recado.cai { animation: cai-recado .9s ease-in forwards; pointer-events: none; }
-@keyframes cai-recado { to { transform: translateY(110vh) rotate(26deg); } }
-.a-geladeira .ultimo { position: static; width: 100%; min-height: 0; margin-bottom: 14px; background: #fff; rotate: 0deg; font-size: 1.7rem; text-align: center; opacity: 0; transition: opacity .6s; }
-.a-geladeira .ultimo.ve { opacity: 1; }
-.a-geladeira .dest { color: #a3123f; text-shadow: none; font-style: normal; }
-.a-geladeira .dica { position: absolute; bottom: 104px; color: #4a4a4a; }
+/* PEÇA: porta g (link 58, geladeira). */
+.a-geladeira .porta-g {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Corta o que passar para fora (porta g). */
+  overflow: hidden;
+  /* Fundo em degradê (porta g), nas cores: cinza claro, branco e cinza claro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(100deg, #e4e7ea, #fafbfc 50%, #d3d7db);
+  /* Cor das letras (porta g): cinza escuro. Troque o código para mudar a cor. */
+  color: #2c2c2c;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Empurra as peças para o fim. */
+  justify-content: flex-end;
+  /* Espaço de dentro, entre a borda e o conteúdo, (porta g): zero em cima, 22 pontinhos nos lados, 108 pontinhos embaixo. */
+  padding: 0 22px 108px;
+}
+
+/* PEÇA: puxador (link 58, geladeira). */
+.a-geladeira .puxador {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 18% do espaço. */
+  top: 18%;
+  /* Distância da direita: 14 pontinhos. */
+  right: 14px;
+  /* Largura (puxador): 11 pontinhos. Número maior = mais largo. */
+  width: 11px;
+  /* Altura (puxador): 170 pontinhos. Número maior = mais alto. */
+  height: 170px;
+  /* Arredonda os cantos (puxador). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Fundo em degradê (puxador), nas cores: cinza claro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, #9aa0a6, #e2e5e8);
+}
+
+/* PEÇA: recado (link 58, geladeira). */
+.a-geladeira .recado {
+  /* Valor inicial guardado com o nome --r. O código muda esse valor enquanto a animação roda. */
+  --r: 0deg;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Largura (recado): 40% do espaço. Número maior = mais largo. */
+  width: 40%;
+  /* Altura mínima (recado): 124 pontinhos. Número maior = mais alto. */
+  min-height: 124px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (recado): 14 pontinhos em cima e embaixo, 8 pontinhos nos lados. */
+  padding: 14px 8px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (recado). */
+  border: 0;
+  /* Cor das letras (recado): cinza escuro. Troque o código para mudar a cor. */
+  color: #2c2c2c;
+  /* Letra (recado): letra de mão (Caveat), tamanho 1,28, grossura 500. Número maior = letra maior. */
+  font: 500 1.28rem/1.08 var(--fonte-mao);
+  /* Sombra ou brilho em volta (recado), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 7px 12px -5px rgba(0, 0, 0, .4);
+  /* Giro (recado): um valor guardado em --r. */
+  rotate: var(--r);
+}
+
+/* PEÇA: enfeite desenhado em: recado (link 58, geladeira). */
+.a-geladeira .recado::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 8 pontinhos. */
+  top: -8px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (enfeite desenhado em: recado): 18 pontinhos. Número maior = mais largo. */
+  width: 18px;
+  /* Altura (enfeite desenhado em: recado): 18 pontinhos. Número maior = mais alto. */
+  height: 18px;
+  /* Espaço de fora, à esquerda: menos 9 pontinhos. */
+  margin-left: -9px;
+  /* Arredonda os cantos (enfeite desenhado em: recado). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (enfeite desenhado em: recado), nas cores: vermelho bem clarinho e vermelho. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 35% 35%, #ff9a9a, #c8102e);
+}
+
+/* PEÇA: recado com "cai" ligado (link 58, geladeira). */
+.a-geladeira .recado.cai {
+  /* Liga a animação "cai-recado": dura 0,9 segundos. Número menor = mais rápida. */
+  animation: cai-recado .9s ease-in forwards;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* ANIMAÇÃO "cai-recado": o recado cai da geladeira. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes cai-recado {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: desce 110% da altura da tela e gira 26 graus para a direita. */
+    transform: translateY(110vh) rotate(26deg);
+  }
+}
+
+/* PEÇA: ultimo (link 58, geladeira). */
+.a-geladeira .ultimo {
+  /* Fica no lugar normal. */
+  position: static;
+  /* Largura (ultimo): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura mínima (ultimo): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Espaço de fora, embaixo: 14 pontinhos. */
+  margin-bottom: 14px;
+  /* Cor de fundo (ultimo): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Giro (ultimo): zero. */
+  rotate: 0deg;
+  /* Tamanho da letra (ultimo): 1,7 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.7rem;
+  /* Texto no meio. */
+  text-align: center;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,6 segundos. Número maior = mais lento. */
+  transition: opacity .6s;
+}
+
+/* PEÇA: ultimo com "ve" ligado (link 58, geladeira). */
+.a-geladeira .ultimo.ve {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+}
+
+/* PEÇA: as palavras em destaque (link 58, geladeira). */
+.a-geladeira .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* PEÇA: a dica piscando (link 58, geladeira). */
+.a-geladeira .dica {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: 104 pontinhos. */
+  bottom: 104px;
+  /* Cor das letras (dica piscando): cinza escuro. Troque o código para mudar a cor. */
+  color: #4a4a4a;
+}
 
 /* ---------- 59 biscoito: biscoito da sorte ---------- */
-.a-biscoito .cookie { width: min(72vw, 270px); appearance: none; border: 0; background: none; }
-.a-biscoito .cookie svg { display: block; width: 100%; overflow: visible; filter: drop-shadow(0 12px 12px rgba(120, 70, 10, .35)); }
-.a-biscoito .m1, .a-biscoito .m2 { fill: #e3a64f; stroke: #b9782a; stroke-width: 3; stroke-linejoin: round; transform-box: fill-box; transition: transform .6s ease; }
-.a-biscoito .m1 { transform-origin: 100% 100%; }
-.a-biscoito .m2 { transform-origin: 0 100%; }
-.a-biscoito .cookie[data-rachou="1"] .m1 { transform: rotate(-3deg); }
-.a-biscoito .cookie[data-rachou="1"] .m2 { transform: rotate(3deg); }
-.a-biscoito .cookie[data-rachou="2"] .m1 { transform: translateX(-5px) rotate(-7deg); }
-.a-biscoito .cookie[data-rachou="2"] .m2 { transform: translateX(5px) rotate(7deg); }
-.a-biscoito .cookie.aberto .m1 { transform: translateX(-46px) rotate(-22deg); }
-.a-biscoito .cookie.aberto .m2 { transform: translateX(46px) rotate(22deg); }
-.a-biscoito .sorte { width: 100%; padding: 16px; color: #3a2a18; background: #fffdf4; box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .55); font: 500 1.5rem/1.15 var(--fonte-mao); animation: puxa-papel .9s ease both; }
-@keyframes puxa-papel { from { transform: scaleX(.1); opacity: 0; } }
-.a-biscoito small { display: block; margin-top: 6px; font: .76rem var(--fonte-mono); letter-spacing: .1em; color: #8a6d4a; }
-.a-biscoito .dest { color: #a3123f; text-shadow: none; font-style: normal; }
+/* PEÇA: cookie (link 59, biscoito). */
+.a-biscoito .cookie {
+  /* Largura (cookie): o menor entre 72% da largura da tela e 270 pontinhos. Número maior = mais largo. */
+  width: min(72vw, 270px);
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (cookie). */
+  border: 0;
+  /* Sem fundo (cookie): dá para ver o que está atrás. */
+  background: none;
+}
+
+/* PEÇA: o desenho dentro de: cookie (link 59, biscoito). */
+.a-biscoito .cookie svg {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Deixa aparecer o que passar para fora. */
+  overflow: visible;
+  /* Efeito visual (desenho): sombra em volta. */
+  filter: drop-shadow(0 12px 12px rgba(120, 70, 10, .35));
+}
+
+/* PEÇA: a metade esquerda e a metade direita (link 59, biscoito). */
+.a-biscoito .m1, .a-biscoito .m2 {
+  /* Cor de dentro do desenho (metade esquerda e a metade direita): laranja. Troque o código para mudar a cor. */
+  fill: #e3a64f;
+  /* Cor do traço (metade esquerda e a metade direita): laranja. Troque o código para mudar a cor. */
+  stroke: #b9782a;
+  /* Grossura do traço: 3. Número maior = traço mais grosso. */
+  stroke-width: 3;
+  /* Cantos do traço arredondados. */
+  stroke-linejoin: round;
+  /* Conta o ponto de giro a partir da própria peça. */
+  transform-box: fill-box;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,6 segundos. Número maior = mais lento. */
+  transition: transform .6s ease;
+}
+
+/* PEÇA: a metade esquerda (link 59, biscoito). */
+.a-biscoito .m1 {
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: 100% 100%;
+}
+
+/* PEÇA: a metade direita (link 59, biscoito). */
+.a-biscoito .m2 {
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: 0 100%;
+}
+
+/* PEÇA: a metade esquerda dentro de: cookie (link 59, biscoito). */
+.a-biscoito .cookie[data-rachou="1"] .m1 {
+  /* Movimento (metade esquerda): gira 3 graus para a esquerda. */
+  transform: rotate(-3deg);
+}
+
+/* PEÇA: a metade direita dentro de: cookie (link 59, biscoito). */
+.a-biscoito .cookie[data-rachou="1"] .m2 {
+  /* Movimento (metade direita): gira 3 graus para a direita. */
+  transform: rotate(3deg);
+}
+
+/* PEÇA: a metade esquerda dentro de: cookie (link 59, biscoito). */
+.a-biscoito .cookie[data-rachou="2"] .m1 {
+  /* Movimento (metade esquerda): vai para a esquerda 5 pontinhos e gira 7 graus para a esquerda. */
+  transform: translateX(-5px) rotate(-7deg);
+}
+
+/* PEÇA: a metade direita dentro de: cookie (link 59, biscoito). */
+.a-biscoito .cookie[data-rachou="2"] .m2 {
+  /* Movimento (metade direita): vai para a direita 5 pontinhos e gira 7 graus para a direita. */
+  transform: translateX(5px) rotate(7deg);
+}
+
+/* PEÇA: a metade esquerda quando cookie estiver com "aberto" ligado (link 59, biscoito). */
+.a-biscoito .cookie.aberto .m1 {
+  /* Movimento (metade esquerda): vai para a esquerda 46 pontinhos e gira 22 graus para a esquerda. */
+  transform: translateX(-46px) rotate(-22deg);
+}
+
+/* PEÇA: a metade direita quando cookie estiver com "aberto" ligado (link 59, biscoito). */
+.a-biscoito .cookie.aberto .m2 {
+  /* Movimento (metade direita): vai para a direita 46 pontinhos e gira 22 graus para a direita. */
+  transform: translateX(46px) rotate(22deg);
+}
+
+/* PEÇA: sorte (link 59, biscoito). */
+.a-biscoito .sorte {
+  /* Largura (sorte): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (sorte): 16 pontinhos em todos os lados. */
+  padding: 16px;
+  /* Cor das letras (sorte): marrom. Troque o código para mudar a cor. */
+  color: #3a2a18;
+  /* Cor de fundo (sorte): branco. Troque o código para mudar a cor. */
+  background: #fffdf4;
+  /* Sombra ou brilho em volta (sorte), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .55);
+  /* Letra (sorte): letra de mão (Caveat), tamanho 1,5, grossura 500. Número maior = letra maior. */
+  font: 500 1.5rem/1.15 var(--fonte-mao);
+  /* Liga a animação "puxa-papel": dura 0,9 segundos. Número menor = mais rápida. */
+  animation: puxa-papel .9s ease both;
+}
+
+/* ANIMAÇÃO "puxa-papel": o papelzinho sai do biscoito. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes puxa-papel {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: encolhe para 10% da largura. */
+    transform: scaleX(.1);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* PEÇA: o texto pequeno (link 59, biscoito). */
+.a-biscoito small {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Espaço de fora, em cima: 6 pontinhos. */
+  margin-top: 6px;
+  /* Letra (texto pequeno): letra de computador (Space Mono), tamanho 0,76. Número maior = letra maior. */
+  font: .76rem var(--fonte-mono);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .1em;
+  /* Cor das letras (texto pequeno): marrom. Troque o código para mudar a cor. */
+  color: #8a6d4a;
+}
+
+/* PEÇA: as palavras em destaque (link 59, biscoito). */
+.a-biscoito .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
 
 /* ---------- 60 pinata: estrela colorida pendurada ---------- */
-.a-pinata .estrela-p { position: relative; width: 210px; height: 210px; margin-top: 60px; appearance: none; border: 0; background: none; transform-origin: 50% -60px; animation: balanca-e 2.6s ease-in-out infinite; }
-@keyframes balanca-e { 0%, 100% { rotate: -5deg; } 50% { rotate: 5deg; } }
-.a-pinata .estrela-p::before { content: ''; position: absolute; top: -70px; left: 50%; width: 2px; height: 80px; background: #e7e7ee; }
-.a-pinata .estrela-p svg { width: 100%; height: 100%; fill: url(#pinata-cores); filter: drop-shadow(0 12px 12px rgba(0, 0, 0, .4)); }
-.a-pinata .estrela-p path { fill: #ff5fa2; stroke: #ffd23f; stroke-width: 3; stroke-dasharray: 6 4; }
-.a-pinata .estrela-p.bate-p { animation: leva-pancada .4s ease; }
-@keyframes leva-pancada { 30% { rotate: 22deg; scale: .94; } 70% { rotate: -14deg; } }
-.a-pinata .estrela-p.estourou { animation: none; visibility: hidden; }
-.a-pinata .texto { min-height: 3.2em; }
+/* PEÇA: a piñata (link 60, pinata). */
+.a-pinata .estrela-p {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (piñata): 210 pontinhos. Número maior = mais largo. */
+  width: 210px;
+  /* Altura (piñata): 210 pontinhos. Número maior = mais alto. */
+  height: 210px;
+  /* Espaço de fora, em cima: 60 pontinhos. */
+  margin-top: 60px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (piñata). */
+  border: 0;
+  /* Sem fundo (piñata): dá para ver o que está atrás. */
+  background: none;
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: 50% -60px;
+  /* Liga a animação "balanca-e": dura 2,6 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: balanca-e 2.6s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "balanca-e": a piñata balança na corda. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes balanca-e {
+  /* Como está quando já passou 0% e  100% do tempo da animação: */
+  0%, 100% {
+    /* Giro: menos 5 graus. */
+    rotate: -5deg;
+  }
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Giro: 5 graus. */
+    rotate: 5deg;
+  }
+}
+
+/* PEÇA: enfeite desenhado em: a piñata (link 60, pinata). */
+.a-pinata .estrela-p::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 70 pontinhos. */
+  top: -70px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (enfeite desenhado em: a piñata): 2 pontinhos. Número maior = mais largo. */
+  width: 2px;
+  /* Altura (enfeite desenhado em: a piñata): 80 pontinhos. Número maior = mais alto. */
+  height: 80px;
+  /* Cor de fundo (enfeite desenhado em: a piñata): azul bem clarinho. Troque o código para mudar a cor. */
+  background: #e7e7ee;
+}
+
+/* PEÇA: o desenho dentro de: a piñata (link 60, pinata). */
+.a-pinata .estrela-p svg {
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (desenho): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Cor de dentro do desenho (desenho): url(#pinata-cores). Troque o código para mudar a cor. */
+  fill: url(#pinata-cores);
+  /* Efeito visual (desenho): sombra em volta. */
+  filter: drop-shadow(0 12px 12px rgba(0, 0, 0, .4));
+}
+
+/* PEÇA: o traço do desenho dentro de: a piñata (link 60, pinata). */
+.a-pinata .estrela-p path {
+  /* Cor de dentro do desenho (traço do desenho): rosa claro. Troque o código para mudar a cor. */
+  fill: #ff5fa2;
+  /* Cor do traço (traço do desenho): dourado claro. Troque o código para mudar a cor. */
+  stroke: #ffd23f;
+  /* Grossura do traço: 3. Número maior = traço mais grosso. */
+  stroke-width: 3;
+  /* Divide o traço em pedaços; é o truque para ele parecer se desenhar sozinho. */
+  stroke-dasharray: 6 4;
+}
+
+/* PEÇA: a piñata com "bate-p" ligado (link 60, pinata). */
+.a-pinata .estrela-p.bate-p {
+  /* Liga a animação "leva-pancada": dura 0,4 segundos. Número menor = mais rápida. */
+  animation: leva-pancada .4s ease;
+}
+
+/* ANIMAÇÃO "leva-pancada": a piñata leva a pancada. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes leva-pancada {
+  /* Como está quando já passou 30% do tempo da animação: */
+  30% {
+    /* Giro: 22 graus. */
+    rotate: 22deg;
+    /* Tamanho: 0,94 vezes o original. */
+    scale: .94;
+  }
+  /* Como está quando já passou 70% do tempo da animação: */
+  70% {
+    /* Giro: menos 14 graus. */
+    rotate: -14deg;
+  }
+}
+
+/* PEÇA: a piñata com "estourou" ligado (link 60, pinata). */
+.a-pinata .estrela-p.estourou {
+  /* Desliga a animação desta peça. */
+  animation: none;
+  /* Deixa invisível, mas guardando o lugar. */
+  visibility: hidden;
+}
+
+/* PEÇA: o texto principal (link 60, pinata). */
+.a-pinata .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}

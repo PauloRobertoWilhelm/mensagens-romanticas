@@ -39,7 +39,11 @@ Site estático no GitHub Pages. O dono gera um link com chave, manda para algué
 
 **RF-07 Música por categoria.** Como destinatário, quero ouvir uma música ao abrir. *Aceite:* começa no primeiro toque (regra do navegador); repete; botão de mudo e volume; pausa ao sair da aba.
 
-**RF-08 Legenda no rodapé.** Como destinatário, quero ver frases curtas no pé da tela enquanto a música toca. *Aceite:* troca a cada N batidas (BPM configurável por categoria); fica legível sobre qualquer tema; respeita "reduzir movimento".
+**RF-08 Mensagens longas e interativas.** Como dono, quero mensagens maiores, com mais efeitos e interação. *Aceite:* depois da animação, cada link tem 2 capítulos interativos com texto próprio; a mesma sequência de capítulos não se repete na categoria; todo toque solta faíscas e o dedo deixa rastro.
+
+**RF-08b Visual moderno.** Como dono, quero que a mensagem pareça tecnológica. *Aceite:* cada link da categoria tem um fundo animado diferente (20 cenários em WebGL, que reagem ao dedo e pulsam no ritmo da música); cada mensagem abre com um leitor de digital; títulos se decodificam; o conteúdo inclina em 3D; se o aparelho não suportar, o site funciona sem o fundo.
+
+**RF-08c Frases na duração da música.** Como dono, quero mensagens longas. *Aceite:* cada link tem um filme de frases que dura pelo menos 70% da música da categoria (ajuste em `FRASES_MUSICA`); as frases ficam em `data/frases-*.js`; o validador confere a duração dos 80 links.
 
 **RF-09 Final.** Como dono, quero que toda mensagem feche com um título, uma frase e reações. *Aceite:* nenhuma termina pedindo para sair ou se encontrar; a letra do título acompanha a arte; a paquera é ousada, com cantadas e elogios ao sorriso, ao cabelo, à inteligência e à mulher incrível que ela é.
 

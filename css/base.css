@@ -4,192 +4,832 @@
    e o que muda se você alterar o valor.
    ========================================================== */
 
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
 /* Variáveis globais de forma: raio dos cantos e as duas famílias de fonte.
    Alterar --raio de 18px para 30px deixa cartões e botões mais arredondados. */
+/* PEÇA: os valores do site inteiro. */
 :root {
+  /* Quanto os cantos ficam redondos no site inteiro. Número maior = mais redondo. */
   --raio: 18px;
+  /* Letra usada nos títulos. O site tenta a 1ª da lista; se não tiver, usa a seguinte. */
   --fonte-titulo: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  /* Letra usada nos textos normais. O site tenta a 1ª da lista; se não tiver, usa a seguinte. */
   --fonte: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Letra de computador. O site tenta a 1ª da lista; se não tiver, usa a seguinte. */
   --fonte-mono: 'Space Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* Letra que parece escrita à mão. O site tenta a 1ª da lista; se não tiver, usa a seguinte. */
   --fonte-mao: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
 }
 
 /* Reset: tira margens/espaços padrão do navegador e faz padding contar dentro da largura.
    O highlight azul ao tocar no celular é removido para não "piscar" feio. */
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* PEÇA: todas as peças. */
+* {
+  /* Conta a borda dentro do tamanho da peça. */
+  box-sizing: border-box;
+  /* Espaço de fora (todas as peças): zero em todos os lados. */
+  margin: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (todas as peças): zero em todos os lados. */
+  padding: 0;
+  /* Tira o piscar azul quando o dedo toca. */
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* html e body ocupam a tela toda; sem isso o fundo não cobre a altura inteira. */
-html, body { height: 100%; }
+/* PEÇA: a página e a página inteira. */
+html, body {
+  /* Altura (página e a página inteira): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+}
 
 /* Corpo da página: fonte, cor do texto, fundo em gradiente (3 cores do tema),
    sem rolagem (cada cena rola sozinha se precisar) e sem seleção de texto por toque. */
+/* PEÇA: a página inteira. */
 body {
+  /* Tipo de letra (página inteira): letra normal (Inter). */
   font-family: var(--fonte);
+  /* Cor das letras (página inteira): a cor do texto do tema. Troque o código para mudar a cor. */
   color: var(--tx);
+  /* Fundo em degradê (página inteira), nas cores: a 1ª cor de fundo do tema, a 2ª cor de fundo do tema e a 3ª cor de fundo do tema. Troque os códigos para mudar as cores. */
   background: linear-gradient(160deg, var(--bg-a), var(--bg-b) 55%, var(--bg-c)) fixed;
+  /* Corta o que passar para fora (página inteira). */
   overflow: hidden;
+  /* Diz ao celular como tratar o dedo aqui. */
   touch-action: manipulation;
+  /* Não deixa selecionar o texto com o dedo. */
   -webkit-user-select: none;
+  /* Tira o menu que aparece ao segurar o dedo. */
   -webkit-touch-callout: none;
+  /* Não deixa selecionar o texto com o dedo. */
   user-select: none;
+  /* Faz a mudança acontecer devagar, sem pular: o fundo em 0,6 segundos. Número maior = mais lento. */
   transition: background .6s ease;
 }
 
 /* Canvas das partículas (corações, pétalas...): cobre a tela, fica ATRÁS do texto
    e não captura toques (pointer-events: none). */
-#fundo { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+/* PEÇA: o canvas de partículas. */
+#fundo {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (canvas de partículas): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (canvas de partículas): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 0;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
 
 /* Palco: camada onde as cenas aparecem. Fica acima do canvas (z-index 1). */
-#palco { position: fixed; inset: 0; z-index: 1; }
+/* PEÇA: o palco das telas. */
+#palco {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 1;
+}
 
 /* Cena: uma "tela" inteira. flex + overflow-y permitem rolar em telas pequenas.
    O padding de baixo reserva espaço para o rodapé da música (96px + área segura do iPhone). */
+/* PEÇA: a tela. */
 .cena {
-  position: absolute; inset: 0; display: flex; overflow-y: auto; overflow-x: hidden;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Deixa rolar para cima e para baixo se não couber. */
+  overflow-y: auto;
+  /* Corta o que passar para o lado. */
+  overflow-x: hidden;
+  /* Espaço de dentro, entre a borda e o conteúdo, (tela): calculado para não ficar atrás do rodapé. */
   padding: 22px 22px calc(96px + env(safe-area-inset-bottom));
+  /* Liga a animação "cena-entra": dura 0,7 segundos. Número menor = mais rápida. */
   animation: cena-entra .7s ease both;
 }
 
 /* Cena saindo: some em .5s e não recebe toques enquanto some. */
-.cena.saindo { animation: cena-sai .5s ease both; pointer-events: none; }
+/* PEÇA: a tela com "saindo" ligado. */
+.cena.saindo {
+  /* Liga a animação "cena-sai": dura 0,5 segundos. Número menor = mais rápida. */
+  animation: cena-sai .5s ease both;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
 
 /* Caixa: coluna centralizada com largura máxima de leitura confortável (520px).
    margin:auto centraliza mesmo quando a cena rola (flex + overflow). gap = espaço entre itens. */
+/* PEÇA: a caixa central. */
 .caixa {
-  width: 100%; max-width: 520px; margin: auto;
-  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;
+  /* Largura (caixa central): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Largura máxima (caixa central): 520 pontinhos. Número maior = mais largo. */
+  max-width: 520px;
+  /* Espaço de fora (caixa central): centraliza a peça sozinho. */
+  margin: auto;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Texto no meio. */
+  text-align: center;
+  /* Espaço entre as peças de dentro: 18 pontinhos. Número maior = mais separadas. */
+  gap: 18px;
 }
 
 /* Animações de entrada e saída das cenas (opacidade + leve deslocamento). */
-@keyframes cena-entra { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-@keyframes cena-sai { to { opacity: 0; transform: translateY(-10px) scale(.98); } }
+/* ANIMAÇÃO "cena-entra": a tela entra aparecendo devagar e subindo um pouquinho. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes cena-entra {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: desce 14 pontinhos. */
+    transform: translateY(14px);
+  }
+  /* Como a animação termina: */
+  to {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+    /* Movimento: nenhum movimento: a peça fica no lugar normal. */
+    transform: none;
+  }
+}
+
+/* ANIMAÇÃO "cena-sai": a tela sai sumindo e encolhendo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes cena-sai {
+  /* Como a animação termina: */
+  to {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: sobe 10 pontinhos e encolhe para 98% do tamanho. */
+    transform: translateY(-10px) scale(.98);
+  }
+}
 
 /* Rótulo pequeno em caixa alta (ex.: "três coisas sobre você"): cor suave, espaçamento largo. */
-.rotulo { font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; color: var(--mut); }
+/* PEÇA: rotulo. */
+.rotulo {
+  /* Tamanho da letra (rotulo): 0,72 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .72rem;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .28em;
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Cor das letras (rotulo): a cor de texto suave do tema. Troque o código para mudar a cor. */
+  color: var(--mut);
+}
 
 /* Título grande: fonte serifada; clamp() faz o tamanho variar entre 1.9rem e 3rem conforme a tela. */
+/* PEÇA: o título. */
 .titulo {
-  font-family: var(--fonte-titulo); font-weight: 600; line-height: 1.15;
+  /* Tipo de letra (título): letra de título (Playfair). */
+  font-family: var(--fonte-titulo);
+  /* Grossura da letra: 600. Número maior = letra mais grossa. */
+  font-weight: 600;
+  /* Espaço entre as linhas do texto: 1,15. Número maior = linhas mais separadas. */
+  line-height: 1.15;
+  /* Tamanho da letra (título): cresce com a tela, de 1,9 vezes o tamanho normal da letra até 3 vezes o tamanho normal da letra. Número maior = letra maior. */
   font-size: clamp(1.9rem, 7vw, 3rem);
-  color: var(--tx); text-shadow: 0 0 28px var(--sombra);
+  /* Cor das letras (título): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Brilho em volta das letras (título), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 28px var(--sombra);
 }
 
 /* Título: cada palavra recebe um degradê próprio. (Degradê no pai não funciona com as palavras
    animadas, que são "inline-block" — por isso a regra fica na palavra.) Se o navegador não
    suportar background-clip, a cor sólida do .titulo acima continua valendo. */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .titulo .w { background: linear-gradient(120deg, var(--tx) 30%, var(--ac2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
+  /* PEÇA: cada palavra que aparece dentro de: o título. */
+  .titulo .w {
+    /* Fundo em degradê (cada palavra que aparece), nas cores: a cor do texto do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
+    background: linear-gradient(120deg, var(--tx) 30%, var(--ac2));
+    /* Usa o fundo só dentro das letras. */
+    -webkit-background-clip: text;
+    /* Usa o fundo só dentro das letras. */
+    background-clip: text;
+    /* Deixa as letras transparentes para o degradê aparecer. */
+    -webkit-text-fill-color: transparent;
+    /* Tira a sombra (cada palavra que aparece). */
+    text-shadow: none;
+  }
 }
 
 /* Texto principal das frases: tamanho fluido e boa altura de linha para leitura lenta. */
-.texto { font-size: clamp(1.25rem, 4.6vw, 1.75rem); line-height: 1.5; font-family: var(--fonte-titulo); font-style: italic; }
+/* PEÇA: o texto principal. */
+.texto {
+  /* Tamanho da letra (texto principal): cresce com a tela, de 1,25 vezes o tamanho normal da letra até 1,75 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: clamp(1.25rem, 4.6vw, 1.75rem);
+  /* Espaço entre as linhas do texto: 1,5. Número maior = linhas mais separadas. */
+  line-height: 1.5;
+  /* Tipo de letra (texto principal): letra de título (Playfair). */
+  font-family: var(--fonte-titulo);
+  /* Letra inclinada. */
+  font-style: italic;
+}
 
 /* Texto menor (subtítulos e explicações). */
-.sub { font-size: 1rem; line-height: 1.55; color: var(--mut); }
+/* PEÇA: o texto menor. */
+.sub {
+  /* Tamanho da letra (texto menor): 1 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1rem;
+  /* Espaço entre as linhas do texto: 1,55. Número maior = linhas mais separadas. */
+  line-height: 1.55;
+  /* Cor das letras (texto menor): a cor de texto suave do tema. Troque o código para mudar a cor. */
+  color: var(--mut);
+}
 
 /* Dica piscando suavemente ("toque para abrir"). */
-.dica { font-size: .85rem; letter-spacing: .12em; color: var(--mut); animation: pisca 2.2s ease-in-out infinite; }
-@keyframes pisca { 50% { opacity: .35; } }
+/* PEÇA: a dica piscando. */
+.dica {
+  /* Tamanho da letra (dica piscando): 0,85 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .85rem;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .12em;
+  /* Cor das letras (dica piscando): a cor de texto suave do tema. Troque o código para mudar a cor. */
+  color: var(--mut);
+  /* Liga a animação "pisca": dura 2,2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: pisca 2.2s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "pisca": a peça pisca, ficando mais fraca e voltando. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes pisca {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,35. */
+    opacity: .35;
+  }
+}
 
 /* Palavra revelada aos poucos: começa invisível, borrada e um pouco abaixo; o atraso vem do JS (inline). */
-.w { display: inline-block; opacity: 0; transform: translateY(8px); filter: blur(6px); animation: palavra .7s ease forwards; }
-@keyframes palavra { to { opacity: 1; transform: none; filter: blur(0); } }
+/* PEÇA: cada palavra que aparece. */
+.w {
+  /* Fica na mesma linha do texto, mas pode ter tamanho próprio. */
+  display: inline-block;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Movimento (cada palavra que aparece): desce 8 pontinhos. */
+  transform: translateY(8px);
+  /* Efeito visual (cada palavra que aparece): borrão. */
+  filter: blur(6px);
+  /* Liga a animação "palavra": dura 0,7 segundos. Número menor = mais rápida. */
+  animation: palavra .7s ease forwards;
+}
+
+/* ANIMAÇÃO "palavra": cada palavra aparece, saindo do borrado. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes palavra {
+  /* Como a animação termina: */
+  to {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+    /* Movimento: nenhum movimento: a peça fica no lugar normal. */
+    transform: none;
+    /* Efeito visual: borrão. */
+    filter: blur(0);
+  }
+}
 
 /* Quando a pessoa toca para pular: todas as palavras aparecem na hora. */
-.pronto .w { animation-delay: 0s !important; animation-duration: .01s !important; }
+/* PEÇA: cada palavra que aparece dentro de: quando a pessoa pula o texto. */
+.pronto .w {
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: 0s !important;
+  /* Quanto tempo dura a animação. Número menor = mais rápida. */
+  animation-duration: .01s !important;
+}
 
 /* Destaque (*assim* no texto): cor de acento e brilho. */
-.dest { color: var(--ac); font-style: normal; font-weight: 700; text-shadow: 0 0 18px var(--sombra); }
+/* PEÇA: as palavras em destaque. */
+.dest {
+  /* Cor das letras (palavras em destaque): a cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac);
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+  /* Grossura da letra: 700. Número maior = letra mais grossa. */
+  font-weight: 700;
+  /* Brilho em volta das letras (palavras em destaque), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 18px var(--sombra);
+}
 
 /* Botão principal em forma de pílula. hover levanta, focus-visible mostra contorno (teclado), active afunda. */
+/* PEÇA: o botão. */
 .btn {
-  appearance: none; border: 0; cursor: pointer; font: 600 1rem var(--fonte);
-  padding: 14px 30px; border-radius: 999px; color: var(--btn-tx);
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (botão). */
+  border: 0;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Letra (botão): letra normal (Inter), tamanho 1, grossura 600. Número maior = letra maior. */
+  font: 600 1rem var(--fonte);
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão): 14 pontinhos em cima e embaixo, 30 pontinhos nos lados. */
+  padding: 14px 30px;
+  /* Arredonda os cantos (botão). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Cor das letras (botão): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Fundo em degradê (botão), nas cores: a cor de destaque do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
   background: linear-gradient(120deg, var(--ac), var(--ac2));
-  box-shadow: 0 8px 28px -8px var(--sombra); transition: transform .2s ease, box-shadow .2s ease, opacity .3s;
+  /* Sombra ou brilho em volta (botão), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 8px 28px -8px var(--sombra);
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,2 segundos, a sombra em 0,2 segundos e a transparência em 0,3 segundos. Número maior = mais lento. */
+  transition: transform .2s ease, box-shadow .2s ease, opacity .3s;
 }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px var(--sombra); }
-.btn:focus-visible { outline: 3px solid var(--tx); outline-offset: 3px; }
-.btn:active { transform: scale(.97); }
-.btn:disabled { opacity: .5; cursor: default; }
+
+/* PEÇA: o botão quando o mouse passa em cima. */
+.btn:hover {
+  /* Movimento (botão): sobe 2 pontinhos. */
+  transform: translateY(-2px);
+  /* Sombra ou brilho em volta (botão), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 12px 32px -8px var(--sombra);
+}
+
+/* PEÇA: o botão quando escolhido pelo teclado. */
+.btn:focus-visible {
+  /* Contorno de destaque em volta (botão), cor a cor do texto do tema. */
+  outline: 3px solid var(--tx);
+  /* Distância entre a peça e esse contorno. */
+  outline-offset: 3px;
+}
+
+/* PEÇA: o botão enquanto o dedo aperta. */
+.btn:active {
+  /* Movimento (botão enquanto o dedo aperta): encolhe para 97% do tamanho. */
+  transform: scale(.97);
+}
+
+/* PEÇA: o botão. */
+.btn:disabled {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,5. */
+  opacity: .5;
+  /* Mostra a setinha normal. */
+  cursor: default;
+}
 
 /* Botão secundário: só contorno, para ações menos importantes (ver de novo). */
-.btn.leve { background: transparent; color: var(--tx); border: 1px solid var(--borda); box-shadow: none; }
+/* PEÇA: o botão com "leve" ligado. */
+.btn.leve {
+  /* Sem fundo (botão): dá para ver o que está atrás. */
+  background: transparent;
+  /* Cor das letras (botão): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Contorno (botão): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Tira a sombra (botão). */
+  box-shadow: none;
+}
 
 /* Elemento que entra com fade quando aparece na tela. */
-.entra { animation: cena-entra .6s ease both; }
+/* PEÇA: a peça que entra com fade. */
+.entra {
+  /* Liga a animação "cena-entra": dura 0,6 segundos. Número menor = mais rápida. */
+  animation: cena-entra .6s ease both;
+}
 
 /* Cartão "vidro": fundo translúcido + borda fina + desfoque do que está atrás. */
+/* PEÇA: o cartão de vidro. */
 .vidro {
-  background: var(--vidro); border: 1px solid var(--borda); border-radius: var(--raio);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  /* Cor de fundo (cartão de vidro): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Contorno (cartão de vidro): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Arredonda os cantos (cartão de vidro). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: var(--raio);
+  /* Borra o que está atrás, como um vidro fosco. */
+  backdrop-filter: blur(10px);
+  /* Borra o que está atrás, como um vidro fosco. */
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* ---------- Peças comuns das artes ---------- */
 
 /* Tela sem margens: a arte ocupa a tela toda (mapas, paredes, canvas). */
-.cena.cheia { padding: 0; overflow: hidden; }
-.cena.cheia > .caixa { max-width: none; height: 100%; margin: 0; gap: 0; position: relative; }
+/* PEÇA: a tela com "cheia" ligado. */
+.cena.cheia {
+  /* Espaço de dentro, entre a borda e o conteúdo, (tela): zero em todos os lados. */
+  padding: 0;
+  /* Corta o que passar para fora (tela). */
+  overflow: hidden;
+}
+
+/* PEÇA: a caixa central quando a tela estiver com "cheia" ligado. */
+.cena.cheia > .caixa {
+  /* Largura máxima (caixa central): nenhum. Número maior = mais largo. */
+  max-width: none;
+  /* Altura (caixa central): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Espaço de fora (caixa central): zero em todos os lados. */
+  margin: 0;
+  /* Espaço entre as peças de dentro: zero. Número maior = mais separadas. */
+  gap: 0;
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+}
 
 /* Canvas das artes: preenche a área de quem o contém. */
-.pintura { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* PEÇA: o canvas (a tela de desenho). */
+.pintura {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (canvas): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (canvas): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+}
 
 /* Tudo que espera um gesto mostra a mãozinha no computador. */
-[data-acao] { cursor: pointer; }
+/* PEÇA: a peça que espera um gesto. */
+[data-acao] {
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+}
 
 /* ---------- Final: revelação ---------- */
 
 /* Linha de reações (chips) que abrem o WhatsApp. */
-.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.chip { appearance: none; cursor: pointer; font: 600 .92rem var(--fonte); color: var(--tx); padding: 10px 16px; border-radius: 999px; background: var(--vidro); border: 1px solid var(--borda); transition: transform .2s, border-color .2s, background .2s; }
-.chip:hover { transform: translateY(-2px); border-color: var(--ac); }
-.chip:focus-visible { outline: 3px solid var(--ac); outline-offset: 2px; }
-.chip.sel { background: var(--ac); color: var(--btn-tx); border-color: var(--ac); }
+/* PEÇA: a fileira de reações. */
+.chips {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+}
+
+/* PEÇA: o botão de reação. */
+.chip {
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Letra (botão de reação): letra normal (Inter), tamanho 0,92, grossura 600. Número maior = letra maior. */
+  font: 600 .92rem var(--fonte);
+  /* Cor das letras (botão de reação): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão de reação): 10 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 10px 16px;
+  /* Arredonda os cantos (botão de reação). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Cor de fundo (botão de reação): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Contorno (botão de reação): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,2 segundos, a borda em 0,2 segundos e o fundo em 0,2 segundos. Número maior = mais lento. */
+  transition: transform .2s, border-color .2s, background .2s;
+}
+
+/* PEÇA: o botão de reação quando o mouse passa em cima. */
+.chip:hover {
+  /* Movimento (botão de reação): sobe 2 pontinhos. */
+  transform: translateY(-2px);
+  /* Cor da borda (botão de reação): a cor de destaque do tema. Troque o código para mudar a cor. */
+  border-color: var(--ac);
+}
+
+/* PEÇA: o botão de reação quando escolhido pelo teclado. */
+.chip:focus-visible {
+  /* Contorno de destaque em volta (botão de reação), cor a cor de destaque do tema. */
+  outline: 3px solid var(--ac);
+  /* Distância entre a peça e esse contorno. */
+  outline-offset: 2px;
+}
+
+/* PEÇA: o botão de reação com "sel" ligado. */
+.chip.sel {
+  /* Cor de fundo (botão de reação): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Cor das letras (botão de reação): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Cor da borda (botão de reação): a cor de destaque do tema. Troque o código para mudar a cor. */
+  border-color: var(--ac);
+}
 
 /* Fileira de botões finais (ler carta / ver de novo). */
-.acoes { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+/* PEÇA: a fileira de botões finais. */
+.acoes {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+  /* Junta as peças no meio. */
+  justify-content: center;
+}
 
 /* ---------- Rodapé da música ---------- */
 
-/* Faixa fixa embaixo: equalizador | legenda | botão mudo. Respeita a área segura do iPhone. */
+/* Faixa fixa embaixo: equalizador à esquerda e botão de mudo à direita. Respeita a área segura do iPhone. */
+/* PEÇA: o rodapé da música. */
 #rodape {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; align-items: center; gap: 12px;
+  /* Empurra o equalizador para a esquerda e o botão de mudo para a direita. */
+  justify-content: space-between;
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 5;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (rodapé da música): calculado para não ficar atrás do rodapé. */
   padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  /* Fundo em degradê (rodapé da música), nas cores: a 1ª cor de fundo do tema e transparente. Troque os códigos para mudar as cores. */
   background: linear-gradient(0deg, var(--bg-a) 20%, transparent);
 }
-#rodape[hidden] { display: none; }
+
+/* PEÇA: o rodapé da música quando está escondido. */
+#rodape[hidden] {
+  /* Esconde esta peça da tela. */
+  display: none;
+}
 
 /* Equalizador: 5 barras que sobem e descem em tempos diferentes. */
-#eq { display: flex; align-items: flex-end; gap: 3px; height: 22px; flex: none; }
-#eq i { width: 4px; height: 100%; background: var(--ac); border-radius: 2px; transform-origin: bottom; animation: eq 1s ease-in-out infinite; }
-#eq i:nth-child(2) { animation-duration: .7s; animation-delay: -.2s; }
-#eq i:nth-child(3) { animation-duration: 1.2s; animation-delay: -.5s; }
-#eq i:nth-child(4) { animation-duration: .85s; animation-delay: -.1s; }
-#eq i:nth-child(5) { animation-duration: 1.05s; animation-delay: -.7s; }
-@keyframes eq { 0%, 100% { transform: scaleY(.2); } 50% { transform: scaleY(1); } }
-#rodape.mudo #eq i, #rodape.parado #eq i { animation-play-state: paused; transform: scaleY(.2); }
+/* PEÇA: o equalizador. */
+#eq {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Encosta as peças no fim. */
+  align-items: flex-end;
+  /* Espaço entre as peças de dentro: 3 pontinhos. Número maior = mais separadas. */
+  gap: 3px;
+  /* Altura (equalizador): 22 pontinhos. Número maior = mais alto. */
+  height: 22px;
+  /* Mantém o tamanho, sem encolher nem esticar. */
+  flex: none;
+}
 
-/* Legenda: ocupa o espaço do meio, uma linha só, troca com fade. */
-#legenda { flex: 1; text-align: center; font-size: .95rem; font-style: italic; color: var(--tx); min-height: 1.4em; transition: opacity .6s ease; text-shadow: 0 1px 10px rgba(0, 0, 0, .35); }
-#legenda.troca { opacity: 0; }
+/* PEÇA: a peça dentro de: o equalizador. */
+#eq i {
+  /* Largura (peça): 4 pontinhos. Número maior = mais largo. */
+  width: 4px;
+  /* Altura (peça): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Cor de fundo (peça): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 2px;
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: bottom;
+  /* Liga a animação "eq": dura 1 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: eq 1s ease-in-out infinite;
+}
+
+/* PEÇA: a peça (o 2º) dentro de: o equalizador. */
+#eq i:nth-child(2) {
+  /* Quanto tempo dura a animação. Número menor = mais rápida. */
+  animation-duration: .7s;
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: -.2s;
+}
+
+/* PEÇA: a peça (o 3º) dentro de: o equalizador. */
+#eq i:nth-child(3) {
+  /* Quanto tempo dura a animação. Número menor = mais rápida. */
+  animation-duration: 1.2s;
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: -.5s;
+}
+
+/* PEÇA: a peça (o 4º) dentro de: o equalizador. */
+#eq i:nth-child(4) {
+  /* Quanto tempo dura a animação. Número menor = mais rápida. */
+  animation-duration: .85s;
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: -.1s;
+}
+
+/* PEÇA: a peça (o 5º) dentro de: o equalizador. */
+#eq i:nth-child(5) {
+  /* Quanto tempo dura a animação. Número menor = mais rápida. */
+  animation-duration: 1.05s;
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: -.7s;
+}
+
+/* ANIMAÇÃO "eq": as barrinhas do equalizador sobem e descem. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes eq {
+  /* Como está quando já passou 0% e  100% do tempo da animação: */
+  0%, 100% {
+    /* Movimento: encolhe para 20% da altura. */
+    transform: scaleY(.2);
+  }
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: fica do tamanho normal. */
+    transform: scaleY(1);
+  }
+}
+
+/* PEÇA: a peça dentro de: o equalizador e a peça dentro de: o equalizador. */
+#rodape.mudo #eq i, #rodape.parado #eq i {
+  /* Pausa a animação. */
+  animation-play-state: paused;
+  /* Movimento (peça): encolhe para 20% da altura. */
+  transform: scaleY(.2);
+}
 
 /* Botão de mudo: redondo, discreto. */
-#mudo { appearance: none; flex: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.05rem; color: var(--tx); background: var(--vidro); border: 1px solid var(--borda); }
-#mudo:focus-visible { outline: 3px solid var(--ac); outline-offset: 2px; }
-#mudo[hidden] { display: none; }
+/* PEÇA: o botão de mudo. */
+#mudo {
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Mantém o tamanho, sem encolher nem esticar. */
+  flex: none;
+  /* Largura (botão de mudo): 40 pontinhos. Número maior = mais largo. */
+  width: 40px;
+  /* Altura (botão de mudo): 40 pontinhos. Número maior = mais alto. */
+  height: 40px;
+  /* Arredonda os cantos (botão de mudo). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Tamanho da letra (botão de mudo): 1,05 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.05rem;
+  /* Cor das letras (botão de mudo): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Cor de fundo (botão de mudo): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Contorno (botão de mudo): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+}
+
+/* PEÇA: o botão de mudo quando escolhido pelo teclado. */
+#mudo:focus-visible {
+  /* Contorno de destaque em volta (botão de mudo), cor a cor de destaque do tema. */
+  outline: 3px solid var(--ac);
+  /* Distância entre a peça e esse contorno. */
+  outline-offset: 2px;
+}
+
+/* PEÇA: o botão de mudo quando está escondido. */
+#mudo[hidden] {
+  /* Esconde esta peça da tela. */
+  display: none;
+}
 
 /* ---------- Carta (dialog) e aviso ---------- */
-#carta { margin: auto; width: min(92vw, 520px); max-height: 82vh; border: 0; border-radius: var(--raio); background: #fffaf2; color: #3a2a2a; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .6); }
-#carta::backdrop { background: rgba(0, 0, 0, .6); backdrop-filter: blur(4px); }
-#carta article { padding: 28px 24px; max-height: 82vh; overflow-y: auto; -webkit-user-select: text; user-select: text; }
-#cartaTexto p { font-family: var(--fonte-mao); font-size: 1.45rem; line-height: 1.35; margin-bottom: .8em; }
-#carta .btn { margin-top: 10px; }
+/* PEÇA: a janela da carta. */
+#carta {
+  /* Espaço de fora (janela da carta): centraliza a peça sozinho. */
+  margin: auto;
+  /* Largura (janela da carta): o menor entre 92% da largura da tela e 520 pontinhos. Número maior = mais largo. */
+  width: min(92vw, 520px);
+  /* Altura máxima (janela da carta): 82% da altura da tela. Número maior = mais alto. */
+  max-height: 82vh;
+  /* Tira o contorno (janela da carta). */
+  border: 0;
+  /* Arredonda os cantos (janela da carta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: var(--raio);
+  /* Cor de fundo (janela da carta): branco. Troque o código para mudar a cor. */
+  background: #fffaf2;
+  /* Cor das letras (janela da carta): vermelho bem escuro. Troque o código para mudar a cor. */
+  color: #3a2a2a;
+  /* Sombra ou brilho em volta (janela da carta), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .6);
+}
+
+/* PEÇA: escurecido atrás de: a janela da carta. */
+#carta::backdrop {
+  /* Cor de fundo (escurecido atrás de: a janela da carta): preto, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(0, 0, 0, .6);
+  /* Borra o que está atrás, como um vidro fosco. */
+  backdrop-filter: blur(4px);
+}
+
+/* PEÇA: o artigo dentro de: a janela da carta. */
+#carta article {
+  /* Espaço de dentro, entre a borda e o conteúdo, (artigo): 28 pontinhos em cima e embaixo, 24 pontinhos nos lados. */
+  padding: 28px 24px;
+  /* Altura máxima (artigo): 82% da altura da tela. Número maior = mais alto. */
+  max-height: 82vh;
+  /* Deixa rolar para cima e para baixo se não couber. */
+  overflow-y: auto;
+  /* Deixa selecionar o texto. */
+  -webkit-user-select: text;
+  /* Deixa selecionar o texto. */
+  user-select: text;
+}
+
+/* PEÇA: o parágrafo dentro de: o texto da carta. */
+#cartaTexto p {
+  /* Tipo de letra (parágrafo): letra de mão (Caveat). */
+  font-family: var(--fonte-mao);
+  /* Tamanho da letra (parágrafo): 1,45 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.45rem;
+  /* Espaço entre as linhas do texto: 1,35. Número maior = linhas mais separadas. */
+  line-height: 1.35;
+  /* Espaço de fora, embaixo: 0,8 vezes o tamanho da letra daqui. */
+  margin-bottom: .8em;
+}
+
+/* PEÇA: o botão dentro de: a janela da carta. */
+#carta .btn {
+  /* Espaço de fora, em cima: 10 pontinhos. */
+  margin-top: 10px;
+}
 
 /* Aviso rápido (toast) no meio de baixo da tela. */
-#aviso { position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); z-index: 9; max-width: 88vw; padding: 12px 20px; border-radius: 999px; background: var(--tx); color: var(--bg-a); font-size: .92rem; opacity: 0; pointer-events: none; transition: opacity .4s, transform .4s; }
-#aviso.on { opacity: 1; transform: translate(-50%, 0); }
+/* PEÇA: o aviso rápido. */
+#aviso {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância de baixo: uma conta feita pelo navegador. */
+  bottom: calc(86px + env(safe-area-inset-bottom));
+  /* Movimento (aviso rápido): vai para a esquerda 50% do espaço e desce 20 pontinhos. */
+  transform: translate(-50%, 20px);
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 9;
+  /* Largura máxima (aviso rápido): 88% da largura da tela. Número maior = mais largo. */
+  max-width: 88vw;
+  /* Espaço de dentro, entre a borda e o conteúdo, (aviso rápido): 12 pontinhos em cima e embaixo, 20 pontinhos nos lados. */
+  padding: 12px 20px;
+  /* Arredonda os cantos (aviso rápido). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Cor de fundo (aviso rápido): a cor do texto do tema. Troque o código para mudar a cor. */
+  background: var(--tx);
+  /* Cor das letras (aviso rápido): a 1ª cor de fundo do tema. Troque o código para mudar a cor. */
+  color: var(--bg-a);
+  /* Tamanho da letra (aviso rápido): 0,92 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .92rem;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,4 segundos e o movimento em 0,4 segundos. Número maior = mais lento. */
+  transition: opacity .4s, transform .4s;
+}
+
+/* PEÇA: o aviso rápido com "on" ligado. */
+#aviso.on {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+  /* Movimento (aviso rápido): vai para a esquerda 50% do espaço e desce zero. */
+  transform: translate(-50%, 0);
+}
 
 /* Quem prefere menos movimento (acessibilidade): animações quase instantâneas. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  /* PEÇA: todas as peças, enfeite desenhado em: todas as peças e enfeite desenhado em: todas as peças. */
+  *, *::before, *::after {
+    /* Quanto tempo dura a animação. Número menor = mais rápida. */
+    animation-duration: .01ms !important;
+    /* Quantas vezes a animação repete. */
+    animation-iteration-count: 1 !important;
+    /* Quanto tempo dura a mudança. Número maior = mais lenta. */
+    transition-duration: .01ms !important;
+  }
 }

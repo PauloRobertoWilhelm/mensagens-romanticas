@@ -1,73 +1,153 @@
 <!DOCTYPE html>
-<!-- index.html — página que o destinatário abre: index.html?k=CHAVE -->
-<!-- Idioma da página: português do Brasil; data-tema é trocado pelo main.js conforme a mensagem. -->
+<!-- ==========================================================
+     index.html é o "esqueleto" da página que a pessoa abre pelo link.
+     Ele só diz QUAIS peças existem. As cores estão na pasta css,
+     a lógica está na pasta js e os textos estão na pasta data.
+     Tudo que está entre estes sinais é explicação: o navegador ignora.
+     Cada explicação fala da linha logo abaixo.
+     ========================================================== -->
+<!-- Início da página. lang diz que é em português; data-tema é o tema de cores, que o código troca depois. -->
 <html lang="pt-BR" data-tema="noite">
+<!-- Parte invisível: informações sobre a página, que não aparecem na tela. -->
 <head>
-  <!-- Codificação de caracteres (acentos e emojis). -->
+  <!-- Permite acentos e emojis. Sem esta linha, "coração" pode virar letras estranhas. -->
   <meta charset="utf-8">
-  <!-- Layout de celular: largura real da tela e uso da área toda (inclusive notch do iPhone). -->
+  <!-- Faz a página caber certinho na tela do celular, inclusive no iPhone. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- Pede aos buscadores para NÃO listar a página (mensagens são privadas). -->
+  <!-- Pede ao Google para não mostrar esta página nas buscas, porque as mensagens são particulares. -->
   <meta name="robots" content="noindex, nofollow">
-  <!-- Cor da barra do navegador no celular (o main.js ajusta ao tema). -->
+  <!-- Cor da barrinha do navegador no celular. O código troca para combinar com o tema. -->
   <meta name="theme-color" content="#0a0a1f">
-  <!-- Título da aba (genérico de propósito, não entrega o conteúdo). -->
+  <!-- Nome que aparece na aba. Pode trocar o texto. Ele é genérico para não contar a surpresa. -->
   <title>Uma mensagem pra você 💌</title>
-  <!-- Fontes do Google (opcionais: se não carregarem, entram fontes do sistema). -->
+  <!-- Avisa o navegador que as letras vêm do Google, para ele já ir preparando a conexão. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Mesma coisa, para o lugar onde os arquivos das letras ficam guardados. -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Baixa os tipos de letra do Google. Se a internet falhar, o site usa as letras do próprio celular. -->
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Caveat:wght@500;700&family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&family=Monoton&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Press+Start+2P&family=Rye&family=Space+Mono&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
-  <!-- Estilos: estrutura primeiro, depois as cores dos temas. -->
+  <!-- Roupa básica do site: botões, textos, tela final e rodapé. -->
   <link rel="stylesheet" href="css/base.css">
+  <!-- Os 10 temas de cores. Para mudar as cores do site, comece por este arquivo. -->
   <link rel="stylesheet" href="css/temas.css">
-  <!-- Estilos próprios das artes, um arquivo por categoria. -->
+  <!-- Visual das 20 animações de paquera. -->
   <link rel="stylesheet" href="css/artes-paquera.css">
+  <!-- Visual das 20 animações de namoro. -->
   <link rel="stylesheet" href="css/artes-namoro.css">
+  <!-- Visual das 20 animações de amigos. -->
   <link rel="stylesheet" href="css/artes-amigos.css">
+  <!-- Visual das 20 animações de datas especiais. -->
   <link rel="stylesheet" href="css/artes-datas.css">
+  <!-- Visual dos capítulos extras e do brilho do dedo. -->
+  <link rel="stylesheet" href="css/capitulos.css">
+  <!-- Visual do filme de frases. -->
+  <link rel="stylesheet" href="css/filme.css">
+  <!-- Polimento moderno: fundo animado, leitor de digital, papel com textura e inclinação 3D. -->
+  <link rel="stylesheet" href="css/acabamento.css">
+<!-- Fim da parte invisível. -->
 </head>
+<!-- Parte visível: tudo que aparece na tela fica aqui dentro. -->
 <body>
-  <!-- Canvas das partículas (corações, pétalas...) atrás de tudo. -->
+  <!-- Quadro de desenho do fundo animado tecnológico, atrás de tudo. -->
+  <canvas id="cenario" aria-hidden="true"></canvas>
+  <!-- Quadro de desenho onde flutuam as partículas (corações, estrelas...). -->
   <canvas id="fundo" aria-hidden="true"></canvas>
-  <!-- Palco: o JS coloca aqui as cenas, uma de cada vez. -->
+  <!-- Palco: lugar vazio onde o código coloca cada tela da animação. -->
   <main id="palco" aria-live="polite"></main>
+  <!-- Quadro de desenho por cima de tudo, onde aparecem as faíscas do toque e o rastro do dedo. -->
+  <canvas id="brilho" aria-hidden="true"></canvas>
 
-  <!-- Rodapé da música: equalizador, legenda e botão de mudo (aparece quando a música é preparada). -->
+  <!-- Rodapé da música. Começa escondido e aparece quando a mensagem abre. -->
   <footer id="rodape" hidden>
+    <!-- Equalizador: as 5 barrinhas que dançam junto com a música. -->
     <div id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-    <p id="legenda" aria-live="off"></p>
+    <!-- Botão de ligar e desligar o som. -->
     <button id="mudo" type="button" aria-label="Silenciar música">🔊</button>
+  <!-- Fim do rodapé. -->
   </footer>
 
-  <!-- Janela da carta longa (abre pelo botão "ler a carta"). -->
+  <!-- Janela da carta longa. Abre quando a pessoa toca em "ler a carta". -->
   <dialog id="carta">
+    <!-- Folha de papel da carta. -->
     <article>
+      <!-- Lugar onde o texto da carta é colocado. -->
       <div id="cartaTexto"></div>
+      <!-- Botão de fechar a carta. Pode trocar a palavra "fechar". -->
       <button id="cartaFechar" class="btn" type="button">fechar</button>
+    <!-- Fim da folha. -->
     </article>
+  <!-- Fim da janela da carta. -->
   </dialog>
 
-  <!-- Aviso rápido (toast). -->
+  <!-- Aviso rápido que aparece embaixo e some sozinho. -->
   <div id="aviso" role="status"></div>
 
-  <!-- Scripts clássicos (sem módulos) na ordem certa: dados, ferramentas, motor, início. -->
+  <!-- Daqui para baixo o navegador carrega o código. A ORDEM IMPORTA: não troque as linhas de lugar. -->
+  <!-- Ajustes gerais, como o número do WhatsApp. -->
   <script src="data/config.js"></script>
+  <!-- As 4 categorias: música e botões de reação. -->
   <script src="data/categorias.js"></script>
+  <!-- Ferramentas para escrever as mensagens. -->
   <script src="data/base.js"></script>
+  <!-- Textos dos 20 links de paquera. -->
   <script src="data/mensagens-paquera.js"></script>
+  <!-- Textos dos 20 links de namoro. -->
   <script src="data/mensagens-namoro.js"></script>
+  <!-- Textos dos 20 links de amigos. -->
   <script src="data/mensagens-amigos.js"></script>
+  <!-- Textos dos 20 links de datas especiais. -->
   <script src="data/mensagens-datas.js"></script>
+  <!-- Frases do filme de frases de paquera. -->
+  <script src="data/frases-paquera.js"></script>
+  <!-- Frases do filme de frases de namoro. -->
+  <script src="data/frases-namoro.js"></script>
+  <!-- Frases do filme de frases de amigos. -->
+  <script src="data/frases-amigos.js"></script>
+  <!-- Frases do filme de frases de datas especiais. -->
+  <script src="data/frases-datas.js"></script>
+  <!-- Qual fundo animado cada link usa. -->
+  <script src="data/cenarios.js"></script>
+  <!-- Textos dos capítulos extras de paquera. -->
+  <script src="data/capitulos-paquera.js"></script>
+  <!-- Textos dos capítulos extras de namoro. -->
+  <script src="data/capitulos-namoro.js"></script>
+  <!-- Textos dos capítulos extras de amigos. -->
+  <script src="data/capitulos-amigos.js"></script>
+  <!-- Textos dos capítulos extras de datas especiais. -->
+  <script src="data/capitulos-datas.js"></script>
+  <!-- Pequenas ajudas usadas em todo o site. -->
   <script src="js/util.js"></script>
+  <!-- Transforma o código do link no número da mensagem. -->
   <script src="js/chave.js"></script>
+  <!-- Desenha as partículas do fundo. -->
   <script src="js/fundo.js"></script>
+  <!-- Desenha os fundos animados tecnológicos. -->
+  <script src="js/cenarios.js"></script>
+  <!-- Desenha as faíscas do toque e o rastro do dedo. -->
+  <script src="js/efeitos.js"></script>
+  <!-- Toca a música. -->
   <script src="js/musica.js"></script>
+  <!-- Peças que as animações usam: toque, arrasto, raspadinha e som. -->
   <script src="js/kit.js"></script>
+  <!-- As 20 animações de paquera. -->
   <script src="js/artes-paquera.js"></script>
+  <!-- As 20 animações de namoro. -->
   <script src="js/artes-namoro.js"></script>
+  <!-- As 20 animações de amigos. -->
   <script src="js/artes-amigos.js"></script>
+  <!-- As 20 animações de datas especiais. -->
   <script src="js/artes-datas.js"></script>
+  <!-- Tela do leitor de digital, que abre cada mensagem. -->
+  <script src="js/abertura.js"></script>
+  <!-- Mostra as frases, uma de cada vez. -->
+  <script src="js/filme.js"></script>
+  <!-- As 8 brincadeiras dos capítulos extras. -->
+  <script src="js/capitulos.js"></script>
+  <!-- Roda a animação, depois os capítulos e por fim a tela final. -->
   <script src="js/cenas.js"></script>
+  <!-- Ponto de partida: lê o link e começa tudo. -->
   <script src="js/main.js"></script>
+<!-- Fim da parte visível. -->
 </body>
+<!-- Fim da página. -->
 </html>

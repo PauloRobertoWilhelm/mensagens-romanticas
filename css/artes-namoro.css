@@ -3,216 +3,2353 @@
    Cada bloco começa com o nome da arte; .a-nome limita o estilo a ela.
    ========================================================== */
 
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
 /* ---------- 21 lacre: papel antigo e cera vermelha ---------- */
-.a-lacre .papel { position: relative; width: min(100%, 340px); min-height: 230px; padding: 26px 20px; display: flex; flex-direction: column; gap: 10px; color: #3a2a2a; background: linear-gradient(170deg, #fff6e4, #efdcb9); border-radius: 4px; box-shadow: 0 18px 34px -14px #000; transition: min-height .9s ease; }
-.a-lacre .papel.aberta { min-height: 340px; }
-.a-lacre .cera { --p: 0; position: absolute; top: 50%; left: 50%; width: 96px; height: 96px; margin: -48px; display: grid; place-items: center; appearance: none; border: 0; border-radius: 47% 53% 50% 50%; color: #ffd7c9; font: 400 2.1rem var(--fonte-titulo); background: radial-gradient(circle at 36% 30%, #d4413f, #8c1616 72%); box-shadow: 0 6px 12px rgba(0, 0, 0, .4), inset 0 0 0 5px rgba(0, 0, 0, .12); transform: scale(calc(1 + var(--p) * .18)) rotate(calc(var(--p) * 7deg)); filter: brightness(calc(1 + var(--p) * .7)); }
-.a-lacre .cera.quebrou { animation: cera-cai .9s ease forwards; }
-@keyframes cera-cai { to { transform: translateY(240px) rotate(70deg); opacity: 0; } }
-.a-lacre .mao { font: 500 1.65rem/1.15 var(--fonte-mao); text-align: left; }
-.a-lacre .dest { color: #8c1616; text-shadow: none; }
+/* PEÇA: papel (link 21, lacre). */
+.a-lacre .papel {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (papel): o menor entre 100% do espaço e 340 pontinhos. Número maior = mais largo. */
+  width: min(100%, 340px);
+  /* Altura mínima (papel): 230 pontinhos. Número maior = mais alto. */
+  min-height: 230px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (papel): 26 pontinhos em cima e embaixo, 20 pontinhos nos lados. */
+  padding: 26px 20px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Cor das letras (papel): vermelho bem escuro. Troque o código para mudar a cor. */
+  color: #3a2a2a;
+  /* Fundo em degradê (papel), nas cores: branco e laranja bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(170deg, #fff6e4, #efdcb9);
+  /* Arredonda os cantos (papel). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px;
+  /* Sombra ou brilho em volta (papel), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 18px 34px -14px #000;
+  /* Faz a mudança acontecer devagar, sem pular: tudo em 0,9 segundos. Número maior = mais lento. */
+  transition: min-height .9s ease;
+}
+
+/* PEÇA: papel com "aberta" ligado (link 21, lacre). */
+.a-lacre .papel.aberta {
+  /* Altura mínima (papel): 340 pontinhos. Número maior = mais alto. */
+  min-height: 340px;
+}
+
+/* PEÇA: cera (link 21, lacre). */
+.a-lacre .cera {
+  /* Valor inicial guardado com o nome --p. O código muda esse valor enquanto a animação roda. */
+  --p: 0;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (cera): 96 pontinhos. Número maior = mais largo. */
+  width: 96px;
+  /* Altura (cera): 96 pontinhos. Número maior = mais alto. */
+  height: 96px;
+  /* Espaço de fora (cera): menos 48 pontinhos em todos os lados. */
+  margin: -48px;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Coloca o conteúdo bem no centro. */
+  place-items: center;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (cera). */
+  border: 0;
+  /* Arredonda os cantos (cera). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 47% 53% 50% 50%;
+  /* Cor das letras (cera): vermelho-alaranjado bem clarinho. Troque o código para mudar a cor. */
+  color: #ffd7c9;
+  /* Letra (cera): letra de título (Playfair), tamanho 2,1, grossura 400. Número maior = letra maior. */
+  font: 400 2.1rem var(--fonte-titulo);
+  /* Fundo redondo (cera), nas cores: vermelho e vermelho escuro. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 36% 30%, #d4413f, #8c1616 72%);
+  /* Sombra ou brilho em volta (cera), na cor: preto, meio transparente e preto, quase invisível. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .4), inset 0 0 0 5px rgba(0, 0, 0, .12);
+  /* Movimento (cera): calc e calc. */
+  transform: scale(calc(1 + var(--p) * .18)) rotate(calc(var(--p) * 7deg));
+  /* Efeito visual (cera): brilho. */
+  filter: brightness(calc(1 + var(--p) * .7));
+}
+
+/* PEÇA: cera com "quebrou" ligado (link 21, lacre). */
+.a-lacre .cera.quebrou {
+  /* Liga a animação "cera-cai": dura 0,9 segundos. Número menor = mais rápida. */
+  animation: cera-cai .9s ease forwards;
+}
+
+/* ANIMAÇÃO "cera-cai": o lacre quebrado cai. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes cera-cai {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: desce 240 pontinhos e gira 70 graus para a direita. */
+    transform: translateY(240px) rotate(70deg);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* PEÇA: mao (link 21, lacre). */
+.a-lacre .mao {
+  /* Letra (mao): letra de mão (Caveat), tamanho 1,65, grossura 500. Número maior = letra maior. */
+  font: 500 1.65rem/1.15 var(--fonte-mao);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: as palavras em destaque (link 21, lacre). */
+.a-lacre .dest {
+  /* Cor das letras (palavras em destaque): vermelho escuro. Troque o código para mudar a cor. */
+  color: #8c1616;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 22 instalador: janela de sistema antigo ---------- */
-.a-instalador.cena { background: #008080; }
-.a-instalador .janela { width: min(100%, 350px); background: #c3c3c3; color: #111; box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555, 6px 8px 0 rgba(0, 0, 0, .35); font-family: var(--fonte-mono); text-align: left; }
-.a-instalador header { margin: 3px; padding: 5px 8px; color: #fff; background: linear-gradient(90deg, #000080, #1084d0); font: 700 .95rem var(--fonte-mono); }
-.a-instalador .conteudo { padding: 14px; display: flex; flex-direction: column; gap: 12px; font-size: .98rem; line-height: 1.35; min-height: 200px; position: relative; }
-.a-instalador .barra { height: 24px; background: #fff; box-shadow: inset 2px 2px 0 #555; padding: 3px; }
-.a-instalador .barra i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(90deg, #000080 0 11px, transparent 11px 14px); transition: width 1s linear; }
-.a-instalador .status { min-height: 1.3em; font-size: .85rem; }
-.a-instalador .ops { display: flex; justify-content: center; gap: 14px; }
-.a-instalador .btn { align-self: center; padding: 8px 26px; border-radius: 0; color: #111; background: #c3c3c3; box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555; font: 700 1rem var(--fonte-mono); transition: transform .12s; }
-.a-instalador .dest { color: #a00000; text-shadow: none; font-style: normal; }
+/* PEÇA: a tela inteira desta arte (link 22, instalador). */
+.a-instalador.cena {
+  /* Cor de fundo (tela inteira desta arte): verde-água escuro. Troque o código para mudar a cor. */
+  background: #008080;
+}
+
+/* PEÇA: janela (link 22, instalador). */
+.a-instalador .janela {
+  /* Largura (janela): o menor entre 100% do espaço e 350 pontinhos. Número maior = mais largo. */
+  width: min(100%, 350px);
+  /* Cor de fundo (janela): cinza claro. Troque o código para mudar a cor. */
+  background: #c3c3c3;
+  /* Cor das letras (janela): preto. Troque o código para mudar a cor. */
+  color: #111;
+  /* Sombra ou brilho em volta (janela), na cor: branco, cinza escuro e preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555, 6px 8px 0 rgba(0, 0, 0, .35);
+  /* Tipo de letra (janela): letra de computador (Space Mono). */
+  font-family: var(--fonte-mono);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: o topo (link 22, instalador). */
+.a-instalador header {
+  /* Espaço de fora (topo): 3 pontinhos em todos os lados. */
+  margin: 3px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (topo): 5 pontinhos em cima e embaixo, 8 pontinhos nos lados. */
+  padding: 5px 8px;
+  /* Cor das letras (topo): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Fundo em degradê (topo), nas cores: azul escuro e azul. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, #000080, #1084d0);
+  /* Letra (topo): letra de computador (Space Mono), tamanho 0,95, grossura 700. Número maior = letra maior. */
+  font: 700 .95rem var(--fonte-mono);
+}
+
+/* PEÇA: conteudo (link 22, instalador). */
+.a-instalador .conteudo {
+  /* Espaço de dentro, entre a borda e o conteúdo, (conteudo): 14 pontinhos em todos os lados. */
+  padding: 14px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+  /* Tamanho da letra (conteudo): 0,98 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .98rem;
+  /* Espaço entre as linhas do texto: 1,35. Número maior = linhas mais separadas. */
+  line-height: 1.35;
+  /* Altura mínima (conteudo): 200 pontinhos. Número maior = mais alto. */
+  min-height: 200px;
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+}
+
+/* PEÇA: a barra (link 22, instalador). */
+.a-instalador .barra {
+  /* Altura (barra): 24 pontinhos. Número maior = mais alto. */
+  height: 24px;
+  /* Cor de fundo (barra): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Sombra ou brilho em volta (barra), na cor: cinza escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 2px 2px 0 #555;
+  /* Espaço de dentro, entre a borda e o conteúdo, (barra): 3 pontinhos em todos os lados. */
+  padding: 3px;
+}
+
+/* PEÇA: a peça dentro de: a barra (link 22, instalador). */
+.a-instalador .barra i {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Altura (peça): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Largura (peça): zero. Número maior = mais largo. */
+  width: 0;
+  /* Fundo (peça) em listras repetidas, nas cores: azul escuro e transparente. */
+  background: repeating-linear-gradient(90deg, #000080 0 11px, transparent 11px 14px);
+  /* Faz a mudança acontecer devagar, sem pular: a largura em 1 segundos. Número maior = mais lento. */
+  transition: width 1s linear;
+}
+
+/* PEÇA: status (link 22, instalador). */
+.a-instalador .status {
+  /* Altura mínima (status): 1,3 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 1.3em;
+  /* Tamanho da letra (status): 0,85 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .85rem;
+}
+
+/* PEÇA: ops (link 22, instalador). */
+.a-instalador .ops {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+}
+
+/* PEÇA: o botão (link 22, instalador). */
+.a-instalador .btn {
+  /* Alinha só esta peça, diferente das outras. */
+  align-self: center;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão): 8 pontinhos em cima e embaixo, 26 pontinhos nos lados. */
+  padding: 8px 26px;
+  /* Arredonda os cantos (botão). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 0;
+  /* Cor das letras (botão): preto. Troque o código para mudar a cor. */
+  color: #111;
+  /* Cor de fundo (botão): cinza claro. Troque o código para mudar a cor. */
+  background: #c3c3c3;
+  /* Sombra ou brilho em volta (botão), na cor: branco e cinza escuro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555;
+  /* Letra (botão): letra de computador (Space Mono), tamanho 1, grossura 700. Número maior = letra maior. */
+  font: 700 1rem var(--fonte-mono);
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,12 segundos. Número maior = mais lento. */
+  transition: transform .12s;
+}
+
+/* PEÇA: as palavras em destaque (link 22, instalador). */
+.a-instalador .dest {
+  /* Cor das letras (palavras em destaque): vermelho escuro. Troque o código para mudar a cor. */
+  color: #a00000;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
 
 /* ---------- 23 bateria: tela de carregamento ---------- */
-.a-bateria .aviso { font: 600 .85rem var(--fonte); letter-spacing: .08em; color: var(--ac); }
-.a-bateria .pilha { position: relative; width: min(82vw, 300px); height: 120px; padding: 7px; border: 5px solid var(--tx); border-radius: 18px; }
-.a-bateria .pilha::after { content: ''; position: absolute; top: 50%; right: -18px; width: 12px; height: 42px; margin-top: -21px; border-radius: 0 7px 7px 0; background: var(--tx); }
-.a-bateria .pilha i { display: block; height: 100%; width: 3%; border-radius: 9px; background: #e0245e; }
-.a-bateria .pilha.boa i { background: linear-gradient(90deg, #35c46f, #8df0a8); }
-.a-bateria .pilha b { position: absolute; inset: 0; display: grid; place-items: center; font: 800 2.6rem var(--fonte); color: var(--tx); mix-blend-mode: difference; }
-.a-bateria .texto { min-height: 3.2em; }
-.a-bateria .abraco { width: 150px; height: 150px; appearance: none; border: 0; border-radius: 50%; color: var(--btn-tx); background: radial-gradient(circle at 40% 35%, var(--ac2), var(--ac)); font: 700 1rem var(--fonte); box-shadow: 0 0 0 0 var(--sombra); animation: pulsa-abraco 1.8s ease-out infinite; }
-@keyframes pulsa-abraco { to { box-shadow: 0 0 0 30px transparent; } }
+/* PEÇA: aviso (link 23, bateria). */
+.a-bateria .aviso {
+  /* Letra (aviso): letra normal (Inter), tamanho 0,85, grossura 600. Número maior = letra maior. */
+  font: 600 .85rem var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .08em;
+  /* Cor das letras (aviso): a cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac);
+}
+
+/* PEÇA: pilha (link 23, bateria). */
+.a-bateria .pilha {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (pilha): o menor entre 82% da largura da tela e 300 pontinhos. Número maior = mais largo. */
+  width: min(82vw, 300px);
+  /* Altura (pilha): 120 pontinhos. Número maior = mais alto. */
+  height: 120px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (pilha): 7 pontinhos em todos os lados. */
+  padding: 7px;
+  /* Contorno (pilha): lisa, 5 pontinhos de grossura, cor a cor do texto do tema. */
+  border: 5px solid var(--tx);
+  /* Arredonda os cantos (pilha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 18px;
+}
+
+/* PEÇA: enfeite desenhado em: pilha (link 23, bateria). */
+.a-bateria .pilha::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Distância da direita: menos 18 pontinhos. */
+  right: -18px;
+  /* Largura (enfeite desenhado em: pilha): 12 pontinhos. Número maior = mais largo. */
+  width: 12px;
+  /* Altura (enfeite desenhado em: pilha): 42 pontinhos. Número maior = mais alto. */
+  height: 42px;
+  /* Espaço de fora, em cima: menos 21 pontinhos. */
+  margin-top: -21px;
+  /* Arredonda os cantos (enfeite desenhado em: pilha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 0 7px 7px 0;
+  /* Cor de fundo (enfeite desenhado em: pilha): a cor do texto do tema. Troque o código para mudar a cor. */
+  background: var(--tx);
+}
+
+/* PEÇA: a peça dentro de: pilha (link 23, bateria). */
+.a-bateria .pilha i {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Altura (peça): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Largura (peça): 3% do espaço. Número maior = mais largo. */
+  width: 3%;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 9px;
+  /* Cor de fundo (peça): rosa. Troque o código para mudar a cor. */
+  background: #e0245e;
+}
+
+/* PEÇA: a peça quando pilha estiver com "boa" ligado (link 23, bateria). */
+.a-bateria .pilha.boa i {
+  /* Fundo em degradê (peça), nas cores: verde e verde claro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, #35c46f, #8df0a8);
+}
+
+/* PEÇA: o texto forte dentro de: pilha (link 23, bateria). */
+.a-bateria .pilha b {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Coloca o conteúdo bem no centro. */
+  place-items: center;
+  /* Letra (texto forte): letra normal (Inter), tamanho 2,6, grossura 800. Número maior = letra maior. */
+  font: 800 2.6rem var(--fonte);
+  /* Cor das letras (texto forte): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Mistura a cor com o que está atrás, como tinta. */
+  mix-blend-mode: difference;
+}
+
+/* PEÇA: o texto principal (link 23, bateria). */
+.a-bateria .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
+
+/* PEÇA: botão do abraço (link 23, bateria). */
+.a-bateria .abraco {
+  /* Largura (botão do abraço): 150 pontinhos. Número maior = mais largo. */
+  width: 150px;
+  /* Altura (botão do abraço): 150 pontinhos. Número maior = mais alto. */
+  height: 150px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (botão do abraço). */
+  border: 0;
+  /* Arredonda os cantos (botão do abraço). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor das letras (botão do abraço): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Fundo redondo (botão do abraço), nas cores: a 2ª cor de destaque do tema e a cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 40% 35%, var(--ac2), var(--ac));
+  /* Letra (botão do abraço): letra normal (Inter), tamanho 1, grossura 700. Número maior = letra maior. */
+  font: 700 1rem var(--fonte);
+  /* Sombra ou brilho em volta (botão do abraço), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 0 var(--sombra);
+  /* Liga a animação "pulsa-abraco": dura 1,8 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: pulsa-abraco 1.8s ease-out infinite;
+}
+
+/* ANIMAÇÃO "pulsa-abraco": um círculo de luz se espalha em volta do botão. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes pulsa-abraco {
+  /* Como a animação termina: */
+  to {
+    /* Sombra ou brilho em volta, na cor: transparente. Os números dizem o tamanho; o código diz a cor. */
+    box-shadow: 0 0 0 30px transparent;
+  }
+}
 
 /* ---------- 24 caixamusica: caixinha de madeira com coração que gira ---------- */
-.a-caixamusica .caixinha { position: relative; width: min(70vw, 250px); height: 150px; margin: 110px 34px 0 0; border-radius: 6px; background: linear-gradient(120deg, #7b4a2a, #4b2a14); box-shadow: 0 16px 28px -12px #000; }
-.a-caixamusica .tampa { position: absolute; bottom: 100%; left: 0; right: 0; height: 110px; border-radius: 6px 6px 0 0; background: linear-gradient(0deg, #b9d4df, #e7f1f5); border: 8px solid #5d3419; transform: perspective(500px) rotateX(-18deg); transform-origin: bottom; }
-.a-caixamusica .dancarina { position: absolute; top: -66px; left: 50%; margin-left: -30px; width: 60px; font: 400 4rem/1 serif; color: var(--ac); text-shadow: 0 0 16px var(--sombra); }
-.a-caixamusica .caixinha.toca .dancarina { animation: dancar 2s linear infinite; }
-@keyframes dancar { to { transform: rotateY(360deg); } }
-.a-caixamusica .manivela { position: absolute; top: 44%; right: -44px; width: 60px; height: 60px; appearance: none; border: 0; background: none; transition: transform .35s ease; }
-.a-caixamusica .manivela::before { content: ''; position: absolute; top: 26px; left: 0; width: 44px; height: 8px; background: #d9b64f; }
-.a-caixamusica .manivela::after { content: ''; position: absolute; top: 14px; left: 34px; width: 22px; height: 22px; border-radius: 50%; background: #d9b64f; }
-.a-caixamusica .texto { min-height: 3.2em; }
+/* PEÇA: caixinha (link 24, caixamusica). */
+.a-caixamusica .caixinha {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (caixinha): o menor entre 70% da largura da tela e 250 pontinhos. Número maior = mais largo. */
+  width: min(70vw, 250px);
+  /* Altura (caixinha): 150 pontinhos. Número maior = mais alto. */
+  height: 150px;
+  /* Espaço de fora (caixinha): 110 pontinhos em cima, 34 pontinhos à direita, zero embaixo, zero à esquerda. */
+  margin: 110px 34px 0 0;
+  /* Arredonda os cantos (caixinha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px;
+  /* Fundo em degradê (caixinha), nas cores: marrom. Troque os códigos para mudar as cores. */
+  background: linear-gradient(120deg, #7b4a2a, #4b2a14);
+  /* Sombra ou brilho em volta (caixinha), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 28px -12px #000;
+}
+
+/* PEÇA: tampa (link 24, caixamusica). */
+.a-caixamusica .tampa {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: 100% do espaço. */
+  bottom: 100%;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Altura (tampa): 110 pontinhos. Número maior = mais alto. */
+  height: 110px;
+  /* Arredonda os cantos (tampa). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px 6px 0 0;
+  /* Fundo em degradê (tampa), nas cores: azul bem clarinho e branco. Troque os códigos para mudar as cores. */
+  background: linear-gradient(0deg, #b9d4df, #e7f1f5);
+  /* Contorno (tampa): lisa, 8 pontinhos de grossura, cor marrom. */
+  border: 8px solid #5d3419;
+  /* Movimento (tampa): ganha profundidade 3D e tomba para trás menos 18 graus. */
+  transform: perspective(500px) rotateX(-18deg);
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: bottom;
+}
+
+/* PEÇA: dancarina (link 24, caixamusica). */
+.a-caixamusica .dancarina {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 66 pontinhos. */
+  top: -66px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Espaço de fora, à esquerda: menos 30 pontinhos. */
+  margin-left: -30px;
+  /* Largura (dancarina): 60 pontinhos. Número maior = mais largo. */
+  width: 60px;
+  /* Letra (dancarina): fonte serif, tamanho 4, grossura 400. Número maior = letra maior. */
+  font: 400 4rem/1 serif;
+  /* Cor das letras (dancarina): a cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac);
+  /* Brilho em volta das letras (dancarina), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 16px var(--sombra);
+}
+
+/* PEÇA: dancarina quando caixinha estiver com "toca" ligado (link 24, caixamusica). */
+.a-caixamusica .caixinha.toca .dancarina {
+  /* Liga a animação "dancar": dura 2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: dancar 2s linear infinite;
+}
+
+/* ANIMAÇÃO "dancar": o coração gira como bailarina. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes dancar {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: vira de lado 360 graus. */
+    transform: rotateY(360deg);
+  }
+}
+
+/* PEÇA: manivela (link 24, caixamusica). */
+.a-caixamusica .manivela {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 44% do espaço. */
+  top: 44%;
+  /* Distância da direita: menos 44 pontinhos. */
+  right: -44px;
+  /* Largura (manivela): 60 pontinhos. Número maior = mais largo. */
+  width: 60px;
+  /* Altura (manivela): 60 pontinhos. Número maior = mais alto. */
+  height: 60px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (manivela). */
+  border: 0;
+  /* Sem fundo (manivela): dá para ver o que está atrás. */
+  background: none;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,35 segundos. Número maior = mais lento. */
+  transition: transform .35s ease;
+}
+
+/* PEÇA: enfeite desenhado em: manivela (link 24, caixamusica). */
+.a-caixamusica .manivela::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 26 pontinhos. */
+  top: 26px;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Largura (enfeite desenhado em: manivela): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (enfeite desenhado em: manivela): 8 pontinhos. Número maior = mais alto. */
+  height: 8px;
+  /* Cor de fundo (enfeite desenhado em: manivela): dourado. Troque o código para mudar a cor. */
+  background: #d9b64f;
+}
+
+/* PEÇA: enfeite desenhado em: manivela (link 24, caixamusica). */
+.a-caixamusica .manivela::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 14 pontinhos. */
+  top: 14px;
+  /* Distância da esquerda: 34 pontinhos. */
+  left: 34px;
+  /* Largura (enfeite desenhado em: manivela): 22 pontinhos. Número maior = mais largo. */
+  width: 22px;
+  /* Altura (enfeite desenhado em: manivela): 22 pontinhos. Número maior = mais alto. */
+  height: 22px;
+  /* Arredonda os cantos (enfeite desenhado em: manivela). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (enfeite desenhado em: manivela): dourado. Troque o código para mudar a cor. */
+  background: #d9b64f;
+}
+
+/* PEÇA: o texto principal (link 24, caixamusica). */
+.a-caixamusica .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 25 aurora: céu polar pintado no canvas ---------- */
-.a-aurora .sobre { position: absolute; inset: auto 0 0; padding: 24px 24px calc(100px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
-.a-aurora .texto { text-shadow: 0 2px 10px #000; min-height: 3em; }
+/* PEÇA: sobre (link 25, aurora). */
+.a-aurora .sobre {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: automático em cima, zero nos lados, zero embaixo. */
+  inset: auto 0 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (sobre): calculado para não ficar atrás do rodapé. */
+  padding: 24px 24px calc(100px + env(safe-area-inset-bottom));
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 16 pontinhos. Número maior = mais separadas. */
+  gap: 16px;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: o texto principal (link 25, aurora). */
+.a-aurora .texto {
+  /* Brilho em volta das letras (texto principal), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 10px #000;
+  /* Altura mínima (texto principal): 3 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3em;
+}
 
 /* ---------- 26 janelas: prédio à noite ---------- */
-.a-janelas .chamada { font: 600 1.1rem var(--fonte-titulo); }
-.a-janelas .fachada { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; width: min(100%, 340px); padding: 12px; background: #10122a; box-shadow: 0 0 0 3px #2b2f55, 0 18px 30px -14px #000; }
-.a-janelas .jan { aspect-ratio: 3 / 3.4; appearance: none; border: 0; border-radius: 2px; background: #23264a; transition: background .3s, box-shadow .3s; }
-.a-janelas .jan.quente { background: #ffb347; animation: pisca 1.3s ease-in-out infinite; }
-.a-janelas .jan.acesa { background: #ffe9a8; box-shadow: 0 0 10px #ffd98a; }
-.a-janelas .texto { min-height: 3.6em; font-size: 1.15rem; }
+/* PEÇA: a frase de cima (link 26, janelas). */
+.a-janelas .chamada {
+  /* Letra (frase de cima): letra de título (Playfair), tamanho 1,1, grossura 600. Número maior = letra maior. */
+  font: 600 1.1rem var(--fonte-titulo);
+}
+
+/* PEÇA: fachada (link 26, janelas). */
+.a-janelas .fachada {
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: repeat(9, 1fr);
+  /* Espaço entre as peças de dentro: 6 pontinhos. Número maior = mais separadas. */
+  gap: 6px;
+  /* Largura (fachada): o menor entre 100% do espaço e 340 pontinhos. Número maior = mais largo. */
+  width: min(100%, 340px);
+  /* Espaço de dentro, entre a borda e o conteúdo, (fachada): 12 pontinhos em todos os lados. */
+  padding: 12px;
+  /* Cor de fundo (fachada): azul bem escuro. Troque o código para mudar a cor. */
+  background: #10122a;
+  /* Sombra ou brilho em volta (fachada), na cor: azul escuro e preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 3px #2b2f55, 0 18px 30px -14px #000;
+}
+
+/* PEÇA: a janelinha (link 26, janelas). */
+.a-janelas .jan {
+  /* Mantém a proporção entre largura e altura (3 / 3.4). */
+  aspect-ratio: 3 / 3.4;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (janelinha). */
+  border: 0;
+  /* Arredonda os cantos (janelinha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 2px;
+  /* Cor de fundo (janelinha): azul bem escuro. Troque o código para mudar a cor. */
+  background: #23264a;
+  /* Faz a mudança acontecer devagar, sem pular: o fundo em 0,3 segundos e a sombra em 0,3 segundos. Número maior = mais lento. */
+  transition: background .3s, box-shadow .3s;
+}
+
+/* PEÇA: a janelinha com "quente" ligado (link 26, janelas). */
+.a-janelas .jan.quente {
+  /* Cor de fundo (janelinha): laranja claro. Troque o código para mudar a cor. */
+  background: #ffb347;
+  /* Liga a animação "pisca": dura 1,3 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: pisca 1.3s ease-in-out infinite;
+}
+
+/* PEÇA: a janelinha com "acesa" ligado (link 26, janelas). */
+.a-janelas .jan.acesa {
+  /* Cor de fundo (janelinha): dourado bem clarinho. Troque o código para mudar a cor. */
+  background: #ffe9a8;
+  /* Sombra ou brilho em volta (janelinha), na cor: laranja claro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 10px #ffd98a;
+}
+
+/* PEÇA: o texto principal (link 26, janelas). */
+.a-janelas .texto {
+  /* Altura mínima (texto principal): 3,6 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.6em;
+  /* Tamanho da letra (texto principal): 1,15 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.15rem;
+}
 
 /* ---------- 27 pordosol: céu que muda de cor ---------- */
-.a-pordosol .ceu { --p: 0; position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; background: linear-gradient(180deg, #ff9a56, #ffd18b 60%, #ffe8b8); }
-.a-pordosol .ceu::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #0b0a2c, #3d1a5e 55%, #c2506a); opacity: var(--p); }
-.a-pordosol .estrelas { position: absolute; inset: 0 0 45%; opacity: calc(var(--p) * var(--p)); background: radial-gradient(circle at 20% 30%, #fff 1px, transparent 2px), radial-gradient(circle at 70% 18%, #fff 1px, transparent 2px), radial-gradient(circle at 45% 52%, #fff 1px, transparent 2px), radial-gradient(circle at 86% 44%, #fff 1px, transparent 2px), radial-gradient(circle at 12% 66%, #fff 1px, transparent 2px), radial-gradient(circle at 60% 74%, #fff 1px, transparent 2px); }
-.a-pordosol .astro { position: absolute; top: 12%; width: 110px; height: 110px; appearance: none; border: 0; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #fff3c4, #ffb347 70%); box-shadow: 0 0 60px 20px rgba(255, 179, 71, .7); }
-.a-pordosol .mar { position: absolute; inset: 62% 0 0; background: linear-gradient(180deg, #14506b, #06243a); z-index: 1; }
-.a-pordosol .texto { position: absolute; top: 67%; left: 0; right: 0; z-index: 2; padding: 0 24px; color: #fff; text-shadow: 0 2px 10px #000; }
-.a-pordosol .dest { color: #ffd98a; }
-.a-pordosol .ceu > .btn { position: absolute; bottom: calc(92px + env(safe-area-inset-bottom)); z-index: 2; }
+/* PEÇA: ceu (link 27, pordosol). */
+.a-pordosol .ceu {
+  /* Valor inicial guardado com o nome --p. O código muda esse valor enquanto a animação roda. */
+  --p: 0;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Corta o que passar para fora (ceu). */
+  overflow: hidden;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Fundo em degradê (ceu), nas cores: laranja claro e laranja bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #ff9a56, #ffd18b 60%, #ffe8b8);
+}
+
+/* PEÇA: enfeite desenhado em: ceu (link 27, pordosol). */
+.a-pordosol .ceu::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Fundo em degradê (enfeite desenhado em: ceu), nas cores: azul bem escuro, roxo bem escuro e rosa. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #0b0a2c, #3d1a5e 55%, #c2506a);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: var(--p);
+}
+
+/* PEÇA: estrelas (link 27, pordosol). */
+.a-pordosol .estrelas {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero em cima, zero nos lados, 45% do espaço embaixo. */
+  inset: 0 0 45%;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: calc(var(--p) * var(--p));
+  /* Fundo redondo (estrelas), nas cores: branco, transparente, branco, transparente, branco, transparente, branco, transparente, branco, transparente, branco e transparente. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 20% 30%, #fff 1px, transparent 2px), radial-gradient(circle at 70% 18%, #fff 1px, transparent 2px), radial-gradient(circle at 45% 52%, #fff 1px, transparent 2px), radial-gradient(circle at 86% 44%, #fff 1px, transparent 2px), radial-gradient(circle at 12% 66%, #fff 1px, transparent 2px), radial-gradient(circle at 60% 74%, #fff 1px, transparent 2px);
+}
+
+/* PEÇA: astro (link 27, pordosol). */
+.a-pordosol .astro {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 12% do espaço. */
+  top: 12%;
+  /* Largura (astro): 110 pontinhos. Número maior = mais largo. */
+  width: 110px;
+  /* Altura (astro): 110 pontinhos. Número maior = mais alto. */
+  height: 110px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (astro). */
+  border: 0;
+  /* Arredonda os cantos (astro). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (astro), nas cores: dourado bem clarinho e laranja claro. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 40% 40%, #fff3c4, #ffb347 70%);
+  /* Sombra ou brilho em volta (astro), na cor: laranja claro, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 60px 20px rgba(255, 179, 71, .7);
+}
+
+/* PEÇA: mar (link 27, pordosol). */
+.a-pordosol .mar {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: 62% do espaço em cima, zero nos lados, zero embaixo. */
+  inset: 62% 0 0;
+  /* Fundo em degradê (mar), nas cores: azul escuro e azul bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #14506b, #06243a);
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 1;
+}
+
+/* PEÇA: o texto principal (link 27, pordosol). */
+.a-pordosol .texto {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 67% do espaço. */
+  top: 67%;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Espaço de dentro, entre a borda e o conteúdo, (texto principal): zero em cima e embaixo, 24 pontinhos nos lados. */
+  padding: 0 24px;
+  /* Cor das letras (texto principal): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Brilho em volta das letras (texto principal), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 10px #000;
+}
+
+/* PEÇA: as palavras em destaque (link 27, pordosol). */
+.a-pordosol .dest {
+  /* Cor das letras (palavras em destaque): laranja claro. Troque o código para mudar a cor. */
+  color: #ffd98a;
+}
+
+/* PEÇA: o botão dentro de: ceu (link 27, pordosol). */
+.a-pordosol .ceu > .btn {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: uma conta feita pelo navegador. */
+  bottom: calc(92px + env(safe-area-inset-bottom));
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+}
 
 /* ---------- 28 calendario: bloco de folhas de arrancar ---------- */
-.a-calendario.cena { overflow: hidden; }
-.a-calendario .bloco { position: relative; width: min(84vw, 300px); height: 340px; }
-.a-calendario .bloco::before { content: ''; position: absolute; top: -14px; left: 0; right: 0; height: 26px; border-radius: 4px; background: #c8102e; z-index: 30; box-shadow: 0 3px 6px rgba(0, 0, 0, .3); }
-.a-calendario .folha { position: absolute; inset: 0; padding: 26px 18px 16px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #2a2a2a; background: #fff; box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .5); transform-origin: top left; }
-.a-calendario .folha.foi { animation: arranca .8s ease-in forwards; }
-@keyframes arranca { to { transform: translate(60px, 520px) rotate(34deg); opacity: 0; } }
-.a-calendario .sem { font: 600 1rem var(--fonte); text-transform: uppercase; letter-spacing: .1em; color: #c8102e; }
-.a-calendario strong { font: 400 6rem/1 'Bebas Neue', var(--fonte); }
-.a-calendario .msg { font: italic 1.12rem/1.3 var(--fonte-titulo); }
-.a-calendario .ultima { justify-content: center; }
-.a-calendario .dest { color: #c8102e; text-shadow: none; }
+/* PEÇA: a tela inteira desta arte (link 28, calendario). */
+.a-calendario.cena {
+  /* Corta o que passar para fora (tela inteira desta arte). */
+  overflow: hidden;
+}
+
+/* PEÇA: bloco (link 28, calendario). */
+.a-calendario .bloco {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (bloco): o menor entre 84% da largura da tela e 300 pontinhos. Número maior = mais largo. */
+  width: min(84vw, 300px);
+  /* Altura (bloco): 340 pontinhos. Número maior = mais alto. */
+  height: 340px;
+}
+
+/* PEÇA: enfeite desenhado em: bloco (link 28, calendario). */
+.a-calendario .bloco::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 14 pontinhos. */
+  top: -14px;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Altura (enfeite desenhado em: bloco): 26 pontinhos. Número maior = mais alto. */
+  height: 26px;
+  /* Arredonda os cantos (enfeite desenhado em: bloco). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px;
+  /* Cor de fundo (enfeite desenhado em: bloco): vermelho. Troque o código para mudar a cor. */
+  background: #c8102e;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 30;
+  /* Sombra ou brilho em volta (enfeite desenhado em: bloco), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
+}
+
+/* PEÇA: folha (link 28, calendario). */
+.a-calendario .folha {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (folha): 26 pontinhos em cima, 18 pontinhos nos lados, 16 pontinhos embaixo. */
+  padding: 26px 18px 16px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 4 pontinhos. Número maior = mais separadas. */
+  gap: 4px;
+  /* Cor das letras (folha): cinza escuro. Troque o código para mudar a cor. */
+  color: #2a2a2a;
+  /* Cor de fundo (folha): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Sombra ou brilho em volta (folha), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 0, .5);
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: top left;
+}
+
+/* PEÇA: folha com "foi" ligado (link 28, calendario). */
+.a-calendario .folha.foi {
+  /* Liga a animação "arranca": dura 0,8 segundos. Número menor = mais rápida. */
+  animation: arranca .8s ease-in forwards;
+}
+
+/* ANIMAÇÃO "arranca": a folha arrancada cai. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes arranca {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: vai para a direita 60 pontinhos, desce 520 pontinhos e gira 34 graus para a direita. */
+    transform: translate(60px, 520px) rotate(34deg);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* PEÇA: sem (link 28, calendario). */
+.a-calendario .sem {
+  /* Letra (sem): letra normal (Inter), tamanho 1, grossura 600. Número maior = letra maior. */
+  font: 600 1rem var(--fonte);
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .1em;
+  /* Cor das letras (sem): vermelho. Troque o código para mudar a cor. */
+  color: #c8102e;
+}
+
+/* PEÇA: o número grande (link 28, calendario). */
+.a-calendario strong {
+  /* Letra (número grande): fonte Bebas Neue, tamanho 6, grossura 400. Número maior = letra maior. */
+  font: 400 6rem/1 'Bebas Neue', var(--fonte);
+}
+
+/* PEÇA: msg (link 28, calendario). */
+.a-calendario .msg {
+  /* Letra (msg): letra de título (Playfair), tamanho 1,12, inclinada. Número maior = letra maior. */
+  font: italic 1.12rem/1.3 var(--fonte-titulo);
+}
+
+/* PEÇA: ultima (link 28, calendario). */
+.a-calendario .ultima {
+  /* Junta as peças no meio. */
+  justify-content: center;
+}
+
+/* PEÇA: as palavras em destaque (link 28, calendario). */
+.a-calendario .dest {
+  /* Cor das letras (palavras em destaque): vermelho. Troque o código para mudar a cor. */
+  color: #c8102e;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 29 vela: chama no escuro ---------- */
-.a-vela .castical { --p: 0; position: relative; width: 120px; height: 250px; }
-.a-vela .luz { position: absolute; top: -100px; left: 50%; width: 320px; height: 320px; margin-left: -160px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 180, 90, .5), transparent 65%); opacity: calc(.3 + var(--p) * .7); transform: scale(calc(.7 + var(--p) * .7)); }
-.a-vela .chama { position: absolute; top: 20px; left: 50%; width: 40px; height: 74px; margin-left: -20px; border-radius: 50% 50% 46% 46% / 72% 72% 28% 28%; background: radial-gradient(ellipse at 50% 72%, #fff 8%, #ffd34d 34%, #ff7a1a 68%, rgba(255, 60, 10, 0) 76%); transform-origin: bottom; transform: scale(calc(.45 + var(--p) * .75)); animation: tremula .35s ease-in-out infinite alternate; }
-@keyframes tremula { to { rotate: 3deg; filter: brightness(1.15); } }
-.a-vela .cera-v { position: absolute; bottom: 0; left: 50%; width: 62px; height: 150px; margin-left: -31px; border-radius: 6px 6px 2px 2px; background: linear-gradient(90deg, #d8cfc0, #fff7e8 45%, #cfc4b1); }
-.a-vela .texto { min-height: 3.2em; }
-.a-vela .mao-v { padding: 18px 26px; appearance: none; border: 1px solid var(--borda); border-radius: 999px; background: var(--vidro); color: var(--tx); font: 600 1rem var(--fonte); }
+/* PEÇA: vela (link 29, vela). */
+.a-vela .castical {
+  /* Valor inicial guardado com o nome --p. O código muda esse valor enquanto a animação roda. */
+  --p: 0;
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (vela): 120 pontinhos. Número maior = mais largo. */
+  width: 120px;
+  /* Altura (vela): 250 pontinhos. Número maior = mais alto. */
+  height: 250px;
+}
+
+/* PEÇA: luz (link 29, vela). */
+.a-vela .luz {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 100 pontinhos. */
+  top: -100px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (luz): 320 pontinhos. Número maior = mais largo. */
+  width: 320px;
+  /* Altura (luz): 320 pontinhos. Número maior = mais alto. */
+  height: 320px;
+  /* Espaço de fora, à esquerda: menos 160 pontinhos. */
+  margin-left: -160px;
+  /* Arredonda os cantos (luz). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (luz), nas cores: laranja claro, meio transparente e transparente. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle, rgba(255, 180, 90, .5), transparent 65%);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: calc(.3 + var(--p) * .7);
+  /* Movimento (luz): calc. */
+  transform: scale(calc(.7 + var(--p) * .7));
+}
+
+/* PEÇA: chama (link 29, vela). */
+.a-vela .chama {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 20 pontinhos. */
+  top: 20px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (chama): 40 pontinhos. Número maior = mais largo. */
+  width: 40px;
+  /* Altura (chama): 74 pontinhos. Número maior = mais alto. */
+  height: 74px;
+  /* Espaço de fora, à esquerda: menos 20 pontinhos. */
+  margin-left: -20px;
+  /* Arredonda os cantos (chama). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50% 50% 46% 46% / 72% 72% 28% 28%;
+  /* Fundo redondo (chama), nas cores: branco, dourado claro, laranja e vermelho-alaranjado, quase invisível. Troque os códigos para mudar as cores. */
+  background: radial-gradient(ellipse at 50% 72%, #fff 8%, #ffd34d 34%, #ff7a1a 68%, rgba(255, 60, 10, 0) 76%);
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: bottom;
+  /* Movimento (chama): calc. */
+  transform: scale(calc(.45 + var(--p) * .75));
+  /* Liga a animação "tremula": dura 0,35 segundos, repetindo para sempre, indo e voltando. Número menor = mais rápida. */
+  animation: tremula .35s ease-in-out infinite alternate;
+}
+
+/* ANIMAÇÃO "tremula": a chama da vela treme. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes tremula {
+  /* Como a animação termina: */
+  to {
+    /* Giro: 3 graus. */
+    rotate: 3deg;
+    /* Efeito visual: brilho. */
+    filter: brightness(1.15);
+  }
+}
+
+/* PEÇA: a vela (link 29, vela). */
+.a-vela .cera-v {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (vela): 62 pontinhos. Número maior = mais largo. */
+  width: 62px;
+  /* Altura (vela): 150 pontinhos. Número maior = mais alto. */
+  height: 150px;
+  /* Espaço de fora, à esquerda: menos 31 pontinhos. */
+  margin-left: -31px;
+  /* Arredonda os cantos (vela). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 6px 6px 2px 2px;
+  /* Fundo em degradê (vela), nas cores: laranja bem clarinho, branco e laranja claro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, #d8cfc0, #fff7e8 45%, #cfc4b1);
+}
+
+/* PEÇA: o texto principal (link 29, vela). */
+.a-vela .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
+
+/* PEÇA: o botão da mão (link 29, vela). */
+.a-vela .mao-v {
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão da mão): 18 pontinhos em cima e embaixo, 26 pontinhos nos lados. */
+  padding: 18px 26px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (botão da mão): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Arredonda os cantos (botão da mão). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Cor de fundo (botão da mão): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Cor das letras (botão da mão): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Letra (botão da mão): letra normal (Inter), tamanho 1, grossura 600. Número maior = letra maior. */
+  font: 600 1rem var(--fonte);
+}
 
 /* ---------- 30 cofre: porta de aço e rodas ---------- */
-.a-cofre .chamada { font: 400 1.5rem 'Bebas Neue', var(--fonte); letter-spacing: .1em; }
-.a-cofre .porta { width: min(84vw, 300px); padding: 34px 14px; border-radius: 14px; background: linear-gradient(145deg, #565d68, #2b3038); box-shadow: 0 0 0 6px #1a1d22, inset 0 0 0 3px #7a828e, 0 20px 30px -14px #000; transform-origin: left center; transition: transform 1s ease; }
-.a-cofre .porta.aberta { transform: perspective(700px) rotateY(-70deg); }
-.a-cofre .rodas { display: flex; justify-content: center; gap: 10px; }
-.a-cofre .roda { width: 74px; height: 96px; appearance: none; border: 0; border-radius: 8px; color: #0e1013; background: linear-gradient(180deg, #8b929d, #eef1f5 50%, #8b929d); font: 400 2.5rem serif; }
-.a-cofre .roda.gira { animation: gira-roda .25s ease; }
-@keyframes gira-roda { from { transform: translateY(-14px); opacity: .4; } }
-.a-cofre .bilhete-c { width: 100%; padding: 18px; color: #2a2118; background: #fff6e4; border-radius: 4px; font: 500 1.5rem/1.2 var(--fonte-mao); min-height: 112px; }
-.a-cofre .dest { color: #a3123f; text-shadow: none; }
+/* PEÇA: a frase de cima (link 30, cofre). */
+.a-cofre .chamada {
+  /* Letra (frase de cima): fonte Bebas Neue, tamanho 1,5, grossura 400. Número maior = letra maior. */
+  font: 400 1.5rem 'Bebas Neue', var(--fonte);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .1em;
+}
+
+/* PEÇA: porta (link 30, cofre). */
+.a-cofre .porta {
+  /* Largura (porta): o menor entre 84% da largura da tela e 300 pontinhos. Número maior = mais largo. */
+  width: min(84vw, 300px);
+  /* Espaço de dentro, entre a borda e o conteúdo, (porta): 34 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 34px 14px;
+  /* Arredonda os cantos (porta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 14px;
+  /* Fundo em degradê (porta), nas cores: cinza e azul bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(145deg, #565d68, #2b3038);
+  /* Sombra ou brilho em volta (porta), na cor: azul bem escuro, cinza e preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 6px #1a1d22, inset 0 0 0 3px #7a828e, 0 20px 30px -14px #000;
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: left center;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 1 segundos. Número maior = mais lento. */
+  transition: transform 1s ease;
+}
+
+/* PEÇA: porta com "aberta" ligado (link 30, cofre). */
+.a-cofre .porta.aberta {
+  /* Movimento (porta): ganha profundidade 3D e vira de lado menos 70 graus. */
+  transform: perspective(700px) rotateY(-70deg);
+}
+
+/* PEÇA: rodas (link 30, cofre). */
+.a-cofre .rodas {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+}
+
+/* PEÇA: roda (link 30, cofre). */
+.a-cofre .roda {
+  /* Largura (roda): 74 pontinhos. Número maior = mais largo. */
+  width: 74px;
+  /* Altura (roda): 96 pontinhos. Número maior = mais alto. */
+  height: 96px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (roda). */
+  border: 0;
+  /* Arredonda os cantos (roda). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 8px;
+  /* Cor das letras (roda): preto. Troque o código para mudar a cor. */
+  color: #0e1013;
+  /* Fundo em degradê (roda), nas cores: cinza, branco e cinza. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #8b929d, #eef1f5 50%, #8b929d);
+  /* Letra (roda): fonte serif, tamanho 2,5, grossura 400. Número maior = letra maior. */
+  font: 400 2.5rem serif;
+}
+
+/* PEÇA: roda com "gira" ligado (link 30, cofre). */
+.a-cofre .roda.gira {
+  /* Liga a animação "gira-roda": dura 0,25 segundos. Número menor = mais rápida. */
+  animation: gira-roda .25s ease;
+}
+
+/* ANIMAÇÃO "gira-roda": a roda do cofre pula. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes gira-roda {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: sobe 14 pontinhos. */
+    transform: translateY(-14px);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,4. */
+    opacity: .4;
+  }
+}
+
+/* PEÇA: o bilhete do cofre (link 30, cofre). */
+.a-cofre .bilhete-c {
+  /* Largura (bilhete do cofre): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (bilhete do cofre): 18 pontinhos em todos os lados. */
+  padding: 18px;
+  /* Cor das letras (bilhete do cofre): marrom. Troque o código para mudar a cor. */
+  color: #2a2118;
+  /* Cor de fundo (bilhete do cofre): branco. Troque o código para mudar a cor. */
+  background: #fff6e4;
+  /* Arredonda os cantos (bilhete do cofre). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px;
+  /* Letra (bilhete do cofre): letra de mão (Caveat), tamanho 1,5, grossura 500. Número maior = letra maior. */
+  font: 500 1.5rem/1.2 var(--fonte-mao);
+  /* Altura mínima (bilhete do cofre): 112 pontinhos. Número maior = mais alto. */
+  min-height: 112px;
+}
+
+/* PEÇA: as palavras em destaque (link 30, cofre). */
+.a-cofre .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 31 garrafa: mar em ondas e pergaminho ---------- */
-.a-garrafa .vidro-g { position: absolute; top: 49%; left: 50%; width: 60px; height: 130px; margin-left: -30px; appearance: none; border: 0; border-radius: 16px 16px 12px 12px; background: linear-gradient(90deg, rgba(180, 240, 220, .55), rgba(255, 255, 255, .25) 40%, rgba(120, 210, 190, .55)); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .5); transform: rotate(18deg); animation: boia 3s ease-in-out infinite; }
-@keyframes boia { 50% { translate: 0 14px; rotate: -6deg; } }
-.a-garrafa .vidro-g i { position: absolute; top: -18px; left: 20px; width: 20px; height: 22px; border-radius: 3px; background: #b5834f; }
-.a-garrafa .vidro-g::after { content: ''; position: absolute; inset: 30px 16px 16px; border-radius: 3px; background: #f3e3bb; }
-.a-garrafa .vidro-g.pescada { animation: none; transition: transform .8s, opacity .8s; transform: translateY(-220px) rotate(0); opacity: 0; }
-.a-garrafa .dica { position: absolute; left: 0; right: 0; top: 26%; color: #eaf9ff; }
-.a-garrafa .rolo-p { position: absolute; inset: 12% 22px auto; padding: 26px 20px; display: flex; flex-direction: column; align-items: center; gap: 16px; color: #3a2a18; background: linear-gradient(180deg, #dcc48f, #f6e9c6 8%, #f6e9c6 92%, #dcc48f); box-shadow: 0 16px 30px -12px #000; font: 500 1.6rem/1.2 var(--fonte-mao); animation: desenrola .9s ease both; transform-origin: top; }
-@keyframes desenrola { from { transform: scaleY(.05); } }
-.a-garrafa .rolo-p p { min-height: 4em; }
-.a-garrafa .dest { color: #8a1c0e; text-shadow: none; }
+/* PEÇA: a garrafa (link 31, garrafa). */
+.a-garrafa .vidro-g {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 49% do espaço. */
+  top: 49%;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (garrafa): 60 pontinhos. Número maior = mais largo. */
+  width: 60px;
+  /* Altura (garrafa): 130 pontinhos. Número maior = mais alto. */
+  height: 130px;
+  /* Espaço de fora, à esquerda: menos 30 pontinhos. */
+  margin-left: -30px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (garrafa). */
+  border: 0;
+  /* Arredonda os cantos (garrafa). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 16px 16px 12px 12px;
+  /* Fundo em degradê (garrafa), nas cores: verde-água bem clarinho, meio transparente, branco, meio transparente e verde-água claro, meio transparente. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, rgba(180, 240, 220, .55), rgba(255, 255, 255, .25) 40%, rgba(120, 210, 190, .55));
+  /* Sombra ou brilho em volta (garrafa), na cor: branco, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .5);
+  /* Movimento (garrafa): gira 18 graus para a direita. */
+  transform: rotate(18deg);
+  /* Liga a animação "boia": dura 3 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: boia 3s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "boia": a garrafa boia subindo e descendo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes boia {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Deslocamento: zero e 14 pontinhos (de lado e para baixo). */
+    translate: 0 14px;
+    /* Giro: menos 6 graus. */
+    rotate: -6deg;
+  }
+}
+
+/* PEÇA: a peça dentro de: a garrafa (link 31, garrafa). */
+.a-garrafa .vidro-g i {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 18 pontinhos. */
+  top: -18px;
+  /* Distância da esquerda: 20 pontinhos. */
+  left: 20px;
+  /* Largura (peça): 20 pontinhos. Número maior = mais largo. */
+  width: 20px;
+  /* Altura (peça): 22 pontinhos. Número maior = mais alto. */
+  height: 22px;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 3px;
+  /* Cor de fundo (peça): laranja. Troque o código para mudar a cor. */
+  background: #b5834f;
+}
+
+/* PEÇA: enfeite desenhado em: a garrafa (link 31, garrafa). */
+.a-garrafa .vidro-g::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: 30 pontinhos em cima, 16 pontinhos nos lados, 16 pontinhos embaixo. */
+  inset: 30px 16px 16px;
+  /* Arredonda os cantos (enfeite desenhado em: a garrafa). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 3px;
+  /* Cor de fundo (enfeite desenhado em: a garrafa): dourado bem clarinho. Troque o código para mudar a cor. */
+  background: #f3e3bb;
+}
+
+/* PEÇA: a garrafa com "pescada" ligado (link 31, garrafa). */
+.a-garrafa .vidro-g.pescada {
+  /* Desliga a animação desta peça. */
+  animation: none;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,8 segundos e a transparência em 0,8 segundos. Número maior = mais lento. */
+  transition: transform .8s, opacity .8s;
+  /* Movimento (garrafa): sobe 220 pontinhos e gira zero para a direita. */
+  transform: translateY(-220px) rotate(0);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+}
+
+/* PEÇA: a dica piscando (link 31, garrafa). */
+.a-garrafa .dica {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de cima: 26% do espaço. */
+  top: 26%;
+  /* Cor das letras (dica piscando): branco. Troque o código para mudar a cor. */
+  color: #eaf9ff;
+}
+
+/* PEÇA: o pergaminho (link 31, garrafa). */
+.a-garrafa .rolo-p {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: 12% do espaço em cima, 22 pontinhos nos lados, automático embaixo. */
+  inset: 12% 22px auto;
+  /* Espaço de dentro, entre a borda e o conteúdo, (pergaminho): 26 pontinhos em cima e embaixo, 20 pontinhos nos lados. */
+  padding: 26px 20px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 16 pontinhos. Número maior = mais separadas. */
+  gap: 16px;
+  /* Cor das letras (pergaminho): marrom. Troque o código para mudar a cor. */
+  color: #3a2a18;
+  /* Fundo em degradê (pergaminho), nas cores: laranja claro, dourado bem clarinho e laranja claro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #dcc48f, #f6e9c6 8%, #f6e9c6 92%, #dcc48f);
+  /* Sombra ou brilho em volta (pergaminho), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 30px -12px #000;
+  /* Letra (pergaminho): letra de mão (Caveat), tamanho 1,6, grossura 500. Número maior = letra maior. */
+  font: 500 1.6rem/1.2 var(--fonte-mao);
+  /* Liga a animação "desenrola": dura 0,9 segundos. Número menor = mais rápida. */
+  animation: desenrola .9s ease both;
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: top;
+}
+
+/* ANIMAÇÃO "desenrola": o pergaminho desenrola. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes desenrola {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: encolhe para 5% da altura. */
+    transform: scaleY(.05);
+  }
+}
+
+/* PEÇA: o parágrafo dentro de: o pergaminho (link 31, garrafa). */
+.a-garrafa .rolo-p p {
+  /* Altura mínima (parágrafo): 4 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 4em;
+}
+
+/* PEÇA: as palavras em destaque (link 31, garrafa). */
+.a-garrafa .dest {
+  /* Cor das letras (palavras em destaque): vermelho escuro. Troque o código para mudar a cor. */
+  color: #8a1c0e;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 32 areia: praia com onda ---------- */
-.a-areia .praia { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 24px 22px 110px; background: #e8cf9c; color: #5a3d1c; }
-.a-areia .escrita { position: relative; width: 100%; min-height: 200px; display: grid; place-items: center; padding: 16px; border-radius: 12px; background: #b58f5c; color: #fff4dd; font: 700 2.1rem/1.1 var(--fonte-mao); }
-.a-areia .escrita canvas { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 12px; }
-.a-areia .onda { position: absolute; left: -10%; right: -10%; top: 100%; height: 130%; border-radius: 45% 55% 0 0 / 12% 10% 0 0; background: linear-gradient(180deg, #fff, #8fd3e8 8%, #2a9fc4); animation: onda-vem 2.1s ease-in-out forwards; }
-@keyframes onda-vem { 50% { transform: translateY(-100%); } 100% { transform: translateY(0); } }
-.a-areia .dica { color: #5a3d1c; }
-.a-areia .dest { color: #a3123f; text-shadow: none; }
+/* PEÇA: praia (link 32, areia). */
+.a-areia .praia {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Corta o que passar para fora (praia). */
+  overflow: hidden;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 18 pontinhos. Número maior = mais separadas. */
+  gap: 18px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (praia): 24 pontinhos em cima, 22 pontinhos nos lados, 110 pontinhos embaixo. */
+  padding: 24px 22px 110px;
+  /* Cor de fundo (praia): laranja claro. Troque o código para mudar a cor. */
+  background: #e8cf9c;
+  /* Cor das letras (praia): marrom. Troque o código para mudar a cor. */
+  color: #5a3d1c;
+}
+
+/* PEÇA: escrita (link 32, areia). */
+.a-areia .escrita {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (escrita): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura mínima (escrita): 200 pontinhos. Número maior = mais alto. */
+  min-height: 200px;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Coloca o conteúdo bem no centro. */
+  place-items: center;
+  /* Espaço de dentro, entre a borda e o conteúdo, (escrita): 16 pontinhos em todos os lados. */
+  padding: 16px;
+  /* Arredonda os cantos (escrita). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 12px;
+  /* Cor de fundo (escrita): laranja. Troque o código para mudar a cor. */
+  background: #b58f5c;
+  /* Cor das letras (escrita): branco. Troque o código para mudar a cor. */
+  color: #fff4dd;
+  /* Letra (escrita): letra de mão (Caveat), tamanho 2,1, grossura 700. Número maior = letra maior. */
+  font: 700 2.1rem/1.1 var(--fonte-mao);
+}
+
+/* PEÇA: o canvas dentro de: escrita (link 32, areia). */
+.a-areia .escrita canvas {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (canvas): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (canvas): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Arredonda os cantos (canvas). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 12px;
+}
+
+/* PEÇA: onda (link 32, areia). */
+.a-areia .onda {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: menos 10% do espaço. */
+  left: -10%;
+  /* Distância da direita: menos 10% do espaço. */
+  right: -10%;
+  /* Distância de cima: 100% do espaço. */
+  top: 100%;
+  /* Altura (onda): 130% do espaço. Número maior = mais alto. */
+  height: 130%;
+  /* Arredonda os cantos (onda). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 45% 55% 0 0 / 12% 10% 0 0;
+  /* Fundo em degradê (onda), nas cores: branco, verde-água claro e verde-água. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #fff, #8fd3e8 8%, #2a9fc4);
+  /* Liga a animação "onda-vem": dura 2,1 segundos. Número menor = mais rápida. */
+  animation: onda-vem 2.1s ease-in-out forwards;
+}
+
+/* ANIMAÇÃO "onda-vem": a onda sobe a praia e volta. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes onda-vem {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: sobe 100% do espaço. */
+    transform: translateY(-100%);
+  }
+  /* Como está quando já passou 100% do tempo da animação: */
+  100% {
+    /* Movimento: desce zero. */
+    transform: translateY(0);
+  }
+}
+
+/* PEÇA: a dica piscando (link 32, areia). */
+.a-areia .dica {
+  /* Cor das letras (dica piscando): marrom. Troque o código para mudar a cor. */
+  color: #5a3d1c;
+}
+
+/* PEÇA: as palavras em destaque (link 32, areia). */
+.a-areia .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 33 extrato: aplicativo de banco ---------- */
-.a-extrato .banco { width: 100%; padding: 18px; display: flex; flex-direction: column; gap: 12px; text-align: left; border-radius: 18px; background: linear-gradient(150deg, #1d1a3a, #3a2470); box-shadow: 0 20px 40px -18px #000; color: #fff; }
-.a-extrato .nome { font: 700 .95rem var(--fonte); color: #cdb8ff; }
-.a-extrato .saldo { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
-.a-extrato .saldo span { grid-column: 1 / -1; font-size: .78rem; opacity: .75; }
-.a-extrato .saldo b { font: 800 1.9rem var(--fonte); }
-.a-extrato .saldo b.rico { color: #6df0a8; animation: brilha-saldo 1s ease-in-out 3 alternate; }
-@keyframes brilha-saldo { to { text-shadow: 0 0 22px #6df0a8; } }
-.a-extrato .olho { width: 44px; height: 44px; appearance: none; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .14); font-size: 1.2rem; animation: pisca 1.3s ease-in-out infinite; }
-.a-extrato .mov { list-style: none; display: flex; flex-direction: column; gap: 8px; min-height: 40px; }
-.a-extrato .mov li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 10px; border-radius: 10px; background: rgba(255, 255, 255, .07); font-size: .94rem; }
-.a-extrato .mais { color: #6df0a8; }
-.a-extrato .menos { color: #ff8a8a; }
-.a-extrato .nota { font-size: .98rem; line-height: 1.35; }
-.a-extrato .dest { color: #6df0a8; text-shadow: none; }
+/* PEÇA: banco (link 33, extrato). */
+.a-extrato .banco {
+  /* Largura (banco): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (banco): 18 pontinhos em todos os lados. */
+  padding: 18px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Arredonda os cantos (banco). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 18px;
+  /* Fundo em degradê (banco), nas cores: azul bem escuro e roxo escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(150deg, #1d1a3a, #3a2470);
+  /* Sombra ou brilho em volta (banco), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 20px 40px -18px #000;
+  /* Cor das letras (banco): branco. Troque o código para mudar a cor. */
+  color: #fff;
+}
+
+/* PEÇA: nome (link 33, extrato). */
+.a-extrato .nome {
+  /* Letra (nome): letra normal (Inter), tamanho 0,95, grossura 700. Número maior = letra maior. */
+  font: 700 .95rem var(--fonte);
+  /* Cor das letras (nome): roxo bem clarinho. Troque o código para mudar a cor. */
+  color: #cdb8ff;
+}
+
+/* PEÇA: saldo (link 33, extrato). */
+.a-extrato .saldo {
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: 1fr auto;
+  /* Espaço entre as peças de dentro: 2 pontinhos. Número maior = mais separadas. */
+  gap: 2px 10px;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+}
+
+/* PEÇA: o pedacinho de texto dentro de: saldo (link 33, extrato). */
+.a-extrato .saldo span {
+  /* Esta peça ocupa a largura da grade inteira. */
+  grid-column: 1 / -1;
+  /* Tamanho da letra (pedacinho de texto): 0,78 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .78rem;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,75. */
+  opacity: .75;
+}
+
+/* PEÇA: o texto forte dentro de: saldo (link 33, extrato). */
+.a-extrato .saldo b {
+  /* Letra (texto forte): letra normal (Inter), tamanho 1,9, grossura 800. Número maior = letra maior. */
+  font: 800 1.9rem var(--fonte);
+}
+
+/* PEÇA: rico dentro de: saldo (link 33, extrato). */
+.a-extrato .saldo b.rico {
+  /* Cor das letras (rico): verde claro. Troque o código para mudar a cor. */
+  color: #6df0a8;
+  /* Liga a animação "brilha-saldo": dura 1 segundos, indo e voltando, repetindo 3 vezes. Número menor = mais rápida. */
+  animation: brilha-saldo 1s ease-in-out 3 alternate;
+}
+
+/* ANIMAÇÃO "brilha-saldo": o saldo brilha. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes brilha-saldo {
+  /* Como a animação termina: */
+  to {
+    /* Brilho em volta das letras, na cor: verde claro. Os números dizem o tamanho; o código diz a cor. */
+    text-shadow: 0 0 22px #6df0a8;
+  }
+}
+
+/* PEÇA: olho (link 33, extrato). */
+.a-extrato .olho {
+  /* Largura (olho): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (olho): 44 pontinhos. Número maior = mais alto. */
+  height: 44px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (olho). */
+  border: 0;
+  /* Arredonda os cantos (olho). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (olho): branco, quase invisível. Troque o código para mudar a cor. */
+  background: rgba(255, 255, 255, .14);
+  /* Tamanho da letra (olho): 1,2 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.2rem;
+  /* Liga a animação "pisca": dura 1,3 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: pisca 1.3s ease-in-out infinite;
+}
+
+/* PEÇA: mov (link 33, extrato). */
+.a-extrato .mov {
+  /* Sem bolinhas de lista. */
+  list-style: none;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+  /* Altura mínima (mov): 40 pontinhos. Número maior = mais alto. */
+  min-height: 40px;
+}
+
+/* PEÇA: o item da lista dentro de: mov (link 33, extrato). */
+.a-extrato .mov li {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espalha as peças, com espaço entre elas. */
+  justify-content: space-between;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (item da lista): 8 pontinhos em cima e embaixo, 10 pontinhos nos lados. */
+  padding: 8px 10px;
+  /* Arredonda os cantos (item da lista). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 10px;
+  /* Cor de fundo (item da lista): branco, quase invisível. Troque o código para mudar a cor. */
+  background: rgba(255, 255, 255, .07);
+  /* Tamanho da letra (item da lista): 0,94 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .94rem;
+}
+
+/* PEÇA: mais (link 33, extrato). */
+.a-extrato .mais {
+  /* Cor das letras (mais): verde claro. Troque o código para mudar a cor. */
+  color: #6df0a8;
+}
+
+/* PEÇA: menos (link 33, extrato). */
+.a-extrato .menos {
+  /* Cor das letras (menos): vermelho claro. Troque o código para mudar a cor. */
+  color: #ff8a8a;
+}
+
+/* PEÇA: nota (link 33, extrato). */
+.a-extrato .nota {
+  /* Tamanho da letra (nota): 0,98 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .98rem;
+  /* Espaço entre as linhas do texto: 1,35. Número maior = linhas mais separadas. */
+  line-height: 1.35;
+}
+
+/* PEÇA: as palavras em destaque (link 33, extrato). */
+.a-extrato .dest {
+  /* Cor das letras (palavras em destaque): verde claro. Troque o código para mudar a cor. */
+  color: #6df0a8;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
 
 /* ---------- 34 ampulheta: vidro e areia caindo ---------- */
-.a-ampulheta .vidro-a { width: min(50vw, 190px); appearance: none; border: 0; background: none; transition: transform .7s cubic-bezier(.5, 0, .3, 1); }
-.a-ampulheta svg { display: block; width: 100%; overflow: visible; }
-.a-ampulheta .moldura-a { fill: none; stroke: #c9a24b; stroke-width: 10; stroke-linecap: round; }
-.a-ampulheta .casca { fill: rgba(255, 255, 255, .1); stroke: rgba(255, 255, 255, .5); stroke-width: 2.5; }
-.a-ampulheta .sup, .a-ampulheta .inf { fill: #f0c56a; }
-.a-ampulheta .sup { transform-origin: 60px 98px; transform: scaleY(.04); }
-.a-ampulheta .inf { transform-origin: 60px 186px; }
-.a-ampulheta .fio-a { stroke: #f0c56a; stroke-width: 2.5; opacity: 0; }
-.a-ampulheta .vidro-a.cai .sup { animation: sup-desce 3.4s linear reverse both; }
-.a-ampulheta .vidro-a.cai .inf { animation: sup-desce 3.4s linear both; }
-.a-ampulheta .vidro-a.cai .fio-a { animation: fio-cai 3.4s linear both; }
-@keyframes sup-desce { from { transform: scaleY(.04); } to { transform: scaleY(1); } }
-@keyframes fio-cai { 4%, 92% { opacity: 1; } to { opacity: 0; } }
-.a-ampulheta .texto { min-height: 3.2em; }
+/* PEÇA: a ampulheta (link 34, ampulheta). */
+.a-ampulheta .vidro-a {
+  /* Largura (ampulheta): o menor entre 50% da largura da tela e 190 pontinhos. Número maior = mais largo. */
+  width: min(50vw, 190px);
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (ampulheta). */
+  border: 0;
+  /* Sem fundo (ampulheta): dá para ver o que está atrás. */
+  background: none;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,7 segundos. Número maior = mais lento. */
+  transition: transform .7s cubic-bezier(.5, 0, .3, 1);
+}
+
+/* PEÇA: o desenho (link 34, ampulheta). */
+.a-ampulheta svg {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Deixa aparecer o que passar para fora. */
+  overflow: visible;
+}
+
+/* PEÇA: as tampas da ampulheta (link 34, ampulheta). */
+.a-ampulheta .moldura-a {
+  /* Sem cor por dentro do desenho (só o traço). */
+  fill: none;
+  /* Cor do traço (tampas da ampulheta): laranja. Troque o código para mudar a cor. */
+  stroke: #c9a24b;
+  /* Grossura do traço: 10. Número maior = traço mais grosso. */
+  stroke-width: 10;
+  /* Pontas do traço arredondadas. */
+  stroke-linecap: round;
+}
+
+/* PEÇA: o vidro (link 34, ampulheta). */
+.a-ampulheta .casca {
+  /* Cor de dentro do desenho (vidro): branco, quase invisível. Troque o código para mudar a cor. */
+  fill: rgba(255, 255, 255, .1);
+  /* Cor do traço (vidro): branco, meio transparente. Troque o código para mudar a cor. */
+  stroke: rgba(255, 255, 255, .5);
+  /* Grossura do traço: 2,5. Número maior = traço mais grosso. */
+  stroke-width: 2.5;
+}
+
+/* PEÇA: a areia de cima e a areia de baixo (link 34, ampulheta). */
+.a-ampulheta .sup, .a-ampulheta .inf {
+  /* Cor de dentro do desenho (areia de cima e a areia de baixo): laranja claro. Troque o código para mudar a cor. */
+  fill: #f0c56a;
+}
+
+/* PEÇA: a areia de cima (link 34, ampulheta). */
+.a-ampulheta .sup {
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: 60px 98px;
+  /* Movimento (areia de cima): encolhe para 4% da altura. */
+  transform: scaleY(.04);
+}
+
+/* PEÇA: a areia de baixo (link 34, ampulheta). */
+.a-ampulheta .inf {
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: 60px 186px;
+}
+
+/* PEÇA: o fio de areia (link 34, ampulheta). */
+.a-ampulheta .fio-a {
+  /* Cor do traço (fio de areia): laranja claro. Troque o código para mudar a cor. */
+  stroke: #f0c56a;
+  /* Grossura do traço: 2,5. Número maior = traço mais grosso. */
+  stroke-width: 2.5;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+}
+
+/* PEÇA: a areia de cima quando a ampulheta estiver com "cai" ligado (link 34, ampulheta). */
+.a-ampulheta .vidro-a.cai .sup {
+  /* Liga a animação "sup-desce": dura 3,4 segundos. Número menor = mais rápida. */
+  animation: sup-desce 3.4s linear reverse both;
+}
+
+/* PEÇA: a areia de baixo quando a ampulheta estiver com "cai" ligado (link 34, ampulheta). */
+.a-ampulheta .vidro-a.cai .inf {
+  /* Liga a animação "sup-desce": dura 3,4 segundos. Número menor = mais rápida. */
+  animation: sup-desce 3.4s linear both;
+}
+
+/* PEÇA: o fio de areia quando a ampulheta estiver com "cai" ligado (link 34, ampulheta). */
+.a-ampulheta .vidro-a.cai .fio-a {
+  /* Liga a animação "fio-cai": dura 3,4 segundos. Número menor = mais rápida. */
+  animation: fio-cai 3.4s linear both;
+}
+
+/* ANIMAÇÃO "sup-desce": a areia enche ou esvazia. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes sup-desce {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: encolhe para 4% da altura. */
+    transform: scaleY(.04);
+  }
+  /* Como a animação termina: */
+  to {
+    /* Movimento: fica do tamanho normal. */
+    transform: scaleY(1);
+  }
+}
+
+/* ANIMAÇÃO "fio-cai": o fio de areia aparece caindo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes fio-cai {
+  /* Como está quando já passou 4% e  92% do tempo da animação: */
+  4%, 92% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+  }
+  /* Como a animação termina: */
+  to {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* PEÇA: o texto principal (link 34, ampulheta). */
+.a-ampulheta .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 35 broto: árvore que cresce ---------- */
-.a-broto .quadro { position: relative; width: 100%; height: min(44vh, 340px); }
-.a-broto .texto { min-height: 3.2em; }
+/* PEÇA: quadro (link 35, broto). */
+.a-broto .quadro {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (quadro): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (quadro): o menor entre 44% da altura da tela e 340 pontinhos. Número maior = mais alto. */
+  height: min(44vh, 340px);
+}
+
+/* PEÇA: o texto principal (link 35, broto). */
+.a-broto .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 36 borboletas: campina clara ---------- */
-.a-borboletas .campina { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 16px 22px 110px; text-align: center; background: linear-gradient(180deg, #d9f3ff, #f3fbe8 50%, #cfeab6); color: #24452b; }
-.a-borboletas .varal { position: absolute; top: calc(18px + env(safe-area-inset-top)); left: 12px; right: 12px; min-height: 44px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-.a-borboletas .varal span { padding: 5px 12px; border-radius: 999px; background: #fff; color: #a3123f; font: 600 .95rem var(--fonte); box-shadow: 0 3px 8px rgba(0, 0, 0, .12); }
-.a-borboletas .borb { --cor: #e0457b; position: absolute; width: 74px; height: 66px; appearance: none; border: 0; background: none; animation: voa 5s ease-in-out infinite; }
-@keyframes voa { 25% { translate: 16px -18px; } 50% { translate: -10px -8px; } 75% { translate: 12px 14px; } }
-.a-borboletas .borb svg { display: block; width: 100%; overflow: visible; fill: var(--cor); }
-.a-borboletas .borb .ae, .a-borboletas .borb .ad { transform-origin: 40px 32px; animation: bate .28s ease-in-out infinite alternate; }
-.a-borboletas .borb .corpo { fill: #3a2410; }
-@keyframes bate { to { transform: scaleX(.38); } }
-.a-borboletas .borb.pega { transition: top 1s, opacity 1s; top: -12% !important; opacity: 0; pointer-events: none; }
-.a-borboletas .dest { color: #a3123f; text-shadow: none; }
-.a-borboletas .dica { color: #24452b; }
+/* PEÇA: campina (link 36, borboletas). */
+.a-borboletas .campina {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Empurra as peças para o fim. */
+  justify-content: flex-end;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (campina): 16 pontinhos em cima, 22 pontinhos nos lados, 110 pontinhos embaixo. */
+  padding: 16px 22px 110px;
+  /* Texto no meio. */
+  text-align: center;
+  /* Fundo em degradê (campina), nas cores: azul bem clarinho, branco e verde bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #d9f3ff, #f3fbe8 50%, #cfeab6);
+  /* Cor das letras (campina): verde bem escuro. Troque o código para mudar a cor. */
+  color: #24452b;
+}
+
+/* PEÇA: varal (link 36, borboletas). */
+.a-borboletas .varal {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: uma conta feita pelo navegador. */
+  top: calc(18px + env(safe-area-inset-top));
+  /* Distância da esquerda: 12 pontinhos. */
+  left: 12px;
+  /* Distância da direita: 12 pontinhos. */
+  right: 12px;
+  /* Altura mínima (varal): 44 pontinhos. Número maior = mais alto. */
+  min-height: 44px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 6 pontinhos. Número maior = mais separadas. */
+  gap: 6px;
+}
+
+/* PEÇA: o pedacinho de texto dentro de: varal (link 36, borboletas). */
+.a-borboletas .varal span {
+  /* Espaço de dentro, entre a borda e o conteúdo, (pedacinho de texto): 5 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 5px 12px;
+  /* Arredonda os cantos (pedacinho de texto). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Cor de fundo (pedacinho de texto): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Cor das letras (pedacinho de texto): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Letra (pedacinho de texto): letra normal (Inter), tamanho 0,95, grossura 600. Número maior = letra maior. */
+  font: 600 .95rem var(--fonte);
+  /* Sombra ou brilho em volta (pedacinho de texto), na cor: preto, quase invisível. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .12);
+}
+
+/* PEÇA: borb (link 36, borboletas). */
+.a-borboletas .borb {
+  /* Valor inicial guardado com o nome --cor. O código muda esse valor enquanto a animação roda. */
+  --cor: #e0457b;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Largura (borb): 74 pontinhos. Número maior = mais largo. */
+  width: 74px;
+  /* Altura (borb): 66 pontinhos. Número maior = mais alto. */
+  height: 66px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (borb). */
+  border: 0;
+  /* Sem fundo (borb): dá para ver o que está atrás. */
+  background: none;
+  /* Liga a animação "voa": dura 5 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: voa 5s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "voa": a borboleta passeia pela tela. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes voa {
+  /* Como está quando já passou 25% do tempo da animação: */
+  25% {
+    /* Deslocamento: 16 pontinhos e menos 18 pontinhos (de lado e para baixo). */
+    translate: 16px -18px;
+  }
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Deslocamento: menos 10 pontinhos e menos 8 pontinhos (de lado e para baixo). */
+    translate: -10px -8px;
+  }
+  /* Como está quando já passou 75% do tempo da animação: */
+  75% {
+    /* Deslocamento: 12 pontinhos e 14 pontinhos (de lado e para baixo). */
+    translate: 12px 14px;
+  }
+}
+
+/* PEÇA: o desenho dentro de: borb (link 36, borboletas). */
+.a-borboletas .borb svg {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Deixa aparecer o que passar para fora. */
+  overflow: visible;
+  /* Cor de dentro do desenho (desenho): a cor que o código escolhe para cada peça. Troque o código para mudar a cor. */
+  fill: var(--cor);
+}
+
+/* PEÇA: a asa esquerda dentro de: borb e a asa direita dentro de: borb (link 36, borboletas). */
+.a-borboletas .borb .ae, .a-borboletas .borb .ad {
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: 40px 32px;
+  /* Liga a animação "bate": dura 0,28 segundos, repetindo para sempre, indo e voltando. Número menor = mais rápida. */
+  animation: bate .28s ease-in-out infinite alternate;
+}
+
+/* PEÇA: corpo dentro de: borb (link 36, borboletas). */
+.a-borboletas .borb .corpo {
+  /* Cor de dentro do desenho (corpo): marrom. Troque o código para mudar a cor. */
+  fill: #3a2410;
+}
+
+/* ANIMAÇÃO "bate": as asas batem. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes bate {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: encolhe para 38% da largura. */
+    transform: scaleX(.38);
+  }
+}
+
+/* PEÇA: borb com "pega" ligado (link 36, borboletas). */
+.a-borboletas .borb.pega {
+  /* Faz a mudança acontecer devagar, sem pular: a posição em 1 segundos e a transparência em 1 segundos. Número maior = mais lento. */
+  transition: top 1s, opacity 1s;
+  /* Distância de cima: -12% !important. */
+  top: -12% !important;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: as palavras em destaque (link 36, borboletas). */
+.a-borboletas .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
+
+/* PEÇA: a dica piscando (link 36, borboletas). */
+.a-borboletas .dica {
+  /* Cor das letras (dica piscando): verde bem escuro. Troque o código para mudar a cor. */
+  color: #24452b;
+}
 
 /* ---------- 37 discoteca: bola de espelhos e pista ---------- */
-.a-discoteca .salao { --h: 0; position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 22px; background: #0c0416; filter: hue-rotate(calc(var(--h) * 1deg)); transition: filter .4s; }
-.a-discoteca .feixes { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg at 50% 38%, rgba(255, 43, 214, .28) 0 7deg, transparent 7deg 40deg, rgba(43, 240, 255, .25) 40deg 46deg, transparent 46deg 90deg, rgba(255, 210, 63, .26) 90deg 97deg, transparent 97deg 150deg, rgba(255, 43, 214, .25) 150deg 157deg, transparent 157deg 215deg, rgba(43, 240, 255, .25) 215deg 222deg, transparent 222deg 290deg, rgba(255, 210, 63, .25) 290deg 297deg, transparent 297deg); animation: gira-feixes 11s linear infinite; }
-@keyframes gira-feixes { to { transform: rotate(360deg); } }
-.a-discoteca .bola { position: relative; flex: none; width: 150px; height: 150px; margin-top: calc(38px + env(safe-area-inset-top)); appearance: none; border: 0; border-radius: 50%; background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 15px), repeating-linear-gradient(0deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 15px), radial-gradient(circle at 36% 30%, #fff, #b8c2d6 42%, #3f4a66); box-shadow: 0 0 40px rgba(255, 255, 255, .5); animation: rola-bola 3s linear infinite; }
-@keyframes rola-bola { to { background-position: 150px 0, 0 0, 0 0; } }
-.a-discoteca .bola::before { content: ''; position: absolute; top: -60px; left: 50%; width: 3px; height: 60px; background: #d8d8e0; }
-.a-discoteca .piso { position: absolute; left: 0; right: 0; bottom: 0; height: 38%; display: grid; grid-template-columns: repeat(8, 1fr); transform: perspective(330px) rotateX(46deg); transform-origin: bottom; opacity: .75; }
-.a-discoteca .piso i { background: #ff2bd6; box-shadow: inset 0 0 0 1px #000; animation: pisca-piso 1.1s steps(2) infinite; }
-@keyframes pisca-piso { 50% { background: #2bf0ff; opacity: .35; } }
-.a-discoteca .texto, .a-discoteca .dica, .a-discoteca .btn { position: relative; z-index: 2; }
-.a-discoteca .texto { min-height: 3.2em; text-shadow: 0 2px 8px #000; }
+/* PEÇA: salao (link 37, discoteca). */
+.a-discoteca .salao {
+  /* Valor inicial guardado com o nome --h. O código muda esse valor enquanto a animação roda. */
+  --h: 0;
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Corta o que passar para fora (salao). */
+  overflow: hidden;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (salao): zero em cima e embaixo, 22 pontinhos nos lados. */
+  padding: 0 22px;
+  /* Cor de fundo (salao): preto. Troque o código para mudar a cor. */
+  background: #0c0416;
+  /* Efeito visual (salao): troca as cores. */
+  filter: hue-rotate(calc(var(--h) * 1deg));
+  /* Faz a mudança acontecer devagar, sem pular: o filtro em 0,4 segundos. Número maior = mais lento. */
+  transition: filter .4s;
+}
+
+/* PEÇA: feixes (link 37, discoteca). */
+.a-discoteca .feixes {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 50% do espaço. */
+  top: -50%;
+  /* Distância da esquerda: menos 50% do espaço. */
+  left: -50%;
+  /* Largura (feixes): 200% do espaço. Número maior = mais largo. */
+  width: 200%;
+  /* Altura (feixes): 200% do espaço. Número maior = mais alto. */
+  height: 200%;
+  /* Fundo (feixes) em fatias, nas cores: lilás-rosado, meio transparente, transparente, verde-água, meio transparente, transparente, dourado claro, meio transparente, transparente, lilás-rosado, meio transparente, transparente, verde-água, meio transparente, transparente, dourado claro, meio transparente e transparente. */
+  background: conic-gradient(from 0deg at 50% 38%, rgba(255, 43, 214, .28) 0 7deg, transparent 7deg 40deg, rgba(43, 240, 255, .25) 40deg 46deg, transparent 46deg 90deg, rgba(255, 210, 63, .26) 90deg 97deg, transparent 97deg 150deg, rgba(255, 43, 214, .25) 150deg 157deg, transparent 157deg 215deg, rgba(43, 240, 255, .25) 215deg 222deg, transparent 222deg 290deg, rgba(255, 210, 63, .25) 290deg 297deg, transparent 297deg);
+  /* Liga a animação "gira-feixes": dura 11 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: gira-feixes 11s linear infinite;
+}
+
+/* ANIMAÇÃO "gira-feixes": as luzes da discoteca giram. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes gira-feixes {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: gira 360 graus para a direita. */
+    transform: rotate(360deg);
+  }
+}
+
+/* PEÇA: bola (link 37, discoteca). */
+.a-discoteca .bola {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Mantém o tamanho, sem encolher nem esticar. */
+  flex: none;
+  /* Largura (bola): 150 pontinhos. Número maior = mais largo. */
+  width: 150px;
+  /* Altura (bola): 150 pontinhos. Número maior = mais alto. */
+  height: 150px;
+  /* Espaço de fora, em cima: uma conta feita pelo navegador. */
+  margin-top: calc(38px + env(safe-area-inset-top));
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (bola). */
+  border: 0;
+  /* Arredonda os cantos (bola). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo (bola) em listras repetidas, nas cores: preto, meio transparente, transparente, preto, meio transparente, transparente, branco, azul bem clarinho e azul escuro. */
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 15px), repeating-linear-gradient(0deg, rgba(0, 0, 0, .28) 0 2px, transparent 2px 15px), radial-gradient(circle at 36% 30%, #fff, #b8c2d6 42%, #3f4a66);
+  /* Sombra ou brilho em volta (bola), na cor: branco, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 40px rgba(255, 255, 255, .5);
+  /* Liga a animação "rola-bola": dura 3 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: rola-bola 3s linear infinite;
+}
+
+/* ANIMAÇÃO "rola-bola": os espelhos da bola andam. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes rola-bola {
+  /* Como a animação termina: */
+  to {
+    /* Posição do desenho de fundo. */
+    background-position: 150px 0, 0 0, 0 0;
+  }
+}
+
+/* PEÇA: enfeite desenhado em: bola (link 37, discoteca). */
+.a-discoteca .bola::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: menos 60 pontinhos. */
+  top: -60px;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Largura (enfeite desenhado em: bola): 3 pontinhos. Número maior = mais largo. */
+  width: 3px;
+  /* Altura (enfeite desenhado em: bola): 60 pontinhos. Número maior = mais alto. */
+  height: 60px;
+  /* Cor de fundo (enfeite desenhado em: bola): cinza claro. Troque o código para mudar a cor. */
+  background: #d8d8e0;
+}
+
+/* PEÇA: piso (link 37, discoteca). */
+.a-discoteca .piso {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Altura (piso): 38% do espaço. Número maior = mais alto. */
+  height: 38%;
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: repeat(8, 1fr);
+  /* Movimento (piso): ganha profundidade 3D e tomba para trás 46 graus. */
+  transform: perspective(330px) rotateX(46deg);
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: bottom;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,75. */
+  opacity: .75;
+}
+
+/* PEÇA: a peça dentro de: piso (link 37, discoteca). */
+.a-discoteca .piso i {
+  /* Cor de fundo (peça): lilás-rosado. Troque o código para mudar a cor. */
+  background: #ff2bd6;
+  /* Sombra ou brilho em volta (peça), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 0 0 1px #000;
+  /* Liga a animação "pisca-piso": dura 1,1 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: pisca-piso 1.1s steps(2) infinite;
+}
+
+/* ANIMAÇÃO "pisca-piso": os ladrilhos piscam. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes pisca-piso {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Cor de fundo: verde-água. Troque o código para mudar a cor. */
+    background: #2bf0ff;
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,35. */
+    opacity: .35;
+  }
+}
+
+/* PEÇA: o texto principal, a dica piscando e o botão (link 37, discoteca). */
+.a-discoteca .texto, .a-discoteca .dica, .a-discoteca .btn {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+}
+
+/* PEÇA: o texto principal (link 37, discoteca). */
+.a-discoteca .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+  /* Brilho em volta das letras (texto principal), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 8px #000;
+}
 
 /* ---------- 38 fogos: céu de festa ---------- */
-.a-fogos.cena { background: #050414; }
-.a-fogos .sobre { position: absolute; inset: auto 0 0; z-index: 2; padding: 0 24px calc(100px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-.a-fogos .toque-ceu { position: absolute; inset: 0 0 96px; z-index: 3; }
-.a-fogos .texto { text-shadow: 0 2px 8px #000; min-height: 3em; }
+/* PEÇA: a tela inteira desta arte (link 38, fogos). */
+.a-fogos.cena {
+  /* Cor de fundo (tela inteira desta arte): preto. Troque o código para mudar a cor. */
+  background: #050414;
+}
+
+/* PEÇA: sobre (link 38, fogos). */
+.a-fogos .sobre {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: automático em cima, zero nos lados, zero embaixo. */
+  inset: auto 0 0;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Espaço de dentro, entre a borda e o conteúdo, (sobre): calculado para não ficar atrás do rodapé. */
+  padding: 0 24px calc(100px + env(safe-area-inset-bottom));
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: toque ceu (link 38, fogos). */
+.a-fogos .toque-ceu {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero em cima, zero nos lados, 96 pontinhos embaixo. */
+  inset: 0 0 96px;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+}
+
+/* PEÇA: o texto principal (link 38, fogos). */
+.a-fogos .texto {
+  /* Brilho em volta das letras (texto principal), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 8px #000;
+  /* Altura mínima (texto principal): 3 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3em;
+}
 
 /* ---------- 39 neon: letreiro em parede de tijolos ---------- */
-.a-neon .muro { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 20px 96px; text-align: center; background: repeating-linear-gradient(0deg, #16101c 0 2px, transparent 2px 28px), repeating-linear-gradient(90deg, #16101c 0 2px, transparent 2px 60px), #2a1f33; }
-.a-neon .placa { font: 400 clamp(2.5rem, 13vw, 4rem)/1 'Monoton', var(--fonte-titulo); color: #4a3a55; white-space: nowrap; }
-.a-neon .placa span.liga { color: #ff4fa8; text-shadow: 0 0 6px #fff, 0 0 20px #ff2bd6, 0 0 44px #ff2bd6; animation: falha .9s steps(2) 1; }
-@keyframes falha { 15%, 45% { opacity: .2; } 30%, 60% { opacity: 1; } }
-.a-neon .sub-n { font: 400 1.9rem 'Pacifico', var(--fonte-titulo); color: #4a3a55; transition: color .4s, text-shadow .4s; }
-.a-neon .sub-n.liga { color: #7df9ff; text-shadow: 0 0 12px #2bf0ff, 0 0 30px #2bf0ff; }
-.a-neon .cordinha { position: absolute; top: 0; right: 42px; width: 44px; height: 200px; appearance: none; border: 0; background: none; }
-.a-neon .cordinha::before { content: ''; position: absolute; top: 0; bottom: 18px; left: 21px; width: 2px; background: #bdb7c9; }
-.a-neon .cordinha i { position: absolute; bottom: 0; left: 11px; width: 22px; height: 22px; border-radius: 50%; background: #e7c65a; }
-.a-neon .dica { color: #e7dff0; }
-.a-neon .texto { min-height: 3.2em; }
+/* PEÇA: muro (link 39, neon). */
+.a-neon .muro {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Corta o que passar para fora (muro). */
+  overflow: hidden;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 16 pontinhos. Número maior = mais separadas. */
+  gap: 16px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (muro): zero em cima, 20 pontinhos nos lados, 96 pontinhos embaixo. */
+  padding: 0 20px 96px;
+  /* Texto no meio. */
+  text-align: center;
+  /* Fundo (muro) em listras repetidas, nas cores: roxo bem escuro, transparente, roxo bem escuro, transparente e roxo bem escuro. */
+  background: repeating-linear-gradient(0deg, #16101c 0 2px, transparent 2px 28px), repeating-linear-gradient(90deg, #16101c 0 2px, transparent 2px 60px), #2a1f33;
+}
+
+/* PEÇA: placa (link 39, neon). */
+.a-neon .placa {
+  /* Tipo de letra (placa): fonte 400 clamp(2.5rem, 13vw, 4rem)/1 'Monoton. */
+  font: 400 clamp(2.5rem, 13vw, 4rem)/1 'Monoton', var(--fonte-titulo);
+  /* Cor das letras (placa): roxo escuro. Troque o código para mudar a cor. */
+  color: #4a3a55;
+  /* Não deixa o texto quebrar de linha. */
+  white-space: nowrap;
+}
+
+/* PEÇA: liga dentro de: placa (link 39, neon). */
+.a-neon .placa span.liga {
+  /* Cor das letras (liga): rosa claro. Troque o código para mudar a cor. */
+  color: #ff4fa8;
+  /* Brilho em volta das letras (liga), na cor: branco e lilás-rosado. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 6px #fff, 0 0 20px #ff2bd6, 0 0 44px #ff2bd6;
+  /* Liga a animação "falha": dura 0,9 segundos, repetindo 1 vezes. Número menor = mais rápida. */
+  animation: falha .9s steps(2) 1;
+}
+
+/* ANIMAÇÃO "falha": a letra de neon pisca falhando antes de ligar. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes falha {
+  /* Como está quando já passou 15% e  45% do tempo da animação: */
+  15%, 45% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,2. */
+    opacity: .2;
+  }
+  /* Como está quando já passou 30% e  60% do tempo da animação: */
+  30%, 60% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+  }
+}
+
+/* PEÇA: a 2ª linha do letreiro (link 39, neon). */
+.a-neon .sub-n {
+  /* Letra (2ª linha do letreiro): fonte Pacifico, tamanho 1,9, grossura 400. Número maior = letra maior. */
+  font: 400 1.9rem 'Pacifico', var(--fonte-titulo);
+  /* Cor das letras (2ª linha do letreiro): roxo escuro. Troque o código para mudar a cor. */
+  color: #4a3a55;
+  /* Faz a mudança acontecer devagar, sem pular: a cor em 0,4 segundos e o brilho do texto em 0,4 segundos. Número maior = mais lento. */
+  transition: color .4s, text-shadow .4s;
+}
+
+/* PEÇA: a 2ª linha do letreiro com "liga" ligado (link 39, neon). */
+.a-neon .sub-n.liga {
+  /* Cor das letras (2ª linha do letreiro): verde-água claro. Troque o código para mudar a cor. */
+  color: #7df9ff;
+  /* Brilho em volta das letras (2ª linha do letreiro), na cor: verde-água. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 12px #2bf0ff, 0 0 30px #2bf0ff;
+}
+
+/* PEÇA: cordinha (link 39, neon). */
+.a-neon .cordinha {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância da direita: 42 pontinhos. */
+  right: 42px;
+  /* Largura (cordinha): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (cordinha): 200 pontinhos. Número maior = mais alto. */
+  height: 200px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (cordinha). */
+  border: 0;
+  /* Sem fundo (cordinha): dá para ver o que está atrás. */
+  background: none;
+}
+
+/* PEÇA: enfeite desenhado em: cordinha (link 39, neon). */
+.a-neon .cordinha::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância de baixo: 18 pontinhos. */
+  bottom: 18px;
+  /* Distância da esquerda: 21 pontinhos. */
+  left: 21px;
+  /* Largura (enfeite desenhado em: cordinha): 2 pontinhos. Número maior = mais largo. */
+  width: 2px;
+  /* Cor de fundo (enfeite desenhado em: cordinha): roxo claro. Troque o código para mudar a cor. */
+  background: #bdb7c9;
+}
+
+/* PEÇA: a peça dentro de: cordinha (link 39, neon). */
+.a-neon .cordinha i {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: 11 pontinhos. */
+  left: 11px;
+  /* Largura (peça): 22 pontinhos. Número maior = mais largo. */
+  width: 22px;
+  /* Altura (peça): 22 pontinhos. Número maior = mais alto. */
+  height: 22px;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (peça): dourado claro. Troque o código para mudar a cor. */
+  background: #e7c65a;
+}
+
+/* PEÇA: a dica piscando (link 39, neon). */
+.a-neon .dica {
+  /* Cor das letras (dica piscando): roxo bem clarinho. Troque o código para mudar a cor. */
+  color: #e7dff0;
+}
+
+/* PEÇA: o texto principal (link 39, neon). */
+.a-neon .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}
 
 /* ---------- 40 abajur: quarto que escurece ---------- */
-.a-abajur .quarto { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 0 22px 108px; background: linear-gradient(180deg, #e8c28c, #c98f54); color: #3a2410; transition: background 1.4s; }
-.a-abajur .quarto.apagou { background: linear-gradient(180deg, #04041a, #0d0a2c); color: #eef; }
-.a-abajur .teto { position: absolute; inset: 0; opacity: 0; transition: opacity 2s .6s; }
-.a-abajur .quarto.apagou .teto { opacity: 1; }
-.a-abajur .teto i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #d8ffb0; box-shadow: 0 0 8px #baff7a; animation: pisca 2.6s ease-in-out infinite; }
-.a-abajur .lampada { position: relative; width: 170px; height: 220px; appearance: none; border: 0; background: none; }
-.a-abajur .lampada i { position: absolute; top: 0; left: 15px; width: 140px; height: 96px; background: #fff0c9; clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%); box-shadow: 0 0 40px #ffe9a8; transition: background 1s; }
-.a-abajur .quarto.apagou .lampada i { background: #2a2740; }
-.a-abajur .lampada b { position: absolute; top: 96px; left: 80px; width: 10px; height: 112px; background: #5a3a1e; }
-.a-abajur .lampada::after { content: ''; position: absolute; bottom: 0; left: 45px; width: 80px; height: 14px; border-radius: 50%; background: #5a3a1e; }
-.a-abajur .texto { min-height: 3.2em; }
+/* PEÇA: quarto (link 40, abajur). */
+.a-abajur .quarto {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Corta o que passar para fora (quarto). */
+  overflow: hidden;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Empurra as peças para o fim. */
+  justify-content: flex-end;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (quarto): zero em cima, 22 pontinhos nos lados, 108 pontinhos embaixo. */
+  padding: 0 22px 108px;
+  /* Fundo em degradê (quarto), nas cores: laranja claro e laranja. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #e8c28c, #c98f54);
+  /* Cor das letras (quarto): marrom. Troque o código para mudar a cor. */
+  color: #3a2410;
+  /* Faz a mudança acontecer devagar, sem pular: o fundo em 1,4 segundos. Número maior = mais lento. */
+  transition: background 1.4s;
+}
+
+/* PEÇA: quarto com "apagou" ligado (link 40, abajur). */
+.a-abajur .quarto.apagou {
+  /* Fundo em degradê (quarto), nas cores: preto e azul bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #04041a, #0d0a2c);
+  /* Cor das letras (quarto): branco. Troque o código para mudar a cor. */
+  color: #eef;
+}
+
+/* PEÇA: teto (link 40, abajur). */
+.a-abajur .teto {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 2 segundos. Número maior = mais lento. */
+  transition: opacity 2s .6s;
+}
+
+/* PEÇA: teto quando quarto estiver com "apagou" ligado (link 40, abajur). */
+.a-abajur .quarto.apagou .teto {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+}
+
+/* PEÇA: a peça dentro de: teto (link 40, abajur). */
+.a-abajur .teto i {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Largura (peça): 4 pontinhos. Número maior = mais largo. */
+  width: 4px;
+  /* Altura (peça): 4 pontinhos. Número maior = mais alto. */
+  height: 4px;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (peça): verde bem clarinho. Troque o código para mudar a cor. */
+  background: #d8ffb0;
+  /* Sombra ou brilho em volta (peça), na cor: verde claro. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 8px #baff7a;
+  /* Liga a animação "pisca": dura 2,6 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: pisca 2.6s ease-in-out infinite;
+}
+
+/* PEÇA: abajur (link 40, abajur). */
+.a-abajur .lampada {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (abajur): 170 pontinhos. Número maior = mais largo. */
+  width: 170px;
+  /* Altura (abajur): 220 pontinhos. Número maior = mais alto. */
+  height: 220px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (abajur). */
+  border: 0;
+  /* Sem fundo (abajur): dá para ver o que está atrás. */
+  background: none;
+}
+
+/* PEÇA: a peça dentro de: abajur (link 40, abajur). */
+.a-abajur .lampada i {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância da esquerda: 15 pontinhos. */
+  left: 15px;
+  /* Largura (peça): 140 pontinhos. Número maior = mais largo. */
+  width: 140px;
+  /* Altura (peça): 96 pontinhos. Número maior = mais alto. */
+  height: 96px;
+  /* Cor de fundo (peça): dourado bem clarinho. Troque o código para mudar a cor. */
+  background: #fff0c9;
+  /* Recorta a peça com uma tesoura, formando o desenho. */
+  clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%);
+  /* Sombra ou brilho em volta (peça), na cor: dourado bem clarinho. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 40px #ffe9a8;
+  /* Faz a mudança acontecer devagar, sem pular: o fundo em 1 segundos. Número maior = mais lento. */
+  transition: background 1s;
+}
+
+/* PEÇA: a peça dentro de: abajur (link 40, abajur). */
+.a-abajur .quarto.apagou .lampada i {
+  /* Cor de fundo (peça): azul bem escuro. Troque o código para mudar a cor. */
+  background: #2a2740;
+}
+
+/* PEÇA: o texto forte dentro de: abajur (link 40, abajur). */
+.a-abajur .lampada b {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 96 pontinhos. */
+  top: 96px;
+  /* Distância da esquerda: 80 pontinhos. */
+  left: 80px;
+  /* Largura (texto forte): 10 pontinhos. Número maior = mais largo. */
+  width: 10px;
+  /* Altura (texto forte): 112 pontinhos. Número maior = mais alto. */
+  height: 112px;
+  /* Cor de fundo (texto forte): marrom. Troque o código para mudar a cor. */
+  background: #5a3a1e;
+}
+
+/* PEÇA: enfeite desenhado em: abajur (link 40, abajur). */
+.a-abajur .lampada::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Distância da esquerda: 45 pontinhos. */
+  left: 45px;
+  /* Largura (enfeite desenhado em: abajur): 80 pontinhos. Número maior = mais largo. */
+  width: 80px;
+  /* Altura (enfeite desenhado em: abajur): 14 pontinhos. Número maior = mais alto. */
+  height: 14px;
+  /* Arredonda os cantos (enfeite desenhado em: abajur). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (enfeite desenhado em: abajur): marrom. Troque o código para mudar a cor. */
+  background: #5a3a1e;
+}
+
+/* PEÇA: o texto principal (link 40, abajur). */
+.a-abajur .texto {
+  /* Altura mínima (texto principal): 3,2 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.2em;
+}

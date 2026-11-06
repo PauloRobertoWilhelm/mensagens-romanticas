@@ -18,8 +18,9 @@
 1. Recebe `index.html?k=CHAVE`.
 2. `main.js` decodifica a chave (`chave.js`) → id → mensagem em `MENSAGENS`.
 3. Aplica `data-tema` e `data-arte`, inicia `Fundo` (partículas do tema, com ajustes da arte) e `Musica` (categoria).
-4. `Cenas.rodar`: arte própria do link (o primeiro toque libera a música) → final (título, mensagem, reações, carta).
-5. Reações no final abrem o WhatsApp se `CONFIG.WHATSAPP` estiver preenchido.
+4. `Cenas.rodar`: leitor de digital (`js/abertura.js`) → arte própria do link → 2 capítulos interativos → final (título, mensagem, reações, carta). O primeiro toque libera a música.
+5. O fundo animado de cada link (`js/cenarios.js`, escolhido em `data/cenarios.js`) roda em WebGL atrás de tudo, reage ao dedo e pulsa com `Musica.batida()`.
+6. Reações no final abrem o WhatsApp se `CONFIG.WHATSAPP` estiver preenchido.
 
 ## Chave do link
 5 caracteres, alfabeto de 31 símbolos (sem 0 O 1 I L). Bits: salt 9 · id mascarado 8 · verificação 6. Ids de 1 a 255. **É ofuscação, não segurança.** O painel usa `Chave.fixa(id)`: cada mensagem tem um link fixo, que nunca muda. `Chave.gerar(id)` continua sorteando chaves diferentes, e toda chave válida segue abrindo a mensagem.
@@ -31,7 +32,9 @@ M(id, 'categoria', 'tema', 'nome', abArte('arte', { /* textos que a arte usa */ 
 ], 'carta opcional');
 ```
 Para criar uma mensagem nova: escreva a função `A.nome = async (d) => { ... }` em `js/artes-<categoria>.js` usando as peças de `js/kit.js` (`K.tela`, `K.toque`, `K.segura`, `K.arrasta`, `K.raspa`, `K.pinta`...), o estilo `.a-nome` em `css/artes-<categoria>.css` e os textos no arquivo de dados. O validador recusa arte repetida entre mensagens.
-`CATEGORIAS[cat] = { nome, emoji, musica, bpm, legendas[], chips[] }`.
+`CATEGORIAS[cat] = { nome, emoji, musica, chips[] }`.
+
+Depois da arte vêm 2 capítulos, definidos em `data/capitulos-*.js` com `X(id, [capítulo, capítulo])`. Os 8 tipos ficam em `js/capitulos.js` e o visual em `css/capitulos.css`. As faíscas do toque ficam em `js/efeitos.js`.
 
 ## Segurança e privacidade
 - Tudo no navegador; nenhum dado enviado a servidor próprio.

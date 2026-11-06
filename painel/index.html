@@ -1,61 +1,103 @@
 <!DOCTYPE html>
-<!-- painel/index.html — SUA ferramenta: escolhe a mensagem e pega o link fixo dela. -->
+<!-- ==========================================================
+     painel/index.html é a SUA ferramenta: aqui você escolhe a mensagem e pega o link.
+     Quem recebe a mensagem nunca vê esta página.
+     Tudo que está entre estes sinais é explicação: o navegador ignora.
+     Cada explicação fala da linha logo abaixo.
+     ========================================================== -->
+<!-- Início da página, em português. -->
 <html lang="pt-BR">
+<!-- Parte invisível: informações sobre a página. -->
 <head>
-  <!-- Codificação e layout de celular. -->
+  <!-- Permite acentos e emojis. -->
   <meta charset="utf-8">
+  <!-- Faz a página caber na tela do celular. -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Não listar em buscadores. -->
+  <!-- Pede ao Google para não mostrar esta página nas buscas. -->
   <meta name="robots" content="noindex, nofollow">
+  <!-- Nome que aparece na aba. Pode trocar o texto. -->
   <title>Painel · Mensagens</title>
-  <!-- Estilo próprio do painel. -->
+  <!-- Roupa do painel: cores e tamanhos estão neste arquivo. -->
   <link rel="stylesheet" href="painel.css">
+<!-- Fim da parte invisível. -->
 </head>
+<!-- Parte visível da página. -->
 <body>
-  <!-- Cabeçalho com explicação curta. -->
+  <!-- Topo do painel. -->
   <header>
+    <!-- Título grande. Pode trocar o texto. -->
     <h1>Painel de links 💌</h1>
+    <!-- Frase que explica como usar. Pode trocar o texto. -->
     <p class="sub">Escolha uma mensagem, toque em <b>Ver link</b> e envie. Cada mensagem tem um link fixo, que nunca muda.</p>
+  <!-- Fim do topo. -->
   </header>
 
-  <!-- Barra de ferramentas: categoria, busca e anotação de destinatário. -->
+  <!-- Barra de ferramentas. -->
   <section class="barra">
+    <!-- Lugar das abas de categoria. O código cria as abas aqui. -->
     <div id="abas" class="abas" role="tablist"></div>
+    <!-- Campo para buscar uma mensagem pelo nome. -->
     <input id="busca" type="search" placeholder="Buscar pelo nome…" aria-label="Buscar mensagem">
+    <!-- Campo para anotar para quem vai o link. Aceita até 40 letras. -->
     <input id="para" type="text" placeholder="Anotação opcional (para quem vai?)" aria-label="Anotação do destinatário" maxlength="40">
+  <!-- Fim da barra. -->
   </section>
 
-  <!-- Lista de cartões das mensagens (preenchida pelo painel.js). -->
+  <!-- Lista das 80 mensagens. O código preenche este lugar. -->
   <main id="lista" class="lista"></main>
 
-  <!-- Gaveta do link: aparece embaixo quando você toca em Ver link. -->
+  <!-- Gaveta do link: fica escondida e aparece quando você toca em "Ver link". -->
   <aside id="gaveta" hidden>
+    <!-- Nome da mensagem escolhida. -->
     <p id="gNome" class="gNome"></p>
+    <!-- Campo com o link pronto para copiar. -->
     <input id="gLink" type="text" readonly aria-label="Link gerado">
+    <!-- Fileira de botões da gaveta. -->
     <div class="gBotoes">
+      <!-- Botão que copia o link. -->
       <button id="gCopiar" type="button">Copiar</button>
+      <!-- Botão que abre a mensagem em outra aba, para você ver como ficou. -->
       <a id="gAbrir" href="#" target="_blank" rel="noopener">Abrir</a>
+      <!-- Botão que fecha a gaveta. -->
       <button id="gFechar" type="button" class="leve">Fechar</button>
+    <!-- Fim da fileira. -->
     </div>
+    <!-- Lugar de um aviso, quando for preciso. -->
     <p id="gAviso" class="sub"></p>
+  <!-- Fim da gaveta. -->
   </aside>
 
-  <!-- Histórico dos links vistos NESTE navegador (fica salvo só aqui). -->
+  <!-- Histórico: links que você viu neste aparelho. Fica guardado só aqui. -->
   <section class="hist">
+    <!-- Título do histórico. Pode trocar o texto. -->
     <h2>Links vistos neste aparelho</h2>
+    <!-- Lista do histórico. O código preenche este lugar. -->
     <ul id="historico"></ul>
+    <!-- Botão que apaga o histórico. -->
     <button id="limpar" type="button" class="leve">Limpar histórico</button>
+  <!-- Fim do histórico. -->
   </section>
 
-  <!-- Mesmos dados que o site usa (caminho sobe uma pasta). -->
+  <!-- Daqui para baixo o navegador carrega o código. A ORDEM IMPORTA. Os ../ querem dizer "volte uma pasta". -->
+  <!-- Ajustes gerais, como o endereço do site. -->
   <script src="../data/config.js"></script>
+  <!-- As 4 categorias. -->
   <script src="../data/categorias.js"></script>
+  <!-- Ferramentas para escrever as mensagens. -->
   <script src="../data/base.js"></script>
+  <!-- Textos dos links de paquera. -->
   <script src="../data/mensagens-paquera.js"></script>
+  <!-- Textos dos links de namoro. -->
   <script src="../data/mensagens-namoro.js"></script>
+  <!-- Textos dos links de amigos. -->
   <script src="../data/mensagens-amigos.js"></script>
+  <!-- Textos dos links de datas especiais. -->
   <script src="../data/mensagens-datas.js"></script>
+  <!-- Cria o código de cada link. -->
   <script src="../js/chave.js"></script>
+  <!-- Faz o painel funcionar. -->
   <script src="painel.js"></script>
+<!-- Fim da parte visível. -->
 </body>
+<!-- Fim da página. -->
 </html>

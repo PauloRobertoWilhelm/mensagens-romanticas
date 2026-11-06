@@ -1,0 +1,622 @@
+/* ==========================================================
+   capitulos.css — o visual dos capítulos extras e do brilho do dedo.
+   ========================================================== */
+
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
+/* ---------- Brilho do dedo: fica por cima de tudo e deixa o toque passar ---------- */
+/* PEÇA: o quadro de faíscas. */
+#brilho {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (quadro de faíscas): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (quadro de faíscas): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 6;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* ---------- Tela de capítulo ---------- */
+/* PEÇA: o título dentro de: a tela de capítulo. */
+.capitulo .titulo {
+  /* Tamanho da letra (título): cresce com a tela, de 1,5 vezes o tamanho normal da letra até 2,3 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: clamp(1.5rem, 6.4vw, 2.3rem);
+}
+
+/* PEÇA: o texto principal dentro de: a tela de capítulo. */
+.capitulo .texto {
+  /* Altura mínima (texto principal): 3,1 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3.1em;
+  /* Tamanho da letra (texto principal): cresce com a tela, de 1,1 vezes o tamanho normal da letra até 1,5 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: clamp(1.1rem, 4.4vw, 1.5rem);
+}
+
+/* ---------- Capítulo 1 quiz: perguntas com respostas próprias ---------- */
+/* PEÇA: as opções dentro de: o capítulo de perguntas. */
+.c-quiz .ops-q {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Largura (opções): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+}
+
+/* PEÇA: a opção dentro de: o capítulo de perguntas. */
+.c-quiz .op-q {
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Espaço de dentro, entre a borda e o conteúdo, (opção): 14 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 14px 16px;
+  /* Contorno (opção): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Arredonda os cantos (opção). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: var(--raio);
+  /* Cor das letras (opção): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Cor de fundo (opção): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Letra (opção): letra normal (Inter), tamanho 1, grossura 600. Número maior = letra maior. */
+  font: 600 1rem var(--fonte);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,2 segundos, a transparência em 0,4 segundos e a borda em 0,2 segundos. Número maior = mais lento. */
+  transition: transform .2s, opacity .4s, border-color .2s;
+}
+
+/* PEÇA: a opção com "sel" ligado dentro de: o capítulo de perguntas. */
+.c-quiz .op-q.sel {
+  /* Cor da borda (opção): a cor de destaque do tema. Troque o código para mudar a cor. */
+  border-color: var(--ac);
+  /* Movimento (opção): fica 1,03 vezes maior. */
+  transform: scale(1.03);
+  /* Sombra ou brilho em volta (opção), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 22px -6px var(--sombra);
+}
+
+/* PEÇA: a opção com "fora" ligado dentro de: o capítulo de perguntas. */
+.c-quiz .op-q.fora {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,22. */
+  opacity: .22;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a resposta dentro de: o capítulo de perguntas. */
+.c-quiz .resposta-q {
+  /* Altura mínima (resposta): 3 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 3em;
+  /* Letra (resposta): letra de título (Playfair), tamanho 1,2, inclinada. Número maior = letra maior. */
+  font: italic 1.2rem/1.4 var(--fonte-titulo);
+}
+
+/* ---------- Capítulo 2 grade: quadrinhos que abrem ---------- */
+/* PEÇA: a grade dentro de: o capítulo de quadrinhos. */
+.c-grade .grade-6 {
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: repeat(3, 1fr);
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Largura (grade): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+}
+
+/* PEÇA: o quadrinho dentro de: o capítulo de quadrinhos. */
+.c-grade .quadrinho {
+  /* Mantém a proporção entre largura e altura (1). */
+  aspect-ratio: 1;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (quadrinho): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Arredonda os cantos (quadrinho). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: var(--raio);
+  /* Cor das letras (quadrinho): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Fundo em degradê (quadrinho), nas cores: a cor de destaque do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(140deg, var(--ac), var(--ac2));
+  /* Letra (quadrinho): letra de título (Playfair), tamanho 1,7, grossura 800. Número maior = letra maior. */
+  font: 800 1.7rem var(--fonte-titulo);
+  /* Sombra ou brilho em volta (quadrinho), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 8px 18px -8px var(--sombra);
+  /* Liga a animação "quadrinho-chama": dura 2,2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: quadrinho-chama 2.2s ease-in-out infinite;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,5 segundos e a transparência em 0,5 segundos. Número maior = mais lento. */
+  transition: transform .5s, opacity .5s;
+}
+
+/* PEÇA: o quadrinho com "aberto" ligado dentro de: o capítulo de quadrinhos. */
+.c-grade .quadrinho.aberto {
+  /* Desliga a animação desta peça. */
+  animation: none;
+  /* Movimento (quadrinho): encolhe para 90% do tamanho. */
+  transform: scale(.9);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,28. */
+  opacity: .28;
+}
+
+/* ---------- Capítulo 3 segura: bola de luz ---------- */
+/* PEÇA: a bola de luz dentro de: o capítulo de segurar. */
+.c-segura .orbe {
+  /* Valor inicial guardado com o nome --p. O código muda esse valor enquanto a animação roda. */
+  --p: 0;
+  /* Largura (bola de luz): 170 pontinhos. Número maior = mais largo. */
+  width: 170px;
+  /* Altura (bola de luz): 170 pontinhos. Número maior = mais alto. */
+  height: 170px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (bola de luz). */
+  border: 0;
+  /* Arredonda os cantos (bola de luz). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (bola de luz), nas cores: branco, a 2ª cor de destaque do tema e a cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 40% 35%, #ffffff, var(--ac2) 36%, var(--ac) 74%);
+  /* Sombra ou brilho em volta (bola de luz), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 calc(24px + var(--p) * 70px) var(--sombra);
+  /* Movimento (bola de luz): calc. */
+  transform: scale(calc(.72 + var(--p) * .55));
+  /* Liga a animação "orbe-respira": dura 2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: orbe-respira 2s ease-in-out infinite;
+}
+
+/* PEÇA: a bola de luz com "pleno" ligado dentro de: o capítulo de segurar. */
+.c-segura .orbe.pleno {
+  /* Desliga a animação desta peça. */
+  animation: none;
+  /* Movimento (bola de luz): fica 1,3 vezes maior. */
+  transform: scale(1.3);
+}
+
+/* ---------- Capítulo 4 pontos: ligar os números ---------- */
+/* PEÇA: o quadro dos pontos dentro de: o capítulo de ligar pontos. */
+.c-pontos .quadro-pontos {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (quadro dos pontos): o menor entre 78% da largura da tela e 300 pontinhos. Número maior = mais largo. */
+  width: min(78vw, 300px);
+  /* Mantém a proporção entre largura e altura (1). */
+  aspect-ratio: 1;
+}
+
+/* PEÇA: o desenho dentro de: o quadro dos pontos. */
+.c-pontos .quadro-pontos svg {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (desenho): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Deixa aparecer o que passar para fora. */
+  overflow: visible;
+}
+
+/* PEÇA: a linha do desenho dentro de: o capítulo de ligar pontos. */
+.c-pontos .linha-p {
+  /* Sem cor por dentro do desenho (só o traço). */
+  fill: none;
+  /* Cor do traço (linha do desenho): a cor de destaque do tema. Troque o código para mudar a cor. */
+  stroke: var(--ac);
+  /* Grossura do traço: 1,6. Número maior = traço mais grosso. */
+  stroke-width: 1.6;
+  /* Pontas do traço arredondadas. */
+  stroke-linecap: round;
+  /* Cantos do traço arredondados. */
+  stroke-linejoin: round;
+}
+
+/* PEÇA: o miolo do desenho dentro de: o capítulo de ligar pontos. */
+.c-pontos .miolo-p {
+  /* Cor de dentro do desenho (miolo do desenho): a cor de destaque do tema. Troque o código para mudar a cor. */
+  fill: var(--ac);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 1 segundos. Número maior = mais lento. */
+  transition: opacity 1s;
+}
+
+/* PEÇA: o miolo do desenho quando o quadro dos pontos estiver com "pronto" ligado. */
+.c-pontos .quadro-pontos.pronto .miolo-p {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,55. */
+  opacity: .55;
+}
+
+/* PEÇA: o ponto numerado dentro de: o capítulo de ligar pontos. */
+.c-pontos .ponto {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Largura (ponto numerado): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (ponto numerado): 44 pontinhos. Número maior = mais alto. */
+  height: 44px;
+  /* Espaço de fora (ponto numerado): menos 22 pontinhos em todos os lados. */
+  margin: -22px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (ponto numerado): lisa, 2 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 2px solid var(--borda);
+  /* Arredonda os cantos (ponto numerado). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor das letras (ponto numerado): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Cor de fundo (ponto numerado): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Letra (ponto numerado): letra normal (Inter), tamanho 0,95, grossura 700. Número maior = letra maior. */
+  font: 700 .95rem var(--fonte);
+}
+
+/* PEÇA: o ponto numerado com "vez" ligado dentro de: o capítulo de ligar pontos. */
+.c-pontos .ponto.vez {
+  /* Cor da borda (ponto numerado): a cor de destaque do tema. Troque o código para mudar a cor. */
+  border-color: var(--ac);
+  /* Liga a animação "ponto-chama": dura 1 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: ponto-chama 1s ease-in-out infinite;
+}
+
+/* PEÇA: o ponto numerado com "ligado" ligado dentro de: o capítulo de ligar pontos. */
+.c-pontos .ponto.ligado {
+  /* Cor das letras (ponto numerado): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Cor de fundo (ponto numerado): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+}
+
+/* ---------- Capítulo 5 bolhas: palavras flutuando ---------- */
+/* PEÇA: o campo das bolhas dentro de: o capítulo de bolhas. */
+.c-bolhas .campo-bolhas {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (campo das bolhas): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (campo das bolhas): 330 pontinhos. Número maior = mais alto. */
+  height: 330px;
+}
+
+/* PEÇA: a bolha dentro de: o capítulo de bolhas. */
+.c-bolhas .bolha {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Largura (bolha): 112 pontinhos. Número maior = mais largo. */
+  width: 112px;
+  /* Altura (bolha): 112 pontinhos. Número maior = mais alto. */
+  height: 112px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (bolha): 6 pontinhos em todos os lados. */
+  padding: 6px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (bolha): lisa, 2 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 2px solid var(--borda);
+  /* Arredonda os cantos (bolha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor das letras (bolha): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Fundo redondo (bolha), nas cores: branco, meio transparente e o vidro translúcido do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .55), var(--vidro) 42%);
+  /* Letra (bolha): letra normal (Inter), tamanho 0,95, grossura 600. Número maior = letra maior. */
+  font: 600 .95rem/1.1 var(--fonte);
+  /* Liga a animação "bolha-flutua": dura 4,2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: bolha-flutua 4.2s ease-in-out infinite;
+}
+
+/* PEÇA: a bolha com "pop" ligado dentro de: o capítulo de bolhas. */
+.c-bolhas .bolha.pop {
+  /* Liga a animação "bolha-estoura": dura 0,22 segundos. Número menor = mais rápida. */
+  animation: bolha-estoura .22s ease-out forwards;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: as palavras guardadas dentro de: o capítulo de bolhas. */
+.c-bolhas .palavras-b {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 6 pontinhos. Número maior = mais separadas. */
+  gap: 6px;
+  /* Altura mínima (palavras guardadas): 34 pontinhos. Número maior = mais alto. */
+  min-height: 34px;
+}
+
+/* PEÇA: o pedacinho de texto dentro de: as palavras guardadas. */
+.c-bolhas .palavras-b span {
+  /* Espaço de dentro, entre a borda e o conteúdo, (pedacinho de texto): 5 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 5px 12px;
+  /* Arredonda os cantos (pedacinho de texto). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Cor das letras (pedacinho de texto): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Cor de fundo (pedacinho de texto): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Letra (pedacinho de texto): letra normal (Inter), tamanho 0,9, grossura 600. Número maior = letra maior. */
+  font: 600 .9rem var(--fonte);
+}
+
+/* ---------- Capítulo 6 medidor: arrastar até estourar ---------- */
+/* PEÇA: o número grande dentro de: o capítulo do medidor. */
+.c-medidor .numero-m {
+  /* Cor das letras (número grande): a cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac);
+  /* Tipo de letra (número grande): fonte 800 clamp(3rem, 15vw, 4.6rem)/1 var(--fonte-titulo). */
+  font: 800 clamp(3rem, 15vw, 4.6rem)/1 var(--fonte-titulo);
+  /* Brilho em volta das letras (número grande), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 26px var(--sombra);
+}
+
+/* PEÇA: o número grande com "estourou-m" ligado dentro de: o capítulo do medidor. */
+.c-medidor .numero-m.estourou-m {
+  /* Liga a animação "numero-estoura": dura 0,6 segundos, repetindo 2 vezes. Número menor = mais rápida. */
+  animation: numero-estoura .6s ease 2;
+}
+
+/* PEÇA: o trilho dentro de: o capítulo do medidor. */
+.c-medidor .trilho-m {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (trilho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Largura máxima (trilho): 330 pontinhos. Número maior = mais largo. */
+  max-width: 330px;
+  /* Altura (trilho): 58 pontinhos. Número maior = mais alto. */
+  height: 58px;
+  /* Corta o que passar para fora (trilho). */
+  overflow: hidden;
+  /* Arredonda os cantos (trilho). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 29px;
+  /* Cor de fundo (trilho): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Contorno (trilho): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+}
+
+/* PEÇA: a parte cheia dentro de: o capítulo do medidor. */
+.c-medidor .cheio-m {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Largura (parte cheia): zero. Número maior = mais largo. */
+  width: 0;
+  /* Fundo em degradê (parte cheia), nas cores: a cor de destaque do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, var(--ac), var(--ac2));
+}
+
+/* PEÇA: a bolinha de arrastar dentro de: o capítulo do medidor. */
+.c-medidor .cabo-m {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 3 pontinhos. */
+  top: 3px;
+  /* Distância da esquerda: 3 pontinhos. */
+  left: 3px;
+  /* Largura (bolinha de arrastar): 50 pontinhos. Número maior = mais largo. */
+  width: 50px;
+  /* Altura (bolinha de arrastar): 50 pontinhos. Número maior = mais alto. */
+  height: 50px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (bolinha de arrastar). */
+  border: 0;
+  /* Arredonda os cantos (bolinha de arrastar). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (bolinha de arrastar): branco. Troque o código para mudar a cor. */
+  background: #ffffff;
+  /* Sombra ou brilho em volta (bolinha de arrastar), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .35);
+}
+
+/* ---------- Capítulo 7 memoria: cartas que viram ---------- */
+/* PEÇA: a mesa dentro de: o jogo da memória. */
+.c-memoria .mesa-m {
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: repeat(3, 1fr);
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Largura (mesa): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Largura máxima (mesa): 330 pontinhos. Número maior = mais largo. */
+  max-width: 330px;
+}
+
+/* PEÇA: a carta dentro de: o jogo da memória. */
+.c-memoria .carta-m {
+  /* Mantém a proporção entre largura e altura (1). */
+  aspect-ratio: 1;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Contorno (carta): lisa, 1 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 1px solid var(--borda);
+  /* Arredonda os cantos (carta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 14px;
+  /* Fundo em degradê (carta), nas cores: a cor de destaque do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(140deg, var(--ac), var(--ac2));
+  /* Tamanho da letra (carta): 2 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 2rem;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,3 segundos. Número maior = mais lento. */
+  transition: transform .3s;
+}
+
+/* PEÇA: o pedacinho de texto dentro de: a carta. */
+.c-memoria .carta-m span {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,2 segundos. Número maior = mais lento. */
+  transition: opacity .2s;
+}
+
+/* PEÇA: a carta com "vira" ligado dentro de: o jogo da memória. */
+.c-memoria .carta-m.vira {
+  /* Movimento (carta): vira de lado 180 graus. */
+  transform: rotateY(180deg);
+  /* Cor de fundo (carta): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+}
+
+/* PEÇA: o pedacinho de texto quando a carta estiver com "vira" ligado. */
+.c-memoria .carta-m.vira span {
+  /* Fica na mesma linha do texto, mas pode ter tamanho próprio. */
+  display: inline-block;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+  /* Movimento (pedacinho de texto): vira de lado 180 graus. */
+  transform: rotateY(180deg);
+}
+
+/* PEÇA: a carta com "ok" ligado dentro de: o jogo da memória. */
+.c-memoria .carta-m.ok {
+  /* Cor da borda (carta): a cor de destaque do tema. Troque o código para mudar a cor. */
+  border-color: var(--ac);
+  /* Sombra ou brilho em volta (carta), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 16px var(--sombra);
+}
+
+/* ---------- Capítulo 8 ritmo: coração que cresce ---------- */
+/* PEÇA: o coração dentro de: o capítulo de batidas. */
+.c-ritmo .pulso {
+  /* Valor inicial guardado com o nome --n. O código muda esse valor enquanto a animação roda. */
+  --n: 0;
+  /* Largura (coração): 150 pontinhos. Número maior = mais largo. */
+  width: 150px;
+  /* Altura (coração): 150 pontinhos. Número maior = mais alto. */
+  height: 150px;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (coração). */
+  border: 0;
+  /* Sem fundo (coração): dá para ver o que está atrás. */
+  background: none;
+  /* Cor das letras (coração): a cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac);
+  /* Efeito visual (coração): sombra em volta. */
+  filter: drop-shadow(0 0 22px var(--sombra));
+  /* Movimento (coração): calc. */
+  transform: scale(calc(.8 + var(--n) * .09));
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,25 segundos. Número maior = mais lento. */
+  transition: transform .25s;
+}
+
+/* PEÇA: o desenho dentro de: o coração. */
+.c-ritmo .pulso svg {
+  /* Largura (desenho): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (desenho): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Cor de dentro do desenho (desenho): a mesma cor das letras. Troque o código para mudar a cor. */
+  fill: currentColor;
+}
+
+/* PEÇA: o desenho quando o coração estiver com "bate" ligado. */
+.c-ritmo .pulso.bate svg {
+  /* Liga a animação "batida-r": dura 0,32 segundos. Número menor = mais rápida. */
+  animation: batida-r .32s ease;
+}
+
+/* ---------- Animações dos capítulos ---------- */
+/* ANIMAÇÃO "quadrinho-chama": o quadrinho pulsa, chamando o toque. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes quadrinho-chama {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: fica 1,04 vezes maior. */
+    transform: scale(1.04);
+  }
+}
+
+/* ANIMAÇÃO "orbe-respira": a bola de luz respira. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes orbe-respira {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Efeito visual: brilho. */
+    filter: brightness(1.18);
+  }
+}
+
+/* ANIMAÇÃO "ponto-chama": o próximo ponto pulsa. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ponto-chama {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: fica 1,22 vezes maior. */
+    transform: scale(1.22);
+  }
+}
+
+/* ANIMAÇÃO "bolha-flutua": a bolha flutua. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes bolha-flutua {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Deslocamento: 6 pontinhos e menos 14 pontinhos (de lado e para baixo). */
+    translate: 6px -14px;
+  }
+}
+
+/* ANIMAÇÃO "bolha-estoura": a bolha estoura. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes bolha-estoura {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: fica 1,5 vezes maior. */
+    transform: scale(1.5);
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* ANIMAÇÃO "numero-estoura": o número pula. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes numero-estoura {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: fica 1,35 vezes maior. */
+    transform: scale(1.35);
+  }
+}
+
+/* ANIMAÇÃO "batida-r": o coração bate. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes batida-r {
+  /* Como está quando já passou 40% do tempo da animação: */
+  40% {
+    /* Movimento: fica 1,22 vezes maior. */
+    transform: scale(1.22);
+  }
+}

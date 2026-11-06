@@ -7,79 +7,437 @@
    e cadastre as partículas dele em js/fundo.js (Fundo.TEMAS).
    ========================================================== */
 
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
 /* noite: azul-marinho profundo com rosa — o clássico romântico. */
-:root[data-tema="noite"] { --bg-a: #0a0a1f; --bg-b: #14123a; --bg-c: #2a1347; --tx: #f4f1ff; --mut: #b9b3dc; --ac: #ff5c8a; --ac2: #ffb0c8; --vidro: rgba(255,255,255,.07); --borda: rgba(255,255,255,.16); --sombra: rgba(255,92,138,.5); --btn-tx: #2a0716; }
+/* PEÇA: as cores do tema noite. */
+:root[data-tema="noite"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: azul bem escuro. Troque o código para mudar a cor. */
+  --bg-a: #0a0a1f;
+  /* 2ª cor do fundo (meio do degradê) deste tema: azul bem escuro. Troque o código para mudar a cor. */
+  --bg-b: #14123a;
+  /* 3ª cor do fundo (fim do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-c: #2a1347;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #f4f1ff;
+  /* Cor do texto suave deste tema: azul bem clarinho. Troque o código para mudar a cor. */
+  --mut: #b9b3dc;
+  /* Cor de destaque (botões e palavras importantes) deste tema: rosa claro. Troque o código para mudar a cor. */
+  --ac: #ff5c8a;
+  /* 2ª cor de destaque deste tema: rosa bem clarinho. Troque o código para mudar a cor. */
+  --ac2: #ffb0c8;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.07);
+  /* Cor das bordas deste tema: branco, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(255,255,255,.16);
+  /* Cor do brilho deste tema: rosa claro, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(255,92,138,.5);
+  /* Cor das letras dentro dos botões deste tema: rosa bem escuro. Troque o código para mudar a cor. */
+  --btn-tx: #2a0716;
+}
 
 /* aurora: verde-azulado escuro com menta e lilás — misterioso e calmo. */
-:root[data-tema="aurora"] { --bg-a: #04161c; --bg-b: #0a3a3f; --bg-c: #2b1b5a; --tx: #eafff8; --mut: #9fd9cb; --ac: #5af2c6; --ac2: #b79bff; --vidro: rgba(255,255,255,.07); --borda: rgba(180,255,235,.2); --sombra: rgba(90,242,198,.45); --btn-tx: #03211a; }
+/* PEÇA: as cores do tema aurora. */
+:root[data-tema="aurora"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: preto. Troque o código para mudar a cor. */
+  --bg-a: #04161c;
+  /* 2ª cor do fundo (meio do degradê) deste tema: verde-água bem escuro. Troque o código para mudar a cor. */
+  --bg-b: #0a3a3f;
+  /* 3ª cor do fundo (fim do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-c: #2b1b5a;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #eafff8;
+  /* Cor do texto suave deste tema: verde-água claro. Troque o código para mudar a cor. */
+  --mut: #9fd9cb;
+  /* Cor de destaque (botões e palavras importantes) deste tema: verde-água claro. Troque o código para mudar a cor. */
+  --ac: #5af2c6;
+  /* 2ª cor de destaque deste tema: roxo bem clarinho. Troque o código para mudar a cor. */
+  --ac2: #b79bff;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.07);
+  /* Cor das bordas deste tema: verde-água bem clarinho, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(180,255,235,.2);
+  /* Cor do brilho deste tema: verde-água claro, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(90,242,198,.45);
+  /* Cor das letras dentro dos botões deste tema: verde-água bem escuro. Troque o código para mudar a cor. */
+  --btn-tx: #03211a;
+}
 
 /* rosa (CLARO): fundo rosa-claro, texto vinho — delicado e doce. */
-:root[data-tema="rosa"] { --bg-a: #fff0f5; --bg-b: #ffdbe8; --bg-c: #ffc4d8; --tx: #4a1630; --mut: #8b4a66; --ac: #e0457b; --ac2: #ff8fb3; --vidro: rgba(255,255,255,.65); --borda: rgba(224,69,123,.28); --sombra: rgba(224,69,123,.4); --btn-tx: #ffffff; }
+/* PEÇA: as cores do tema rosa. */
+:root[data-tema="rosa"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: branco. Troque o código para mudar a cor. */
+  --bg-a: #fff0f5;
+  /* 2ª cor do fundo (meio do degradê) deste tema: rosa bem clarinho. Troque o código para mudar a cor. */
+  --bg-b: #ffdbe8;
+  /* 3ª cor do fundo (fim do degradê) deste tema: rosa bem clarinho. Troque o código para mudar a cor. */
+  --bg-c: #ffc4d8;
+  /* Cor do texto principal deste tema: rosa bem escuro. Troque o código para mudar a cor. */
+  --tx: #4a1630;
+  /* Cor do texto suave deste tema: rosa. Troque o código para mudar a cor. */
+  --mut: #8b4a66;
+  /* Cor de destaque (botões e palavras importantes) deste tema: rosa. Troque o código para mudar a cor. */
+  --ac: #e0457b;
+  /* 2ª cor de destaque deste tema: rosa bem clarinho. Troque o código para mudar a cor. */
+  --ac2: #ff8fb3;
+  /* Cor dos cartões translúcidos deste tema: branco, meio transparente. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.65);
+  /* Cor das bordas deste tema: rosa, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(224,69,123,.28);
+  /* Cor do brilho deste tema: rosa, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(224,69,123,.4);
+  /* Cor das letras dentro dos botões deste tema: branco. Troque o código para mudar a cor. */
+  --btn-tx: #ffffff;
+}
 
 /* fogo: vermelho-escuro com laranja — intenso e apaixonado. */
-:root[data-tema="fogo"] { --bg-a: #1a0505; --bg-b: #4a0d12; --bg-c: #8a2a10; --tx: #fff3ea; --mut: #f0b9a0; --ac: #ff6a3d; --ac2: #ffc26b; --vidro: rgba(255,255,255,.08); --borda: rgba(255,200,160,.22); --sombra: rgba(255,106,61,.5); --btn-tx: #2a0a02; }
+/* PEÇA: as cores do tema fogo. */
+:root[data-tema="fogo"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: preto. Troque o código para mudar a cor. */
+  --bg-a: #1a0505;
+  /* 2ª cor do fundo (meio do degradê) deste tema: vermelho bem escuro. Troque o código para mudar a cor. */
+  --bg-b: #4a0d12;
+  /* 3ª cor do fundo (fim do degradê) deste tema: vermelho-alaranjado escuro. Troque o código para mudar a cor. */
+  --bg-c: #8a2a10;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #fff3ea;
+  /* Cor do texto suave deste tema: vermelho-alaranjado bem clarinho. Troque o código para mudar a cor. */
+  --mut: #f0b9a0;
+  /* Cor de destaque (botões e palavras importantes) deste tema: vermelho-alaranjado. Troque o código para mudar a cor. */
+  --ac: #ff6a3d;
+  /* 2ª cor de destaque deste tema: laranja claro. Troque o código para mudar a cor. */
+  --ac2: #ffc26b;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.08);
+  /* Cor das bordas deste tema: laranja bem clarinho, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(255,200,160,.22);
+  /* Cor do brilho deste tema: vermelho-alaranjado, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(255,106,61,.5);
+  /* Cor das letras dentro dos botões deste tema: vermelho bem escuro. Troque o código para mudar a cor. */
+  --btn-tx: #2a0a02;
+}
 
 /* oceano: azul profundo com ciano — leve e fresco. */
-:root[data-tema="oceano"] { --bg-a: #031527; --bg-b: #06355a; --bg-c: #0a6a8a; --tx: #eaf9ff; --mut: #9ccfe0; --ac: #5ce1ff; --ac2: #a8f0e0; --vidro: rgba(255,255,255,.08); --borda: rgba(160,235,255,.22); --sombra: rgba(92,225,255,.45); --btn-tx: #02202b; }
+/* PEÇA: as cores do tema oceano. */
+:root[data-tema="oceano"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: azul bem escuro. Troque o código para mudar a cor. */
+  --bg-a: #031527;
+  /* 2ª cor do fundo (meio do degradê) deste tema: azul bem escuro. Troque o código para mudar a cor. */
+  --bg-b: #06355a;
+  /* 3ª cor do fundo (fim do degradê) deste tema: azul escuro. Troque o código para mudar a cor. */
+  --bg-c: #0a6a8a;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #eaf9ff;
+  /* Cor do texto suave deste tema: azul claro. Troque o código para mudar a cor. */
+  --mut: #9ccfe0;
+  /* Cor de destaque (botões e palavras importantes) deste tema: verde-água claro. Troque o código para mudar a cor. */
+  --ac: #5ce1ff;
+  /* 2ª cor de destaque deste tema: verde-água bem clarinho. Troque o código para mudar a cor. */
+  --ac2: #a8f0e0;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.08);
+  /* Cor das bordas deste tema: verde-água bem clarinho, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(160,235,255,.22);
+  /* Cor do brilho deste tema: verde-água claro, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(92,225,255,.45);
+  /* Cor das letras dentro dos botões deste tema: azul bem escuro. Troque o código para mudar a cor. */
+  --btn-tx: #02202b;
+}
 
 /* ouro: preto com dourado — elegante, para datas especiais. */
-:root[data-tema="ouro"] { --bg-a: #0b0905; --bg-b: #1c150a; --bg-c: #2e2410; --tx: #fbf3df; --mut: #cdbd92; --ac: #e8bd5a; --ac2: #fff0b8; --vidro: rgba(255,240,200,.06); --borda: rgba(232,189,90,.3); --sombra: rgba(232,189,90,.45); --btn-tx: #2a1d04; }
+/* PEÇA: as cores do tema ouro. */
+:root[data-tema="ouro"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: preto. Troque o código para mudar a cor. */
+  --bg-a: #0b0905;
+  /* 2ª cor do fundo (meio do degradê) deste tema: marrom. Troque o código para mudar a cor. */
+  --bg-b: #1c150a;
+  /* 3ª cor do fundo (fim do degradê) deste tema: marrom. Troque o código para mudar a cor. */
+  --bg-c: #2e2410;
+  /* Cor do texto principal deste tema: dourado bem clarinho. Troque o código para mudar a cor. */
+  --tx: #fbf3df;
+  /* Cor do texto suave deste tema: dourado claro. Troque o código para mudar a cor. */
+  --mut: #cdbd92;
+  /* Cor de destaque (botões e palavras importantes) deste tema: laranja claro. Troque o código para mudar a cor. */
+  --ac: #e8bd5a;
+  /* 2ª cor de destaque deste tema: dourado bem clarinho. Troque o código para mudar a cor. */
+  --ac2: #fff0b8;
+  /* Cor dos cartões translúcidos deste tema: dourado bem clarinho, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,240,200,.06);
+  /* Cor das bordas deste tema: laranja claro, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(232,189,90,.3);
+  /* Cor do brilho deste tema: laranja claro, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(232,189,90,.45);
+  /* Cor das letras dentro dos botões deste tema: marrom. Troque o código para mudar a cor. */
+  --btn-tx: #2a1d04;
+}
 
 /* neon: preto-arroxeado com magenta e ciano — tecnológico. */
-:root[data-tema="neon"] { --bg-a: #07000f; --bg-b: #14012b; --bg-c: #240048; --tx: #fdf4ff; --mut: #c9a9e6; --ac: #ff2bd6; --ac2: #2bf0ff; --vidro: rgba(255,255,255,.06); --borda: rgba(43,240,255,.3); --sombra: rgba(255,43,214,.55); --btn-tx: #12001f; }
+/* PEÇA: as cores do tema neon. */
+:root[data-tema="neon"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: preto. Troque o código para mudar a cor. */
+  --bg-a: #07000f;
+  /* 2ª cor do fundo (meio do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-b: #14012b;
+  /* 3ª cor do fundo (fim do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-c: #240048;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #fdf4ff;
+  /* Cor do texto suave deste tema: roxo bem clarinho. Troque o código para mudar a cor. */
+  --mut: #c9a9e6;
+  /* Cor de destaque (botões e palavras importantes) deste tema: lilás-rosado. Troque o código para mudar a cor. */
+  --ac: #ff2bd6;
+  /* 2ª cor de destaque deste tema: verde-água. Troque o código para mudar a cor. */
+  --ac2: #2bf0ff;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.06);
+  /* Cor das bordas deste tema: verde-água, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(43,240,255,.3);
+  /* Cor do brilho deste tema: lilás-rosado, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(255,43,214,.55);
+  /* Cor das letras dentro dos botões deste tema: preto. Troque o código para mudar a cor. */
+  --btn-tx: #12001f;
+}
 
 /* jardim (CLARO): creme esverdeado com folha e flor — fresco e sereno. */
-:root[data-tema="jardim"] { --bg-a: #f6fcf0; --bg-b: #e0f3d4; --bg-c: #cbecc2; --tx: #1f3a22; --mut: #55785a; --ac: #3f9a52; --ac2: #f08aa8; --vidro: rgba(255,255,255,.7); --borda: rgba(63,154,82,.3); --sombra: rgba(63,154,82,.35); --btn-tx: #ffffff; }
+/* PEÇA: as cores do tema jardim. */
+:root[data-tema="jardim"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: branco. Troque o código para mudar a cor. */
+  --bg-a: #f6fcf0;
+  /* 2ª cor do fundo (meio do degradê) deste tema: verde bem clarinho. Troque o código para mudar a cor. */
+  --bg-b: #e0f3d4;
+  /* 3ª cor do fundo (fim do degradê) deste tema: verde bem clarinho. Troque o código para mudar a cor. */
+  --bg-c: #cbecc2;
+  /* Cor do texto principal deste tema: verde bem escuro. Troque o código para mudar a cor. */
+  --tx: #1f3a22;
+  /* Cor do texto suave deste tema: verde. Troque o código para mudar a cor. */
+  --mut: #55785a;
+  /* Cor de destaque (botões e palavras importantes) deste tema: verde. Troque o código para mudar a cor. */
+  --ac: #3f9a52;
+  /* 2ª cor de destaque deste tema: rosa claro. Troque o código para mudar a cor. */
+  --ac2: #f08aa8;
+  /* Cor dos cartões translúcidos deste tema: branco, meio transparente. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.7);
+  /* Cor das bordas deste tema: verde, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(63,154,82,.3);
+  /* Cor do brilho deste tema: verde, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(63,154,82,.35);
+  /* Cor das letras dentro dos botões deste tema: branco. Troque o código para mudar a cor. */
+  --btn-tx: #ffffff;
+}
 
 /* crepúsculo: roxo para laranja-rosado — pôr do sol. */
-:root[data-tema="crepusculo"] { --bg-a: #1b0f3a; --bg-b: #5a1f66; --bg-c: #c2506a; --tx: #fff1f4; --mut: #f0c3d4; --ac: #ffb347; --ac2: #ff8fb1; --vidro: rgba(255,255,255,.1); --borda: rgba(255,230,240,.25); --sombra: rgba(255,179,71,.5); --btn-tx: #2b1204; }
+/* PEÇA: as cores do tema crepusculo. */
+:root[data-tema="crepusculo"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-a: #1b0f3a;
+  /* 2ª cor do fundo (meio do degradê) deste tema: lilás-rosado escuro. Troque o código para mudar a cor. */
+  --bg-b: #5a1f66;
+  /* 3ª cor do fundo (fim do degradê) deste tema: rosa. Troque o código para mudar a cor. */
+  --bg-c: #c2506a;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #fff1f4;
+  /* Cor do texto suave deste tema: rosa bem clarinho. Troque o código para mudar a cor. */
+  --mut: #f0c3d4;
+  /* Cor de destaque (botões e palavras importantes) deste tema: laranja claro. Troque o código para mudar a cor. */
+  --ac: #ffb347;
+  /* 2ª cor de destaque deste tema: rosa bem clarinho. Troque o código para mudar a cor. */
+  --ac2: #ff8fb1;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.1);
+  /* Cor das bordas deste tema: branco, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(255,230,240,.25);
+  /* Cor do brilho deste tema: laranja claro, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(255,179,71,.5);
+  /* Cor das letras dentro dos botões deste tema: vermelho-alaranjado bem escuro. Troque o código para mudar a cor. */
+  --btn-tx: #2b1204;
+}
 
 /* confete: roxo festivo com amarelo e pink — alegre, para festa e amizade. */
-:root[data-tema="confete"] { --bg-a: #1a0b3d; --bg-b: #2d1068; --bg-c: #5a1a8c; --tx: #fff9e8; --mut: #d8c4f5; --ac: #ffd23f; --ac2: #ff5fa2; --vidro: rgba(255,255,255,.09); --borda: rgba(255,255,255,.22); --sombra: rgba(255,210,63,.5); --btn-tx: #2b1d00; }
+/* PEÇA: as cores do tema confete. */
+:root[data-tema="confete"] {
+  /* 1ª cor do fundo (começo do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-a: #1a0b3d;
+  /* 2ª cor do fundo (meio do degradê) deste tema: roxo bem escuro. Troque o código para mudar a cor. */
+  --bg-b: #2d1068;
+  /* 3ª cor do fundo (fim do degradê) deste tema: roxo escuro. Troque o código para mudar a cor. */
+  --bg-c: #5a1a8c;
+  /* Cor do texto principal deste tema: branco. Troque o código para mudar a cor. */
+  --tx: #fff9e8;
+  /* Cor do texto suave deste tema: roxo bem clarinho. Troque o código para mudar a cor. */
+  --mut: #d8c4f5;
+  /* Cor de destaque (botões e palavras importantes) deste tema: dourado claro. Troque o código para mudar a cor. */
+  --ac: #ffd23f;
+  /* 2ª cor de destaque deste tema: rosa claro. Troque o código para mudar a cor. */
+  --ac2: #ff5fa2;
+  /* Cor dos cartões translúcidos deste tema: branco, quase invisível. Troque o código para mudar a cor. */
+  --vidro: rgba(255,255,255,.09);
+  /* Cor das bordas deste tema: branco, meio transparente. Troque o código para mudar a cor. */
+  --borda: rgba(255,255,255,.22);
+  /* Cor do brilho deste tema: dourado claro, meio transparente. Troque o código para mudar a cor. */
+  --sombra: rgba(255,210,63,.5);
+  /* Cor das letras dentro dos botões deste tema: marrom. Troque o código para mudar a cor. */
+  --btn-tx: #2b1d00;
+}
 
 /* ----- Toques extras de personalidade por tema ----- */
 
 /* neon: linhas de varredura (tipo monitor antigo) por cima do palco, sem bloquear toques. */
-:root[data-tema="neon"] #palco::before { content: ''; position: fixed; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,43,214,.05) 3px 4px); }
+/* PEÇA: enfeite desenhado em: o palco das telas no tema neon. */
+:root[data-tema="neon"] #palco::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Fundo (enfeite desenhado em: o palco das telas no tema neon) em listras repetidas, nas cores: transparente e lilás-rosado, quase invisível. */
+  background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,43,214,.05) 3px 4px);
+}
 
 /* neon: título em caixa alta com espaçamento — visual "digital". */
-:root[data-tema="neon"] .titulo { text-transform: uppercase; letter-spacing: .06em; font-family: var(--fonte); font-weight: 800; }
+/* PEÇA: o título no tema neon. */
+:root[data-tema="neon"] .titulo {
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .06em;
+  /* Tipo de letra (título no tema neon): letra normal (Inter). */
+  font-family: var(--fonte);
+  /* Grossura da letra: 800. Número maior = letra mais grossa. */
+  font-weight: 800;
+}
 
 /* ouro: título em versalete com espaçamento — visual "convite". */
-:root[data-tema="ouro"] .titulo { letter-spacing: .05em; font-variant: small-caps; }
+/* PEÇA: o título no tema ouro. */
+:root[data-tema="ouro"] .titulo {
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .05em;
+  /* Letras minúsculas desenhadas como maiúsculas pequenas. */
+  font-variant: small-caps;
+}
 
 /* fogo e confete: título mais pesado. */
-:root[data-tema="fogo"] .titulo, :root[data-tema="confete"] .titulo { font-weight: 800; }
+/* PEÇA: o título no tema fogo e o título no tema confete. */
+:root[data-tema="fogo"] .titulo, :root[data-tema="confete"] .titulo {
+  /* Grossura da letra: 800. Número maior = letra mais grossa. */
+  font-weight: 800;
+}
 
 /* temas claros: o rodapé usa o fundo claro e a sombra do texto fica discreta. */
-:root[data-tema="rosa"] #legenda, :root[data-tema="jardim"] #legenda { text-shadow: none; }
-:root[data-tema="rosa"] .term, :root[data-tema="jardim"] .term { background: rgba(255,255,255,.75); }
+/* PEÇA: term no tema rosa e term no tema jardim. */
+:root[data-tema="rosa"] .term, :root[data-tema="jardim"] .term {
+  /* Cor de fundo (term no tema rosa e term no tema jardim): branco, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(255,255,255,.75);
+}
 
 /* ----- Letra do título final: continua o estilo da arte que veio antes ----- */
 
 /* faroeste */
-:root[data-arte="procurada"] .final .titulo { font-family: 'Rye', var(--fonte-titulo); font-weight: 400; }
+/* PEÇA: o título nestas artes. */
+:root[data-arte="procurada"] .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Rye. */
+  font-family: 'Rye', var(--fonte-titulo);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
 
 /* cartaz e placa */
-:root:is([data-arte="multa"], [data-arte="previsao"], [data-arte="incendio"], [data-arte="raspadinha"], [data-arte="podio"], [data-arte="botao"], [data-arte="cofre"], [data-arte="figurinhas"], [data-arte="garra"], [data-arte="pads"], [data-arte="calendario"]) .final .titulo { font-family: 'Bebas Neue', var(--fonte); font-weight: 400; letter-spacing: .04em; }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="multa"], [data-arte="previsao"], [data-arte="incendio"], [data-arte="raspadinha"], [data-arte="podio"], [data-arte="botao"], [data-arte="cofre"], [data-arte="figurinhas"], [data-arte="garra"], [data-arte="pads"], [data-arte="calendario"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Bebas Neue. */
+  font-family: 'Bebas Neue', var(--fonte);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .04em;
+}
 
 /* jornal */
-:root[data-arte="jornal"] .final .titulo { font-family: 'Abril Fatface', var(--fonte-titulo); font-weight: 400; }
+/* PEÇA: o título nestas artes. */
+:root[data-arte="jornal"] .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Abril Fatface. */
+  font-family: 'Abril Fatface', var(--fonte-titulo);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
 
 /* gravura clássica */
-:root:is([data-arte="tarot"], [data-arte="diploma"], [data-arte="elevador"], [data-arte="museu"], [data-arte="aliancas"]) .final .titulo { font-family: 'Cinzel', var(--fonte-titulo); }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="tarot"], [data-arte="diploma"], [data-arte="elevador"], [data-arte="museu"], [data-arte="aliancas"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Cinzel. */
+  font-family: 'Cinzel', var(--fonte-titulo);
+}
 
 /* letra cursiva de festa */
-:root:is([data-arte="neon"], [data-arte="espelho"], [data-arte="vinil"], [data-arte="postais"], [data-arte="baloes"], [data-arte="bolo"]) .final .titulo { font-family: 'Pacifico', var(--fonte-titulo); font-weight: 400; }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="neon"], [data-arte="espelho"], [data-arte="vinil"], [data-arte="postais"], [data-arte="baloes"], [data-arte="bolo"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Pacifico. */
+  font-family: 'Pacifico', var(--fonte-titulo);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
 
 /* escrito à mão */
-:root:is([data-arte="lacre"], [data-arte="cardapio"], [data-arte="retrato"], [data-arte="areia"], [data-arte="geladeira"], [data-arte="receita"], [data-arte="caderno"], [data-arte="biscoito"], [data-arte="pulseira"], [data-arte="garrafa"], [data-arte="prova"]) .final .titulo { font-family: var(--fonte-mao); font-weight: 700; }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="lacre"], [data-arte="cardapio"], [data-arte="retrato"], [data-arte="areia"], [data-arte="geladeira"], [data-arte="receita"], [data-arte="caderno"], [data-arte="biscoito"], [data-arte="pulseira"], [data-arte="garrafa"], [data-arte="prova"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): letra de mão (Caveat). */
+  font-family: var(--fonte-mao);
+  /* Grossura da letra: 700. Número maior = letra mais grossa. */
+  font-weight: 700;
+}
 
 /* máquina de escrever */
-:root:is([data-arte="dossie"], [data-arte="bula"], [data-arte="boleto"]) .final .titulo { font-family: 'Special Elite', var(--fonte-mono); font-weight: 400; }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="dossie"], [data-arte="bula"], [data-arte="boleto"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Special Elite. */
+  font-family: 'Special Elite', var(--fonte-mono);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
 
 /* tela antiga */
-:root:is([data-arte="vhs"], [data-arte="instalador"], [data-arte="radio"], [data-arte="rpg"], [data-arte="pixel"], [data-arte="gps"]) .final .titulo { font-family: 'VT323', var(--fonte-mono); font-weight: 400; }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="vhs"], [data-arte="instalador"], [data-arte="radio"], [data-arte="rpg"], [data-arte="pixel"], [data-arte="gps"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte VT323. */
+  font-family: 'VT323', var(--fonte-mono);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+}
 
 /* letreiro luminoso */
-:root:is([data-arte="jackpot"], [data-arte="discoteca"], [data-arte="fogos"]) .final .titulo { font-family: 'Monoton', var(--fonte-titulo); font-weight: 400; font-size: clamp(1.5rem, 6vw, 2.2rem); }
+/* PEÇA: o título nestas artes. */
+:root:is([data-arte="jackpot"], [data-arte="discoteca"], [data-arte="fogos"]) .final .titulo {
+  /* Tipo de letra (título nestas artes): fonte Monoton. */
+  font-family: 'Monoton', var(--fonte-titulo);
+  /* Grossura da letra: 400. Número maior = letra mais grossa. */
+  font-weight: 400;
+  /* Tamanho da letra (título nestas artes): cresce com a tela, de 1,5 vezes o tamanho normal da letra até 2,2 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+}

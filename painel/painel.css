@@ -1,47 +1,379 @@
 /* painel.css — visual simples e escuro do painel (não faz parte do site que a pessoa recebe). */
 
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
 /* Reset básico e fonte do sistema. */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* PEÇA: todas as peças. */
+* {
+  /* Conta a borda dentro do tamanho da peça. */
+  box-sizing: border-box;
+  /* Espaço de fora (todas as peças): zero em todos os lados. */
+  margin: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (todas as peças): zero em todos os lados. */
+  padding: 0;
+}
 
 /* Corpo: fundo escuro, texto claro, espaço embaixo para a gaveta não cobrir a lista. */
-body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #0e0d1f; color: #f1eefc; padding: 18px 16px 220px; max-width: 980px; margin: 0 auto; }
+/* PEÇA: a página inteira. */
+body {
+  /* Tipo de letra (página inteira): fonte system-ui. */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Cor de fundo (página inteira): azul bem escuro. Troque o código para mudar a cor. */
+  background: #0e0d1f;
+  /* Cor das letras (página inteira): branco. Troque o código para mudar a cor. */
+  color: #f1eefc;
+  /* Espaço de dentro, entre a borda e o conteúdo, (página inteira): 18 pontinhos em cima, 16 pontinhos nos lados, 220 pontinhos embaixo. */
+  padding: 18px 16px 220px;
+  /* Largura máxima (página inteira): 980 pontinhos. Número maior = mais largo. */
+  max-width: 980px;
+  /* Espaço de fora (página inteira): centralizado nos lados. */
+  margin: 0 auto;
+}
 
 /* Títulos e texto de apoio. */
-h1 { font-size: 1.5rem; margin-bottom: 6px; }
-h2 { font-size: 1.05rem; margin: 26px 0 10px; }
-.sub { color: #b4aed6; font-size: .92rem; line-height: 1.5; }
+/* PEÇA: o título grande. */
+h1 {
+  /* Tamanho da letra (título grande): 1,5 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.5rem;
+  /* Espaço de fora, embaixo: 6 pontinhos. */
+  margin-bottom: 6px;
+}
+
+/* PEÇA: o título. */
+h2 {
+  /* Tamanho da letra (título): 1,05 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.05rem;
+  /* Espaço de fora (título): 26 pontinhos em cima, zero nos lados, 10 pontinhos embaixo. */
+  margin: 26px 0 10px;
+}
+
+/* PEÇA: o texto menor. */
+.sub {
+  /* Cor das letras (texto menor): azul claro. Troque o código para mudar a cor. */
+  color: #b4aed6;
+  /* Tamanho da letra (texto menor): 0,92 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .92rem;
+  /* Espaço entre as linhas do texto: 1,5. Número maior = linhas mais separadas. */
+  line-height: 1.5;
+}
 
 /* Barra de ferramentas empilhada em telas pequenas. */
-.barra { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
-.abas { display: flex; gap: 8px; flex-wrap: wrap; }
-.aba { border: 1px solid #3b3866; background: #1a1838; color: inherit; padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: .92rem; }
-.aba[aria-selected="true"] { background: #ff5c8a; border-color: #ff5c8a; color: #2a0716; font-weight: 700; }
+/* PEÇA: a barra. */
+.barra {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Espaço de fora (barra): 18 pontinhos em cima e embaixo, zero nos lados. */
+  margin: 18px 0;
+}
+
+/* PEÇA: as abas. */
+.abas {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+}
+
+/* PEÇA: a aba. */
+.aba {
+  /* Contorno (aba): lisa, 1 pontinhos de grossura, cor azul escuro. */
+  border: 1px solid #3b3866;
+  /* Cor de fundo (aba): azul bem escuro. Troque o código para mudar a cor. */
+  background: #1a1838;
+  /* Cor das letras (aba): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+  /* Espaço de dentro, entre a borda e o conteúdo, (aba): 8 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 8px 14px;
+  /* Arredonda os cantos (aba). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 999px;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Tamanho da letra (aba): 0,92 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .92rem;
+}
+
+/* PEÇA: a aba quando está escolhida. */
+.aba[aria-selected="true"] {
+  /* Cor de fundo (aba): rosa claro. Troque o código para mudar a cor. */
+  background: #ff5c8a;
+  /* Cor da borda (aba): rosa claro. Troque o código para mudar a cor. */
+  border-color: #ff5c8a;
+  /* Cor das letras (aba): rosa bem escuro. Troque o código para mudar a cor. */
+  color: #2a0716;
+  /* Grossura da letra: 700. Número maior = letra mais grossa. */
+  font-weight: 700;
+}
 
 /* Campos de texto. */
-input[type="search"], input[type="text"] { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #3b3866; background: #151330; color: inherit; font-size: 1rem; }
+/* PEÇA: o campo de digitar de texto e o campo de digitar de texto. */
+input[type="search"], input[type="text"] {
+  /* Largura (campo de digitar de texto e o campo de digitar de texto): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (campo de digitar de texto e o campo de digitar de texto): 11 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 11px 14px;
+  /* Arredonda os cantos (campo de digitar de texto e o campo de digitar de texto). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 10px;
+  /* Contorno (campo de digitar de texto e o campo de digitar de texto): lisa, 1 pontinhos de grossura, cor azul escuro. */
+  border: 1px solid #3b3866;
+  /* Cor de fundo (campo de digitar de texto e o campo de digitar de texto): azul bem escuro. Troque o código para mudar a cor. */
+  background: #151330;
+  /* Cor das letras (campo de digitar de texto e o campo de digitar de texto): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+  /* Tamanho da letra (campo de digitar de texto e o campo de digitar de texto): 1 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1rem;
+}
 
 /* Grade de cartões. */
-.lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-.card { background: #171533; border: 1px solid #2c2a55; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-.card h3 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-.card .id { font-size: .75rem; color: #8f89c4; margin-left: auto; }
-.card .meta { font-size: .8rem; color: #b4aed6; line-height: 1.5; }
-.pt { width: 14px; height: 14px; border-radius: 50%; flex: none; border: 1px solid rgba(255,255,255,.4); }
+/* PEÇA: a lista. */
+.lista {
+  /* Arruma as peças de dentro em grade, como um tabuleiro. */
+  display: grid;
+  /* Quantas colunas a grade tem e a largura de cada uma. */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+}
+
+/* PEÇA: o cartão. */
+.card {
+  /* Cor de fundo (cartão): azul bem escuro. Troque o código para mudar a cor. */
+  background: #171533;
+  /* Contorno (cartão): lisa, 1 pontinhos de grossura, cor azul escuro. */
+  border: 1px solid #2c2a55;
+  /* Arredonda os cantos (cartão). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 14px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (cartão): 14 pontinhos em todos os lados. */
+  padding: 14px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+}
+
+/* PEÇA: o título do cartão dentro de: o cartão. */
+.card h3 {
+  /* Tamanho da letra (título do cartão): 1 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1rem;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+}
+
+/* PEÇA: o número do link dentro de: o cartão. */
+.card .id {
+  /* Tamanho da letra (número do link): 0,75 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .75rem;
+  /* Cor das letras (número do link): azul claro. Troque o código para mudar a cor. */
+  color: #8f89c4;
+  /* Espaço de fora, à esquerda: automático. */
+  margin-left: auto;
+}
+
+/* PEÇA: os detalhes do cartão dentro de: o cartão. */
+.card .meta {
+  /* Tamanho da letra (detalhes do cartão): 0,8 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .8rem;
+  /* Cor das letras (detalhes do cartão): azul claro. Troque o código para mudar a cor. */
+  color: #b4aed6;
+  /* Espaço entre as linhas do texto: 1,5. Número maior = linhas mais separadas. */
+  line-height: 1.5;
+}
+
+/* PEÇA: a bolinha de cor. */
+.pt {
+  /* Largura (bolinha de cor): 14 pontinhos. Número maior = mais largo. */
+  width: 14px;
+  /* Altura (bolinha de cor): 14 pontinhos. Número maior = mais alto. */
+  height: 14px;
+  /* Arredonda os cantos (bolinha de cor). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Mantém o tamanho, sem encolher nem esticar. */
+  flex: none;
+  /* Contorno (bolinha de cor): lisa, 1 pontinhos de grossura, cor branco, meio transparente. */
+  border: 1px solid rgba(255,255,255,.4);
+}
 
 /* Botões. */
-button, .gBotoes a { font: 600 .95rem system-ui, sans-serif; border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer; background: #ff5c8a; color: #2a0716; text-decoration: none; text-align: center; }
-button.leve { background: transparent; border: 1px solid #3b3866; color: inherit; }
-button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #5ce1ff; outline-offset: 2px; }
+/* PEÇA: o botão e o link dentro de: os botões da gaveta. */
+button, .gBotoes a {
+  /* Letra (botão e o link): fonte system-ui, tamanho 0,95, grossura 600. Número maior = letra maior. */
+  font: 600 .95rem system-ui, sans-serif;
+  /* Tira o contorno (botão e o link). */
+  border: 0;
+  /* Arredonda os cantos (botão e o link). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 10px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão e o link): 10 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 10px 14px;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Cor de fundo (botão e o link): rosa claro. Troque o código para mudar a cor. */
+  background: #ff5c8a;
+  /* Cor das letras (botão e o link): rosa bem escuro. Troque o código para mudar a cor. */
+  color: #2a0716;
+  /* Tira o sublinhado. */
+  text-decoration: none;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: só com contorno. */
+button.leve {
+  /* Sem fundo (só com contorno): dá para ver o que está atrás. */
+  background: transparent;
+  /* Contorno (só com contorno): lisa, 1 pontinhos de grossura, cor azul escuro. */
+  border: 1px solid #3b3866;
+  /* Cor das letras (só com contorno): inherit. Troque o código para mudar a cor. */
+  color: inherit;
+}
+
+/* PEÇA: o botão quando escolhido pelo teclado, o link quando escolhido pelo teclado e o campo de digitar quando escolhido pelo teclado. */
+button:focus-visible, a:focus-visible, input:focus-visible {
+  /* Contorno de destaque em volta (botão), cor verde-água claro. */
+  outline: 3px solid #5ce1ff;
+  /* Distância entre a peça e esse contorno. */
+  outline-offset: 2px;
+}
 
 /* Gaveta fixa embaixo com o link gerado. */
-#gaveta { position: fixed; left: 0; right: 0; bottom: 0; background: #1d1b45; border-top: 1px solid #4a4780; padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 8px; max-width: 980px; margin: 0 auto; box-shadow: 0 -12px 40px rgba(0,0,0,.5); }
-#gaveta[hidden] { display: none; }
-.gNome { font-weight: 700; }
-#gLink { font-family: ui-monospace, monospace; font-size: .85rem; }
-.gBotoes { display: flex; gap: 8px; flex-wrap: wrap; }
-.gBotoes > * { flex: 1; min-width: 90px; }
+/* PEÇA: a gaveta do link. */
+#gaveta {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de baixo: zero. */
+  bottom: 0;
+  /* Cor de fundo (gaveta do link): azul bem escuro. Troque o código para mudar a cor. */
+  background: #1d1b45;
+  /* Contorno de cima (gaveta do link): lisa, 1 pontinhos de grossura, cor azul. */
+  border-top: 1px solid #4a4780;
+  /* Espaço de dentro, entre a borda e o conteúdo, (gaveta do link): 14 pontinhos em cima, 16 pontinhos nos lados, 18 pontinhos embaixo. */
+  padding: 14px 16px 18px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+  /* Largura máxima (gaveta do link): 980 pontinhos. Número maior = mais largo. */
+  max-width: 980px;
+  /* Espaço de fora (gaveta do link): centralizado nos lados. */
+  margin: 0 auto;
+  /* Sombra ou brilho em volta (gaveta do link), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 -12px 40px rgba(0,0,0,.5);
+}
+
+/* PEÇA: a gaveta do link quando está escondido. */
+#gaveta[hidden] {
+  /* Esconde esta peça da tela. */
+  display: none;
+}
+
+/* PEÇA: o nome na gaveta. */
+.gNome {
+  /* Grossura da letra: 700. Número maior = letra mais grossa. */
+  font-weight: 700;
+}
+
+/* PEÇA: o campo do link. */
+#gLink {
+  /* Tipo de letra (campo do link): fonte ui-monospace. */
+  font-family: ui-monospace, monospace;
+  /* Tamanho da letra (campo do link): 0,85 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .85rem;
+}
+
+/* PEÇA: os botões da gaveta. */
+.gBotoes {
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espaço entre as peças de dentro: 8 pontinhos. Número maior = mais separadas. */
+  gap: 8px;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+}
+
+/* PEÇA: todas as peças dentro de: os botões da gaveta. */
+.gBotoes > * {
+  /* Estica para ocupar o espaço que sobrar. */
+  flex: 1;
+  /* Largura mínima (todas as peças): 90 pontinhos. Número maior = mais largo. */
+  min-width: 90px;
+}
 
 /* Histórico. */
-.hist ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
-.hist li { font-size: .85rem; background: #151330; border: 1px solid #2c2a55; border-radius: 8px; padding: 8px 10px; word-break: break-all; color: #cfc9ee; }
-.hist li b { color: #fff; }
+/* PEÇA: a lista dentro de: o histórico. */
+.hist ul {
+  /* Sem bolinhas de lista. */
+  list-style: none;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 6 pontinhos. Número maior = mais separadas. */
+  gap: 6px;
+  /* Espaço de fora, embaixo: 10 pontinhos. */
+  margin-bottom: 10px;
+}
+
+/* PEÇA: o item da lista dentro de: o histórico. */
+.hist li {
+  /* Tamanho da letra (item da lista): 0,85 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: .85rem;
+  /* Cor de fundo (item da lista): azul bem escuro. Troque o código para mudar a cor. */
+  background: #151330;
+  /* Contorno (item da lista): lisa, 1 pontinhos de grossura, cor azul escuro. */
+  border: 1px solid #2c2a55;
+  /* Arredonda os cantos (item da lista). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 8px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (item da lista): 8 pontinhos em cima e embaixo, 10 pontinhos nos lados. */
+  padding: 8px 10px;
+  /* Quebra palavras compridas para caberem. */
+  word-break: break-all;
+  /* Cor das letras (item da lista): azul bem clarinho. Troque o código para mudar a cor. */
+  color: #cfc9ee;
+}
+
+/* PEÇA: o texto forte dentro de: o item da lista. */
+.hist li b {
+  /* Cor das letras (texto forte): branco. Troque o código para mudar a cor. */
+  color: #fff;
+}
