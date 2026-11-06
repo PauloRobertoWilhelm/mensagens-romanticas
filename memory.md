@@ -1,6 +1,6 @@
 # memory.md — Resumo de Estado
 
-**Projeto:** Mensagens Românticas (GitHub Pages) · **Fase 7 de 7 entregue** (restam só ajustes do dono). isso
+**Projeto:** Mensagens Românticas (GitHub Pages) · **Fase 7 de 7 entregue** (restam só ajustes do dono).
 
 ## Feito
 - Motor completo: 4 aberturas, 7 tipos de cena, 3 finais (segurar, toques, deslizar), reações → WhatsApp.
