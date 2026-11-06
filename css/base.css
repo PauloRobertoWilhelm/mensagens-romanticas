@@ -1,0 +1,337 @@
+/* ==========================================================
+   base.css — estrutura e componentes (as CORES vêm de temas.css)
+   Regra: cada bloco tem um comentário acima dizendo o que faz
+   e o que muda se você alterar o valor.
+   ========================================================== */
+
+/* Variáveis globais de forma: raio dos cantos e as duas famílias de fonte.
+   Alterar --raio de 18px para 30px deixa cartões e botões mais arredondados. */
+:root {
+  --raio: 18px;
+  --fonte-titulo: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --fonte: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fonte-mono: 'Space Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --fonte-mao: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+}
+
+/* Reset: tira margens/espaços padrão do navegador e faz padding contar dentro da largura.
+   O highlight azul ao tocar no celular é removido para não "piscar" feio. */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+/* html e body ocupam a tela toda; sem isso o fundo não cobre a altura inteira. */
+html, body { height: 100%; }
+
+/* Corpo da página: fonte, cor do texto, fundo em gradiente (3 cores do tema),
+   sem rolagem (cada cena rola sozinha se precisar) e sem seleção de texto por toque. */
+body {
+  font-family: var(--fonte);
+  color: var(--tx);
+  background: linear-gradient(160deg, var(--bg-a), var(--bg-b) 55%, var(--bg-c)) fixed;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  transition: background .6s ease;
+}
+
+/* Canvas das partículas (corações, pétalas...): cobre a tela, fica ATRÁS do texto
+   e não captura toques (pointer-events: none). */
+#fundo { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+/* Palco: camada onde as cenas aparecem. Fica acima do canvas (z-index 1). */
+#palco { position: fixed; inset: 0; z-index: 1; }
+
+/* Cena: uma "tela" inteira. flex + overflow-y permitem rolar em telas pequenas.
+   O padding de baixo reserva espaço para o rodapé da música (96px + área segura do iPhone). */
+.cena {
+  position: absolute; inset: 0; display: flex; overflow-y: auto; overflow-x: hidden;
+  padding: 22px 22px calc(96px + env(safe-area-inset-bottom));
+  animation: cena-entra .7s ease both;
+}
+
+/* Cena saindo: some em .5s e não recebe toques enquanto some. */
+.cena.saindo { animation: cena-sai .5s ease both; pointer-events: none; }
+
+/* Caixa: coluna centralizada com largura máxima de leitura confortável (520px).
+   margin:auto centraliza mesmo quando a cena rola (flex + overflow). gap = espaço entre itens. */
+.caixa {
+  width: 100%; max-width: 520px; margin: auto;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;
+}
+
+/* Animações de entrada e saída das cenas (opacidade + leve deslocamento). */
+@keyframes cena-entra { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes cena-sai { to { opacity: 0; transform: translateY(-10px) scale(.98); } }
+
+/* Rótulo pequeno em caixa alta (ex.: "três coisas sobre você"): cor suave, espaçamento largo. */
+.rotulo { font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; color: var(--mut); }
+
+/* Título grande: fonte serifada; clamp() faz o tamanho variar entre 1.9rem e 3rem conforme a tela. */
+.titulo {
+  font-family: var(--fonte-titulo); font-weight: 600; line-height: 1.15;
+  font-size: clamp(1.9rem, 7vw, 3rem);
+  color: var(--tx); text-shadow: 0 0 28px var(--sombra);
+}
+
+/* Título: cada palavra recebe um degradê próprio. (Degradê no pai não funciona com as palavras
+   animadas, que são "inline-block" — por isso a regra fica na palavra.) Se o navegador não
+   suportar background-clip, a cor sólida do .titulo acima continua valendo. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .titulo .w { background: linear-gradient(120deg, var(--tx) 30%, var(--ac2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; }
+}
+
+/* Texto principal das frases: tamanho fluido e boa altura de linha para leitura lenta. */
+.texto { font-size: clamp(1.25rem, 4.6vw, 1.75rem); line-height: 1.5; font-family: var(--fonte-titulo); font-style: italic; }
+
+/* Texto menor (subtítulos e explicações). */
+.sub { font-size: 1rem; line-height: 1.55; color: var(--mut); }
+
+/* Dica piscando suavemente ("toque para abrir"). */
+.dica { font-size: .85rem; letter-spacing: .12em; color: var(--mut); animation: pisca 2.2s ease-in-out infinite; }
+@keyframes pisca { 50% { opacity: .35; } }
+
+/* Palavra revelada aos poucos: começa invisível, borrada e um pouco abaixo; o atraso vem do JS (inline). */
+.w { display: inline-block; opacity: 0; transform: translateY(8px); filter: blur(6px); animation: palavra .7s ease forwards; }
+@keyframes palavra { to { opacity: 1; transform: none; filter: blur(0); } }
+
+/* Quando a pessoa toca para pular: todas as palavras aparecem na hora. */
+.pronto .w { animation-delay: 0s !important; animation-duration: .01s !important; }
+
+/* Destaque (*assim* no texto): cor de acento e brilho. */
+.dest { color: var(--ac); font-style: normal; font-weight: 700; text-shadow: 0 0 18px var(--sombra); }
+
+/* Botão principal em forma de pílula. hover levanta, focus-visible mostra contorno (teclado), active afunda. */
+.btn {
+  appearance: none; border: 0; cursor: pointer; font: 600 1rem var(--fonte);
+  padding: 14px 30px; border-radius: 999px; color: var(--btn-tx);
+  background: linear-gradient(120deg, var(--ac), var(--ac2));
+  box-shadow: 0 8px 28px -8px var(--sombra); transition: transform .2s ease, box-shadow .2s ease, opacity .3s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px var(--sombra); }
+.btn:focus-visible { outline: 3px solid var(--tx); outline-offset: 3px; }
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .5; cursor: default; }
+
+/* Botão secundário: só contorno, para ações menos importantes (ver de novo). */
+.btn.leve { background: transparent; color: var(--tx); border: 1px solid var(--borda); box-shadow: none; }
+
+/* Elemento que entra com fade quando aparece na tela. */
+.entra { animation: cena-entra .6s ease both; }
+
+/* Cartão "vidro": fundo translúcido + borda fina + desfoque do que está atrás. */
+.vidro {
+  background: var(--vidro); border: 1px solid var(--borda); border-radius: var(--raio);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+
+/* ---------- Barras de progresso das histórias ---------- */
+
+/* Faixa fixa no topo com um segmento por frase. */
+.prog { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: 18px; right: 18px; display: flex; gap: 5px; }
+.prog i { flex: 1; height: 3px; border-radius: 3px; background: var(--borda); overflow: hidden; position: relative; }
+.prog i::after { content: ''; position: absolute; inset: 0; background: var(--ac); transform: scaleX(0); transform-origin: left; }
+.prog i.ok::after { transform: scaleX(1); }
+.prog i.on::after { transform: scaleX(1); transition: transform var(--dur, 4s) linear; }
+
+/* ---------- Abertura: terminal ---------- */
+
+/* Janela de terminal: fundo escuro, fonte monoespaçada, brilho na borda. */
+.term {
+  width: 100%; text-align: left; padding: 18px; border-radius: 14px; min-height: 170px;
+  background: rgba(0, 0, 0, .55); border: 1px solid var(--ac); box-shadow: 0 0 34px -10px var(--sombra);
+  font-family: var(--fonte-mono); font-size: .88rem; line-height: 1.7; color: var(--ac2);
+}
+.term pre { white-space: pre-wrap; font: inherit; }
+.term .cursor { display: inline-block; width: .6em; height: 1.05em; background: var(--ac); vertical-align: -2px; animation: pisca 1s steps(2) infinite; }
+
+/* ---------- Abertura: coração ---------- */
+
+/* Botão do coração: grande, pulsando como batimento. */
+.coracao { appearance: none; border: 0; background: none; cursor: pointer; width: 150px; height: 150px; color: var(--ac); filter: drop-shadow(0 0 24px var(--sombra)); animation: batida 1.4s ease-in-out infinite; }
+.coracao svg { width: 100%; height: 100%; fill: currentColor; }
+.coracao.foi { animation: estoura .8s ease forwards; }
+@keyframes batida { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+@keyframes estoura { to { transform: scale(2.6); opacity: 0; } }
+
+/* ---------- Abertura: envelope ---------- */
+
+/* Envelope: 280x180, perspectiva para a aba virar em 3D. */
+.env { position: relative; width: 280px; height: 180px; cursor: pointer; perspective: 800px; animation: flutua 3.6s ease-in-out infinite; }
+@keyframes flutua { 50% { transform: translateY(-8px); } }
+.env > * { position: absolute; left: 0; right: 0; }
+
+/* Corpo de trás do envelope. */
+.env .e-fundo { top: 0; bottom: 0; border-radius: 10px; background: var(--ac); filter: brightness(.82); }
+
+/* Carta dentro: sobe quando o envelope abre. */
+.env .e-carta {
+  top: 12px; height: 150px; margin: 0 14px; border-radius: 8px; padding: 18px 12px;
+  background: #fffaf2; color: #3a2a2a; display: flex; align-items: center; justify-content: center;
+  font-family: var(--fonte-mao); font-size: 1.5rem; line-height: 1.1; transition: transform 1s ease .5s;
+}
+
+/* Frente em V (dois triângulos laterais + base) usando clip-path. */
+.env .e-frente { top: 0; bottom: 0; border-radius: 10px; background: var(--ac); clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%); }
+
+/* Aba triangular de cima: gira 180° no eixo X ao abrir. */
+.env .e-aba { top: 0; height: 100px; background: var(--ac2); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transition: transform .8s ease, z-index 0s .4s; z-index: 3; }
+
+/* Selo no centro da aba. */
+.env .e-selo { top: 62px; text-align: center; font-size: 2rem; z-index: 4; transition: opacity .3s; }
+
+/* Estado aberto: aba vira, selo some, carta sobe e passa por cima. */
+.env.aberto .e-aba { transform: rotateX(180deg); z-index: 0; }
+.env.aberto .e-selo { opacity: 0; }
+.env.aberto .e-carta { transform: translateY(-86px); z-index: 2; }
+
+/* ---------- Abertura: presente ---------- */
+
+/* Presente: caixa 150x120 com tampa e laço feitos de blocos CSS. */
+.pres { position: relative; width: 160px; height: 150px; cursor: pointer; animation: balanca 2.4s ease-in-out infinite; }
+@keyframes balanca { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+.pres .p-corpo { position: absolute; bottom: 0; left: 8px; right: 8px; height: 100px; border-radius: 6px; background: var(--ac); }
+.pres .p-corpo::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 26px; margin-left: -13px; background: var(--ac2); }
+.pres .p-tampa { position: absolute; top: 12px; left: 0; right: 0; height: 40px; border-radius: 6px; background: var(--ac); filter: brightness(1.12); transition: transform .9s cubic-bezier(.3, 1.4, .5, 1), opacity .9s; }
+.pres .p-tampa::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 26px; margin-left: -13px; background: var(--ac2); }
+.pres .p-laco { position: absolute; top: -8px; left: 50%; width: 54px; height: 30px; margin-left: -27px; z-index: 2; border: 7px solid var(--ac2); border-radius: 50% 50% 8px 8px; transition: transform .9s cubic-bezier(.3, 1.4, .5, 1), opacity .9s; }
+.pres.aberto { animation: none; }
+.pres.aberto .p-tampa, .pres.aberto .p-laco { transform: translateY(-90px) rotate(-18deg); opacity: 0; }
+
+/* ---------- Cena: constelação ---------- */
+
+/* Moldura quadrada do desenho de estrelas. */
+.const { width: min(78vw, 340px); aspect-ratio: 1; }
+.const svg { width: 100%; height: 100%; overflow: visible; }
+
+/* Linha que se desenha sozinha (dasharray/dashoffset com pathLength=1). */
+.const .linha { fill: none; stroke: var(--ac); stroke-width: .7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 0 2px var(--ac)); transition: stroke-dashoffset 4s ease-in-out; }
+.const.vai .linha { stroke-dashoffset: 0; }
+
+/* Estrelinhas (pontos): nascem pequenas e crescem em sequência (atraso inline). */
+.const .est { fill: var(--tx); opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .5s, transform .5s; transform: scale(.2); }
+.const.vai .est { opacity: 1; transform: scale(1); }
+
+/* ---------- Cena: scanner ---------- */
+
+/* Lista de linhas "rótulo | barra | número". */
+.scan { width: 100%; display: flex; flex-direction: column; gap: 14px; text-align: left; }
+.scan .lin { display: grid; grid-template-columns: 1fr 52px; gap: 6px 10px; align-items: center; font-size: .95rem; }
+.scan .barra { grid-column: 1 / -1; height: 9px; border-radius: 9px; background: var(--vidro); border: 1px solid var(--borda); overflow: hidden; }
+.scan .barra i { display: block; height: 100%; width: 0; border-radius: 9px; background: linear-gradient(90deg, var(--ac), var(--ac2)); box-shadow: 0 0 14px var(--sombra); transition: width 1.3s cubic-bezier(.2, .8, .2, 1); }
+.scan .val { text-align: right; font-weight: 700; color: var(--ac); font-variant-numeric: tabular-nums; }
+
+/* ---------- Cena: cartas que viram ---------- */
+
+/* Grade de cartas; cada uma é um quadrado vertical com perspectiva 3D. */
+.cartas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; width: 100%; }
+.card { position: relative; flex: 1 1 130px; max-width: 170px; height: 170px; perspective: 900px; cursor: pointer; background: none; border: 0; color: inherit; font: inherit; }
+.card .miolo { position: absolute; inset: 0; transition: transform .8s cubic-bezier(.3, 1.2, .4, 1); transform-style: preserve-3d; }
+.card.virado .miolo { transform: rotateY(180deg); }
+.card .lado { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 14px; border-radius: var(--raio); font-size: 1rem; line-height: 1.35; }
+.card .frente { background: linear-gradient(150deg, var(--ac), var(--ac2)); color: var(--btn-tx); font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.15rem; box-shadow: 0 10px 28px -12px var(--sombra); }
+.card .verso { transform: rotateY(180deg); background: var(--vidro); border: 1px solid var(--ac); backdrop-filter: blur(8px); }
+
+/* ---------- Cena: contagem ---------- */
+
+/* Número gigante com brilho, e o rótulo embaixo. */
+.num { font-family: var(--fonte-titulo); font-weight: 700; font-size: clamp(4rem, 22vw, 7.5rem); line-height: 1; color: var(--ac); text-shadow: 0 0 40px var(--sombra); font-variant-numeric: tabular-nums; min-height: 1em; }
+.num-rot { font-size: 1.15rem; color: var(--tx); min-height: 2.6em; }
+
+/* Histórico pequeno dos números já mostrados. */
+.hist { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.hist span { font-size: .78rem; padding: 5px 12px; border-radius: 999px; background: var(--vidro); border: 1px solid var(--borda); color: var(--mut); animation: cena-entra .5s ease both; }
+
+/* ---------- Cena: motivos (lista) ---------- */
+.lista { list-style: none; display: flex; flex-direction: column; gap: 12px; width: 100%; text-align: left; }
+.lista li { display: flex; gap: 12px; align-items: flex-start; padding: 13px 16px; font-size: 1.02rem; line-height: 1.4; opacity: 0; transform: translateX(-16px); transition: opacity .6s, transform .6s; }
+.lista li.on { opacity: 1; transform: none; }
+.lista li::before { content: '♥'; color: var(--ac); flex: none; }
+
+/* ---------- Cena: escolha ---------- */
+.opcoes { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.opcao { appearance: none; cursor: pointer; font: 600 1rem var(--fonte); color: var(--tx); text-align: left; padding: 15px 18px; transition: transform .2s, border-color .2s, opacity .4s; }
+.opcao:hover { transform: translateY(-2px); border-color: var(--ac); }
+.opcao:focus-visible { outline: 3px solid var(--ac); outline-offset: 2px; }
+.opcao.sel { border-color: var(--ac); box-shadow: 0 0 22px -6px var(--sombra); }
+.opcao.fora { opacity: .25; pointer-events: none; }
+.resposta { font-family: var(--fonte-titulo); font-style: italic; font-size: 1.3rem; line-height: 1.5; }
+
+/* ---------- Final: segurar o coração ---------- */
+
+/* Anel de progresso em volta do coração (SVG): o traço cresce enquanto se segura. */
+.seg { position: relative; width: 190px; height: 190px; touch-action: none; cursor: pointer; }
+.seg svg.anel { position: absolute; inset: 0; transform: rotate(-90deg); }
+.seg .trilho { fill: none; stroke: var(--borda); stroke-width: 5; }
+.seg .prog-anel { fill: none; stroke: var(--ac); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 289; stroke-dashoffset: 289; filter: drop-shadow(0 0 6px var(--sombra)); }
+.seg .miolo { position: absolute; inset: 28px; color: var(--ac); filter: drop-shadow(0 0 20px var(--sombra)); transition: transform .15s; }
+.seg.preso .miolo { transform: scale(1.12); }
+.seg .miolo svg { width: 100%; height: 100%; fill: currentColor; }
+
+/* ---------- Final: toques ---------- */
+.toq { appearance: none; border: 0; background: none; width: 170px; height: 170px; color: var(--ac); cursor: pointer; position: relative; filter: drop-shadow(0 0 22px var(--sombra)); transition: transform .12s; }
+.toq:active { transform: scale(.9); }
+.toq svg { width: 100%; height: 100%; fill: currentColor; }
+.toq b { position: absolute; inset: 0; display: grid; place-items: center; color: var(--btn-tx); font: 700 2.4rem var(--fonte-titulo); }
+
+/* ---------- Final: deslizar ---------- */
+.desl { position: relative; width: min(100%, 320px); height: 62px; border-radius: 999px; touch-action: none; overflow: hidden; }
+.desl .rot { position: absolute; inset: 0; display: grid; place-items: center; color: var(--mut); font-size: .92rem; letter-spacing: .08em; padding-left: 40px; }
+.desl .cabo { position: absolute; top: 5px; left: 5px; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; color: var(--btn-tx); background: linear-gradient(120deg, var(--ac), var(--ac2)); box-shadow: 0 6px 20px -6px var(--sombra); cursor: grab; }
+
+/* ---------- Final: revelação ---------- */
+
+/* Linha de reações (chips) que abrem o WhatsApp. */
+.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.chip { appearance: none; cursor: pointer; font: 600 .92rem var(--fonte); color: var(--tx); padding: 10px 16px; border-radius: 999px; background: var(--vidro); border: 1px solid var(--borda); transition: transform .2s, border-color .2s, background .2s; }
+.chip:hover { transform: translateY(-2px); border-color: var(--ac); }
+.chip:focus-visible { outline: 3px solid var(--ac); outline-offset: 2px; }
+.chip.sel { background: var(--ac); color: var(--btn-tx); border-color: var(--ac); }
+
+/* Fileira de botões finais (ler carta / ver de novo). */
+.acoes { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+/* ---------- Rodapé da música ---------- */
+
+/* Faixa fixa embaixo: equalizador | legenda | botão mudo. Respeita a área segura do iPhone. */
+#rodape {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: linear-gradient(0deg, var(--bg-a) 20%, transparent);
+}
+#rodape[hidden] { display: none; }
+
+/* Equalizador: 5 barras que sobem e descem em tempos diferentes. */
+#eq { display: flex; align-items: flex-end; gap: 3px; height: 22px; flex: none; }
+#eq i { width: 4px; height: 100%; background: var(--ac); border-radius: 2px; transform-origin: bottom; animation: eq 1s ease-in-out infinite; }
+#eq i:nth-child(2) { animation-duration: .7s; animation-delay: -.2s; }
+#eq i:nth-child(3) { animation-duration: 1.2s; animation-delay: -.5s; }
+#eq i:nth-child(4) { animation-duration: .85s; animation-delay: -.1s; }
+#eq i:nth-child(5) { animation-duration: 1.05s; animation-delay: -.7s; }
+@keyframes eq { 0%, 100% { transform: scaleY(.2); } 50% { transform: scaleY(1); } }
+#rodape.mudo #eq i, #rodape.parado #eq i { animation-play-state: paused; transform: scaleY(.2); }
+
+/* Legenda: ocupa o espaço do meio, uma linha só, troca com fade. */
+#legenda { flex: 1; text-align: center; font-size: .95rem; font-style: italic; color: var(--tx); min-height: 1.4em; transition: opacity .6s ease; text-shadow: 0 1px 10px rgba(0, 0, 0, .35); }
+#legenda.troca { opacity: 0; }
+
+/* Botão de mudo: redondo, discreto. */
+#mudo { appearance: none; flex: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.05rem; color: var(--tx); background: var(--vidro); border: 1px solid var(--borda); }
+#mudo:focus-visible { outline: 3px solid var(--ac); outline-offset: 2px; }
+#mudo[hidden] { display: none; }
+
+/* ---------- Carta (dialog) e aviso ---------- */
+#carta { margin: auto; width: min(92vw, 520px); max-height: 82vh; border: 0; border-radius: var(--raio); background: #fffaf2; color: #3a2a2a; box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .6); }
+#carta::backdrop { background: rgba(0, 0, 0, .6); backdrop-filter: blur(4px); }
+#carta article { padding: 28px 24px; max-height: 82vh; overflow-y: auto; -webkit-user-select: text; user-select: text; }
+#cartaTexto p { font-family: var(--fonte-mao); font-size: 1.45rem; line-height: 1.35; margin-bottom: .8em; }
+#carta .btn { margin-top: 10px; }
+
+/* Aviso rápido (toast) no meio de baixo da tela. */
+#aviso { position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); z-index: 9; max-width: 88vw; padding: 12px 20px; border-radius: 999px; background: var(--tx); color: var(--bg-a); font-size: .92rem; opacity: 0; pointer-events: none; transition: opacity .4s, transform .4s; }
+#aviso.on { opacity: 1; transform: translate(-50%, 0); }
+
+/* Quem prefere menos movimento (acessibilidade): animações quase instantâneas. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

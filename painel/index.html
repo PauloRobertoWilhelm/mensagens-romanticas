@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- painel/index.html — SUA ferramenta: escolhe a mensagem e gera o link com chave. -->
+<html lang="pt-BR">
+<head>
+  <!-- Codificação e layout de celular. -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Não listar em buscadores. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel · Mensagens</title>
+  <!-- Estilo próprio do painel. -->
+  <link rel="stylesheet" href="painel.css">
+</head>
+<body>
+  <!-- Cabeçalho com explicação curta. -->
+  <header>
+    <h1>Painel de links 💌</h1>
+    <p class="sub">Escolha uma mensagem, toque em <b>Gerar link</b> e envie. Cada clique cria uma chave nova (todas abrem a mesma mensagem).</p>
+  </header>
+
+  <!-- Barra de ferramentas: categoria, busca e anotação de destinatário. -->
+  <section class="barra">
+    <div id="abas" class="abas" role="tablist"></div>
+    <input id="busca" type="search" placeholder="Buscar pelo nome…" aria-label="Buscar mensagem">
+    <input id="para" type="text" placeholder="Anotação opcional (para quem vai?)" aria-label="Anotação do destinatário" maxlength="40">
+  </section>
+
+  <!-- Lista de cartões das mensagens (preenchida pelo painel.js). -->
+  <main id="lista" class="lista"></main>
+
+  <!-- Gaveta do link gerado: aparece embaixo quando você gera um link. -->
+  <aside id="gaveta" hidden>
+    <p id="gNome" class="gNome"></p>
+    <input id="gLink" type="text" readonly aria-label="Link gerado">
+    <div class="gBotoes">
+      <button id="gCopiar" type="button">Copiar</button>
+      <a id="gAbrir" href="#" target="_blank" rel="noopener">Abrir</a>
+      <button id="gFechar" type="button" class="leve">Fechar</button>
+    </div>
+    <p id="gAviso" class="sub"></p>
+  </aside>
+
+  <!-- Histórico dos links gerados NESTE navegador (fica salvo só aqui). -->
+  <section class="hist">
+    <h2>Links gerados neste aparelho</h2>
+    <ul id="historico"></ul>
+    <button id="limpar" type="button" class="leve">Limpar histórico</button>
+  </section>
+
+  <!-- Mesmos dados que o site usa (caminho sobe uma pasta). -->
+  <script src="../data/config.js"></script>
+  <script src="../data/categorias.js"></script>
+  <script src="../data/base.js"></script>
+  <script src="../data/mensagens-paquera.js"></script>
+  <script src="../data/mensagens-namoro.js"></script>
+  <script src="../data/mensagens-amigos.js"></script>
+  <script src="../data/mensagens-datas.js"></script>
+  <script src="../js/chave.js"></script>
+  <script src="painel.js"></script>
+</body>
+</html>

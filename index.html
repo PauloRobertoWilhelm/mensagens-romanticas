@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- index.html — página que o destinatário abre: index.html?k=CHAVE -->
+<!-- Idioma da página: português do Brasil; data-tema é trocado pelo main.js conforme a mensagem. -->
+<html lang="pt-BR" data-tema="noite">
+<head>
+  <!-- Codificação de caracteres (acentos e emojis). -->
+  <meta charset="utf-8">
+  <!-- Layout de celular: largura real da tela e uso da área toda (inclusive notch do iPhone). -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Pede aos buscadores para NÃO listar a página (mensagens são privadas). -->
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Cor da barra do navegador no celular (o main.js ajusta ao tema). -->
+  <meta name="theme-color" content="#0a0a1f">
+  <!-- Título da aba (genérico de propósito, não entrega o conteúdo). -->
+  <title>Uma mensagem pra você 💌</title>
+  <!-- Fontes do Google (opcionais: se não carregarem, entram fontes do sistema). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Space+Mono&display=swap" rel="stylesheet">
+  <!-- Estilos: estrutura primeiro, depois as cores dos temas. -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/temas.css">
+</head>
+<body>
+  <!-- Canvas das partículas (corações, pétalas...) atrás de tudo. -->
+  <canvas id="fundo" aria-hidden="true"></canvas>
+  <!-- Palco: o JS coloca aqui as cenas, uma de cada vez. -->
+  <main id="palco" aria-live="polite"></main>
+
+  <!-- Rodapé da música: equalizador, legenda e botão de mudo (aparece quando a música é preparada). -->
+  <footer id="rodape" hidden>
+    <div id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <p id="legenda" aria-live="off"></p>
+    <button id="mudo" type="button" aria-label="Silenciar música">🔊</button>
+  </footer>
+
+  <!-- Janela da carta longa (abre pelo botão "ler a carta"). -->
+  <dialog id="carta">
+    <article>
+      <div id="cartaTexto"></div>
+      <button id="cartaFechar" class="btn" type="button">fechar</button>
+    </article>
+  </dialog>
+
+  <!-- Aviso rápido (toast). -->
+  <div id="aviso" role="status"></div>
+
+  <!-- Scripts clássicos (sem módulos) na ordem certa: dados, ferramentas, motor, início. -->
+  <script src="data/config.js"></script>
+  <script src="data/categorias.js"></script>
+  <script src="data/base.js"></script>
+  <script src="data/mensagens-paquera.js"></script>
+  <script src="data/mensagens-namoro.js"></script>
+  <script src="data/mensagens-amigos.js"></script>
+  <script src="data/mensagens-datas.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/chave.js"></script>
+  <script src="js/fundo.js"></script>
+  <script src="js/musica.js"></script>
+  <script src="js/cenas.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

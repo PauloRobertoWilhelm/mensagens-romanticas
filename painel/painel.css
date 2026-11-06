@@ -1,0 +1,47 @@
+/* painel.css — visual simples e escuro do painel (não faz parte do site que a pessoa recebe). */
+
+/* Reset básico e fonte do sistema. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Corpo: fundo escuro, texto claro, espaço embaixo para a gaveta não cobrir a lista. */
+body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #0e0d1f; color: #f1eefc; padding: 18px 16px 220px; max-width: 980px; margin: 0 auto; }
+
+/* Títulos e texto de apoio. */
+h1 { font-size: 1.5rem; margin-bottom: 6px; }
+h2 { font-size: 1.05rem; margin: 26px 0 10px; }
+.sub { color: #b4aed6; font-size: .92rem; line-height: 1.5; }
+
+/* Barra de ferramentas empilhada em telas pequenas. */
+.barra { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+.abas { display: flex; gap: 8px; flex-wrap: wrap; }
+.aba { border: 1px solid #3b3866; background: #1a1838; color: inherit; padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: .92rem; }
+.aba[aria-selected="true"] { background: #ff5c8a; border-color: #ff5c8a; color: #2a0716; font-weight: 700; }
+
+/* Campos de texto. */
+input[type="search"], input[type="text"] { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid #3b3866; background: #151330; color: inherit; font-size: 1rem; }
+
+/* Grade de cartões. */
+.lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.card { background: #171533; border: 1px solid #2c2a55; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.card h3 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.card .id { font-size: .75rem; color: #8f89c4; margin-left: auto; }
+.card .meta { font-size: .8rem; color: #b4aed6; line-height: 1.5; }
+.pt { width: 14px; height: 14px; border-radius: 50%; flex: none; border: 1px solid rgba(255,255,255,.4); }
+
+/* Botões. */
+button, .gBotoes a { font: 600 .95rem system-ui, sans-serif; border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer; background: #ff5c8a; color: #2a0716; text-decoration: none; text-align: center; }
+button.leve { background: transparent; border: 1px solid #3b3866; color: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #5ce1ff; outline-offset: 2px; }
+
+/* Gaveta fixa embaixo com o link gerado. */
+#gaveta { position: fixed; left: 0; right: 0; bottom: 0; background: #1d1b45; border-top: 1px solid #4a4780; padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 8px; max-width: 980px; margin: 0 auto; box-shadow: 0 -12px 40px rgba(0,0,0,.5); }
+#gaveta[hidden] { display: none; }
+.gNome { font-weight: 700; }
+#gLink { font-family: ui-monospace, monospace; font-size: .85rem; }
+.gBotoes { display: flex; gap: 8px; flex-wrap: wrap; }
+.gBotoes > * { flex: 1; min-width: 90px; }
+
+/* Histórico. */
+.hist ul { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+.hist li { font-size: .85rem; background: #151330; border: 1px solid #2c2a55; border-radius: 8px; padding: 8px 10px; word-break: break-all; color: #cfc9ee; }
+.hist li b { color: #fff; }

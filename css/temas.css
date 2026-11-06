@@ -1,0 +1,56 @@
+/* ==========================================================
+   temas.css — 10 temas de cor. Cada mensagem escolhe um via data-tema.
+   Variáveis: --bg-a/b/c = fundo (gradiente) | --tx = texto | --mut = texto suave
+   --ac/--ac2 = cores de destaque | --vidro/--borda = cartões | --sombra = brilho
+   --btn-tx = cor do texto dentro de botões (precisa contrastar com --ac)
+   Para criar um tema novo: copie um bloco, mude o nome e as cores,
+   e cadastre as partículas dele em js/fundo.js (Fundo.TEMAS).
+   ========================================================== */
+
+/* noite: azul-marinho profundo com rosa — o clássico romântico. */
+:root[data-tema="noite"] { --bg-a: #0a0a1f; --bg-b: #14123a; --bg-c: #2a1347; --tx: #f4f1ff; --mut: #b9b3dc; --ac: #ff5c8a; --ac2: #ffb0c8; --vidro: rgba(255,255,255,.07); --borda: rgba(255,255,255,.16); --sombra: rgba(255,92,138,.5); --btn-tx: #2a0716; }
+
+/* aurora: verde-azulado escuro com menta e lilás — misterioso e calmo. */
+:root[data-tema="aurora"] { --bg-a: #04161c; --bg-b: #0a3a3f; --bg-c: #2b1b5a; --tx: #eafff8; --mut: #9fd9cb; --ac: #5af2c6; --ac2: #b79bff; --vidro: rgba(255,255,255,.07); --borda: rgba(180,255,235,.2); --sombra: rgba(90,242,198,.45); --btn-tx: #03211a; }
+
+/* rosa (CLARO): fundo rosa-claro, texto vinho — delicado e doce. */
+:root[data-tema="rosa"] { --bg-a: #fff0f5; --bg-b: #ffdbe8; --bg-c: #ffc4d8; --tx: #4a1630; --mut: #8b4a66; --ac: #e0457b; --ac2: #ff8fb3; --vidro: rgba(255,255,255,.65); --borda: rgba(224,69,123,.28); --sombra: rgba(224,69,123,.4); --btn-tx: #ffffff; }
+
+/* fogo: vermelho-escuro com laranja — intenso e apaixonado. */
+:root[data-tema="fogo"] { --bg-a: #1a0505; --bg-b: #4a0d12; --bg-c: #8a2a10; --tx: #fff3ea; --mut: #f0b9a0; --ac: #ff6a3d; --ac2: #ffc26b; --vidro: rgba(255,255,255,.08); --borda: rgba(255,200,160,.22); --sombra: rgba(255,106,61,.5); --btn-tx: #2a0a02; }
+
+/* oceano: azul profundo com ciano — leve e fresco. */
+:root[data-tema="oceano"] { --bg-a: #031527; --bg-b: #06355a; --bg-c: #0a6a8a; --tx: #eaf9ff; --mut: #9ccfe0; --ac: #5ce1ff; --ac2: #a8f0e0; --vidro: rgba(255,255,255,.08); --borda: rgba(160,235,255,.22); --sombra: rgba(92,225,255,.45); --btn-tx: #02202b; }
+
+/* ouro: preto com dourado — elegante, para datas especiais. */
+:root[data-tema="ouro"] { --bg-a: #0b0905; --bg-b: #1c150a; --bg-c: #2e2410; --tx: #fbf3df; --mut: #cdbd92; --ac: #e8bd5a; --ac2: #fff0b8; --vidro: rgba(255,240,200,.06); --borda: rgba(232,189,90,.3); --sombra: rgba(232,189,90,.45); --btn-tx: #2a1d04; }
+
+/* neon: preto-arroxeado com magenta e ciano — tecnológico. */
+:root[data-tema="neon"] { --bg-a: #07000f; --bg-b: #14012b; --bg-c: #240048; --tx: #fdf4ff; --mut: #c9a9e6; --ac: #ff2bd6; --ac2: #2bf0ff; --vidro: rgba(255,255,255,.06); --borda: rgba(43,240,255,.3); --sombra: rgba(255,43,214,.55); --btn-tx: #12001f; }
+
+/* jardim (CLARO): creme esverdeado com folha e flor — fresco e sereno. */
+:root[data-tema="jardim"] { --bg-a: #f6fcf0; --bg-b: #e0f3d4; --bg-c: #cbecc2; --tx: #1f3a22; --mut: #55785a; --ac: #3f9a52; --ac2: #f08aa8; --vidro: rgba(255,255,255,.7); --borda: rgba(63,154,82,.3); --sombra: rgba(63,154,82,.35); --btn-tx: #ffffff; }
+
+/* crepúsculo: roxo para laranja-rosado — pôr do sol. */
+:root[data-tema="crepusculo"] { --bg-a: #1b0f3a; --bg-b: #5a1f66; --bg-c: #c2506a; --tx: #fff1f4; --mut: #f0c3d4; --ac: #ffb347; --ac2: #ff8fb1; --vidro: rgba(255,255,255,.1); --borda: rgba(255,230,240,.25); --sombra: rgba(255,179,71,.5); --btn-tx: #2b1204; }
+
+/* confete: roxo festivo com amarelo e pink — alegre, para festa e amizade. */
+:root[data-tema="confete"] { --bg-a: #1a0b3d; --bg-b: #2d1068; --bg-c: #5a1a8c; --tx: #fff9e8; --mut: #d8c4f5; --ac: #ffd23f; --ac2: #ff5fa2; --vidro: rgba(255,255,255,.09); --borda: rgba(255,255,255,.22); --sombra: rgba(255,210,63,.5); --btn-tx: #2b1d00; }
+
+/* ----- Toques extras de personalidade por tema ----- */
+
+/* neon: linhas de varredura (tipo monitor antigo) por cima do palco, sem bloquear toques. */
+:root[data-tema="neon"] #palco::before { content: ''; position: fixed; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,43,214,.05) 3px 4px); }
+
+/* neon: título em caixa alta com espaçamento — visual "digital". */
+:root[data-tema="neon"] .titulo { text-transform: uppercase; letter-spacing: .06em; font-family: var(--fonte); font-weight: 800; }
+
+/* ouro: título em versalete com espaçamento — visual "convite". */
+:root[data-tema="ouro"] .titulo { letter-spacing: .05em; font-variant: small-caps; }
+
+/* fogo e confete: título mais pesado. */
+:root[data-tema="fogo"] .titulo, :root[data-tema="confete"] .titulo { font-weight: 800; }
+
+/* temas claros: o rodapé usa o fundo claro e a sombra do texto fica discreta. */
+:root[data-tema="rosa"] #legenda, :root[data-tema="jardim"] #legenda { text-shadow: none; }
+:root[data-tema="rosa"] .term, :root[data-tema="jardim"] .term { background: rgba(255,255,255,.75); }
