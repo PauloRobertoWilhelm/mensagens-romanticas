@@ -142,10 +142,10 @@
 
   // Roda a mensagem inteira: a arte e o final. Um erro na arte não impede a mensagem de chegar.
   Cenas.rodar = async (msg, cat) => {
-    // Mostra o leitor de digital antes de tudo.
+    // Mostra a entrada própria do link antes de tudo.
     try {
-      // Roda a abertura com os textos da categoria.
-      await Abertura(cat.abertura);
+      // Roda a entrada própria deste link.
+      await Abertura(window.ABERTURAS[msg.id]);
       // Se deu erro, cai aqui e o site continua funcionando.
     } catch (e) {
       // Escreve o erro no console, para ajudar a achar o problema.
@@ -178,7 +178,7 @@
         console.error('capitulo ' + c.t, e);
       }
       // Depois de cada capítulo, passa uma parte do filme de frases.
-      await Filme(frases, i ? meio : 0, i ? frases.length : meio);
+      await Filme(frases, i ? meio : 0, i ? frases.length : meio, window.CFILME[msg.id]);
     }
     // Mostra o final, que é sempre o último passo.
     await revelar(msg, cat, msg.passos[msg.passos.length - 1]);

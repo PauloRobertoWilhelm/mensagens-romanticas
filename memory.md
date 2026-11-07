@@ -5,8 +5,8 @@
 ## Feito
 - 80 artes diferentes, uma por link: `js/artes-*.js` (movimento), `css/artes-*.css` (visual), `data/mensagens-*.js` (textos).
 - Depois da arte, 2 capítulos interativos por link (`data/capitulos-*.js`, `js/capitulos.js`) e faíscas no toque (`js/efeitos.js`). A legenda do rodapé foi retirada a pedido do dono.
-- Visual moderno: 20 fundos em WebGL (`js/cenarios.js`, `data/cenarios.js`), leitor de digital na abertura (`js/abertura.js`), acabamento em `css/acabamento.css`.
-- Filme de frases: `js/filme.js`, `data/frases-*.js`, dura pelo menos 70% da música. A paquera usa os PDFs do dono, sem as partes de cantadas sexuais, convites e respostas a recusas.
+- Visual moderno: 20 fundos em WebGL (`js/cenarios.js`, `data/cenarios.js`), 20 entradas de tela inteira, sem moldura (`js/luz.js`, `js/abertura.js`, `js/entradas-*.js`, `data/aberturas.js`), acabamento em `css/acabamento.css`.
+- Filme de frases: `js/filme.js`, `data/frases-*.js`, `data/formatos.js` (20 formatos, cada link com etiqueta própria), dura pelo menos 70% da música. A paquera usa os PDFs do dono, sem as partes de cantadas sexuais, convites e respostas a recusas.
 - Peças comuns em `js/kit.js`; cada gesto marca o elemento com `data-acao`.
 - Paquera reescrita com cantadas e elogios ousados. Ids e links não mudaram.
 - 10 temas de cor + partículas por tema, com ajuste por arte. Música por categoria, com modo sem áudio.

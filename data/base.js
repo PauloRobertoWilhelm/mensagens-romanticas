@@ -103,7 +103,7 @@ window.tempoFrase = (f) => {
   // Conta as palavras da frase.
   const palavras = f.split(/\s+/).length;
   // Tempo de aparecer, tempo de ler e tempo de sumir. Número maior = frases mais demoradas.
-  return palavras * 170 + 2500 + f.length * 26;
+  return palavras * 170 + 3000 + f.length * 26;
 };
 
 // Escolhe as frases do link 'id' até somar 'alvo' milésimos de segundo.
@@ -137,4 +137,22 @@ window.escolheFrases = (id, alvo) => {
   }
   // Entrega as frases escolhidas.
   return fora;
+};
+
+// Lista de como as frases aparecem em cada link (preenchida por data/formatos.js).
+window.CFILME = {};
+
+// Guarda o formato e a etiqueta das frases do link de número 'id'.
+window.W = (id, formato, rotulo) => {
+  // Coloca na lista.
+  CFILME[id] = { formato, rotulo };
+};
+
+// Lista das entradas de cada link (preenchida por data/aberturas.js).
+window.ABERTURAS = {};
+
+// Guarda a entrada do link de número 'id': o tipo e os textos.
+window.P = (id, tipo, textos) => {
+  // Coloca na lista.
+  ABERTURAS[id] = Object.assign({ tipo }, textos);
 };

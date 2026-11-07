@@ -18,7 +18,7 @@
 1. Recebe `index.html?k=CHAVE`.
 2. `main.js` decodifica a chave (`chave.js`) → id → mensagem em `MENSAGENS`.
 3. Aplica `data-tema` e `data-arte`, inicia `Fundo` (partículas do tema, com ajustes da arte) e `Musica` (categoria).
-4. `Cenas.rodar`: leitor de digital (`js/abertura.js`) → arte própria do link → 2 capítulos interativos → final (título, mensagem, reações, carta). O primeiro toque libera a música.
+4. `Cenas.rodar`: entrada própria do link (`js/abertura.js`, `js/entradas-*.js`, motor `js/luz.js`, textos em `data/aberturas.js`) → arte própria do link → 2 capítulos interativos → final (título, mensagem, reações, carta). O primeiro toque libera a música.
 5. O fundo animado de cada link (`js/cenarios.js`, escolhido em `data/cenarios.js`) roda em WebGL atrás de tudo, reage ao dedo e pulsa com `Musica.batida()`.
 6. Reações no final abrem o WhatsApp se `CONFIG.WHATSAPP` estiver preenchido.
 

@@ -1,0 +1,1083 @@
+/* ==========================================================
+   filme.css — o visual dos 20 formatos do filme de frases.
+   Cada bloco começa com o nome do formato.
+   ========================================================== */
+
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
+/* ---------- Peças comuns ---------- */
+/* PEÇA: a barra de progresso. */
+.trilho-f {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: uma conta feita pelo navegador. */
+  top: calc(14px + env(safe-area-inset-top));
+  /* Distância da esquerda: 18 pontinhos. */
+  left: 18px;
+  /* Distância da direita: 18 pontinhos. */
+  right: 18px;
+  /* Altura (barra de progresso): 3 pontinhos. Número maior = mais alto. */
+  height: 3px;
+  /* Arredonda os cantos (barra de progresso). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 3px;
+  /* Cor de fundo (barra de progresso): a cor de borda do tema. Troque o código para mudar a cor. */
+  background: var(--borda);
+  /* Corta o que passar para fora (barra de progresso). */
+  overflow: hidden;
+}
+
+/* PEÇA: a parte cheia da barra. */
+.cheio-f {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Altura (parte cheia da barra): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Largura (parte cheia da barra): zero. Número maior = mais largo. */
+  width: 0;
+  /* Fundo em degradê (parte cheia da barra), nas cores: a cor de destaque do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, var(--ac), var(--ac2));
+  /* Sombra ou brilho em volta (parte cheia da barra), na cor: a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 10px var(--sombra);
+  /* Faz a mudança acontecer devagar, sem pular: a largura em 0,6 segundos. Número maior = mais lento. */
+  transition: width .6s ease;
+}
+
+/* PEÇA: o lugar das frases. */
+.palco-f {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (lugar das frases): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura mínima (lugar das frases): 62% da altura da tela. Número maior = mais alto. */
+  min-height: 62vh;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+}
+
+/* PEÇA: a frase. */
+.item-f {
+  /* Valor inicial guardado com o nome --r. O código muda esse valor enquanto a animação roda. */
+  --r: 0deg;
+  /* Valor inicial guardado com o nome --x. O código muda esse valor enquanto a animação roda. */
+  --x: 0%;
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (frase): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,45 segundos e o movimento em 0,45 segundos. Número maior = mais lento. */
+  transition: opacity .45s, transform .45s;
+  /* Liga a animação "item-entra": dura 0,6 segundos. Número menor = mais rápida. */
+  animation: item-entra .6s cubic-bezier(.2, .9, .3, 1) both;
+}
+
+/* PEÇA: a frase com "sai" ligado. */
+.item-f.sai {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Movimento (frase): encolhe para 92% do tamanho. */
+  transform: scale(.92);
+}
+
+/* ANIMAÇÃO "item-entra": a frase entra subindo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes item-entra {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: desce 26 pontinhos. */
+    transform: translateY(26px);
+  }
+}
+
+/* PEÇA: a etiqueta da frase. */
+.rotulo-f {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Espaço de fora, embaixo: 6 pontinhos. */
+  margin-bottom: 6px;
+  /* Letra (etiqueta da frase): letra de computador (Space Mono), tamanho 0,72, grossura 700. Número maior = letra maior. */
+  font: 700 .72rem var(--fonte-mono);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .14em;
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,75. */
+  opacity: .75;
+}
+
+/* PEÇA: o texto da frase. */
+.texto-f {
+  /* Altura mínima (texto da frase): 2,6 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 2.6em;
+  /* Tamanho da letra (texto da frase): 1,25 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.25rem;
+  /* Espaço entre as linhas do texto: 1,32. Número maior = linhas mais separadas. */
+  line-height: 1.32;
+}
+
+/* PEÇA: a tampa que se toca. */
+.tampa-f {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (tampa que se toca): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Tira o visual padrão do navegador, para usar o nosso. */
+  appearance: none;
+  /* Tira o contorno (tampa que se toca). */
+  border: 0;
+  /* Arredonda os cantos (tampa que se toca). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: inherit;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Tamanho da letra (tampa que se toca): 3,4 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 3.4rem;
+}
+
+/* ---------- balao: conversa de celular ---------- */
+/* PEÇA: o lugar das frases dentro de: o formato conversa. */
+.f-balao .palco-f {
+  /* Empurra as peças para o fim. */
+  justify-content: flex-end;
+  /* Encosta as peças no fim. */
+  align-items: flex-end;
+}
+
+/* PEÇA: a frase dentro de: o formato conversa. */
+.f-balao .item-f {
+  /* Largura (frase): 84% do espaço. Número maior = mais largo. */
+  width: 84%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 10 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 10px 14px;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 18px 18px 4px 18px;
+  /* Cor das letras (frase): branco. Troque o código para mudar a cor. */
+  color: #ffffff;
+  /* Fundo em degradê (frase), nas cores: verde-água escuro e verde. Troque os códigos para mudar as cores. */
+  background: linear-gradient(135deg, #128c7e, #25a76a);
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Sombra ou brilho em volta (frase), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 8px 16px -8px #000000;
+  /* Usa a animação "balao-pula". */
+  animation-name: balao-pula;
+}
+
+/* ANIMAÇÃO "balao-pula": o balão pula na conversa. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes balao-pula {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: encolhe para 60% do tamanho e desce 30 pontinhos. */
+    transform: scale(.6) translateY(30px);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato conversa. */
+.f-balao .texto-f {
+  /* Altura mínima (texto da frase): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Letra (texto da frase): letra normal (Inter), tamanho 1,08, grossura 400. Número maior = letra maior. */
+  font: 400 1.08rem/1.32 var(--fonte);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato conversa. */
+.f-balao .dest {
+  /* Cor das letras (palavras em destaque): amarelo bem clarinho. Troque o código para mudar a cor. */
+  color: #fff3a8;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* ---------- terminal: tela de computador ---------- */
+/* PEÇA: o lugar das frases dentro de: o formato computador. */
+.f-terminal .palco-f {
+  /* Distribui as peças. */
+  justify-content: flex-start;
+  /* Espaço de dentro, entre a borda e o conteúdo, (lugar das frases): 16 pontinhos em todos os lados. */
+  padding: 16px;
+  /* Arredonda os cantos (lugar das frases). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 10px;
+  /* Cor de fundo (lugar das frases): preto. Troque o código para mudar a cor. */
+  background: rgba(2, 10, 6, .92);
+  /* Contorno (lugar das frases): lisa, 1 pontinhos de grossura, cor verde. */
+  border: 1px solid #1fd67a;
+  /* Sombra ou brilho em volta (lugar das frases), na cor: verde. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 30px -8px #1fd67a;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato computador. */
+.f-terminal .rotulo-f {
+  /* Cor das letras (etiqueta da frase): verde claro. Troque o código para mudar a cor. */
+  color: #7dffb5;
+}
+
+/* PEÇA: enfeite desenhado em: a etiqueta da frase dentro de: o formato computador. */
+.f-terminal .rotulo-f::before {
+  /* Escreve este texto ou símbolo: '$ '. */
+  content: '$ ';
+}
+
+/* PEÇA: o texto da frase dentro de: o formato computador. */
+.f-terminal .texto-f {
+  /* Altura mínima (texto da frase): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Cor das letras (texto da frase): verde. Troque o código para mudar a cor. */
+  color: #38ff9a;
+  /* Letra (texto da frase): letra de computador (Space Mono), tamanho 1,02, grossura 400. Número maior = letra maior. */
+  font: 400 1.02rem/1.35 var(--fonte-mono);
+}
+
+/* ---------- placa: painel de aeroporto ---------- */
+/* PEÇA: a frase dentro de: o formato painel de aeroporto. */
+.f-placa .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 18 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 18px 14px;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 8px;
+  /* Cor das letras (frase): dourado claro. Troque o código para mudar a cor. */
+  color: #ffcf3f;
+  /* Fundo (frase) em listras repetidas, nas cores: cinza escuro e preto. */
+  background: repeating-linear-gradient(0deg, #101114 0 30px, #000000 30px 32px);
+  /* Sombra ou brilho em volta (frase), na cor: cinza escuro e preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 3px #30333b, 0 14px 26px -12px #000000;
+}
+
+/* PEÇA: o texto da frase dentro de: o formato painel de aeroporto. */
+.f-placa .texto-f {
+  /* Letra (texto da frase): fonte VT323, tamanho 1,5, grossura 400. Número maior = letra maior. */
+  font: 400 1.5rem/1.2 'VT323', var(--fonte-mono);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .05em;
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+}
+
+/* ---------- polaroid: fotos instantâneas ---------- */
+/* PEÇA: a frase dentro de: o formato foto. */
+.f-polaroid .item-f {
+  /* Largura (frase): 78% do espaço. Número maior = mais largo. */
+  width: 78%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 12 pontinhos em cima, 12 pontinhos nos lados, 18 pontinhos embaixo. */
+  padding: 12px 12px 18px;
+  /* Cor das letras (frase): cinza escuro. Troque o código para mudar a cor. */
+  color: #2c2c2c;
+  /* Cor de fundo (frase): branco. Troque o código para mudar a cor. */
+  background: #fbfaf5;
+  /* Sombra ou brilho em volta (frase), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 28px -12px #000000;
+  /* Movimento (frase): anda um tanto calculado e gira um tanto calculado. */
+  transform: translateX(var(--x)) rotate(var(--r));
+  /* Usa a animação "foto-cai". */
+  animation-name: foto-cai;
+}
+
+/* ANIMAÇÃO "foto-cai": a foto cai na mesa. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes foto-cai {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: fica 1,5 vezes maior e gira 14 graus para a direita. */
+    transform: scale(1.5) rotate(14deg);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato foto. */
+.f-polaroid .texto-f {
+  /* Altura mínima (texto da frase): 5,6 vezes o tamanho da letra daqui. Número maior = mais alto. */
+  min-height: 5.6em;
+  /* Espaço de dentro, entre a borda e o conteúdo, (texto da frase): 12 pontinhos em todos os lados. */
+  padding: 12px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Quando não couber, a fila quebra em outra linha. */
+  flex-wrap: wrap;
+  /* Centraliza as linhas de texto na altura. */
+  align-content: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as palavras. */
+  column-gap: .25em;
+  /* Cor das letras (texto da frase): branco. Troque o código para mudar a cor. */
+  color: #ffffff;
+  /* Fundo em degradê (texto da frase), nas cores: a cor de destaque do tema e a 3ª cor de fundo do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(150deg, var(--ac), var(--bg-c));
+  /* Letra (texto da frase): letra de mão (Caveat), tamanho 1,35, grossura 500. Número maior = letra maior. */
+  font: 500 1.35rem/1.1 var(--fonte-mao);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato foto. */
+.f-polaroid .dest {
+  /* Cor das letras (palavras em destaque): amarelo bem clarinho. Troque o código para mudar a cor. */
+  color: #fff3a8;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
+
+/* ---------- postit: bilhetes na parede ---------- */
+/* PEÇA: a frase dentro de: o formato bilhete. */
+.f-postit .item-f {
+  /* Largura (frase): 72% do espaço. Número maior = mais largo. */
+  width: 72%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 14 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 14px 12px;
+  /* Cor das letras (frase): dourado bem escuro. Troque o código para mudar a cor. */
+  color: #33290a;
+  /* Fundo em degradê (frase), nas cores: amarelo claro e dourado. Troque os códigos para mudar as cores. */
+  background: linear-gradient(170deg, #ffeb7a, #ffd93d);
+  /* Sombra ou brilho em volta (frase), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 10px 14px -8px #000000;
+  /* Movimento (frase): anda um tanto calculado e gira um tanto calculado. */
+  transform: translateX(var(--x)) rotate(var(--r));
+  /* Usa a animação "bilhete-cola". */
+  animation-name: bilhete-cola;
+}
+
+/* ANIMAÇÃO "bilhete-cola": o bilhete cola na parede. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes bilhete-cola {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: fica 1,3 vezes maior e gira 10 graus para a direita. */
+    transform: scale(1.3) rotate(10deg);
+  }
+}
+
+/* PEÇA: a frase dentro de: o formato bilhete. */
+.f-postit .item-f:nth-child(even) {
+  /* Fundo em degradê (frase), nas cores: rosa bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(170deg, #ffb3cf, #ff8fb3);
+}
+
+/* PEÇA: o texto da frase dentro de: o formato bilhete. */
+.f-postit .texto-f {
+  /* Altura mínima (texto da frase): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Letra (texto da frase): letra de mão (Caveat), tamanho 1,3, grossura 500. Número maior = letra maior. */
+  font: 500 1.3rem/1.1 var(--fonte-mao);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato bilhete. */
+.f-postit .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* ---------- karaoke: letra de música ---------- */
+/* PEÇA: o texto da frase dentro de: o formato karaokê. */
+.f-karaoke .texto-f {
+  /* Tipo de letra (texto da frase): fonte 800 clamp(1.7rem, 7.6vw, 2.5rem)/1.2 var(--fonte). */
+  font: 800 clamp(1.7rem, 7.6vw, 2.5rem)/1.2 var(--fonte);
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Cor das letras (texto da frase): branco. Troque o código para mudar a cor. */
+  color: #ffffff;
+  /* Brilho em volta das letras (texto da frase), na cor: a cor de destaque do tema e preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 16px var(--ac), 0 3px 0 #000000;
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato karaokê. */
+.f-karaoke .rotulo-f {
+  /* Cor das letras (etiqueta da frase): a 2ª cor de destaque do tema. Troque o código para mudar a cor. */
+  color: var(--ac2);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato karaokê. */
+.f-karaoke .dest {
+  /* Cor das letras (palavras em destaque): dourado claro. Troque o código para mudar a cor. */
+  color: #ffe14d;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* ---------- cinema: legenda com faixas pretas ---------- */
+/* PEÇA: enfeite desenhado em: o formato cinema com "cena" ligado e enfeite desenhado em: o formato cinema com "cena" ligado. */
+.f-cinema.cena::before, .f-cinema.cena::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Altura (enfeite desenhado em: o formato cinema): 15% do espaço. Número maior = mais alto. */
+  height: 15%;
+  /* Cor de fundo (enfeite desenhado em: o formato cinema): preto. Troque o código para mudar a cor. */
+  background: #000000;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 1;
+}
+
+/* PEÇA: enfeite desenhado em: o formato cinema com "cena" ligado. */
+.f-cinema.cena::before {
+  /* Distância de cima: zero. */
+  top: 0;
+}
+
+/* PEÇA: enfeite desenhado em: o formato cinema com "cena" ligado. */
+.f-cinema.cena::after {
+  /* Distância de baixo: zero. */
+  bottom: 0;
+}
+
+/* PEÇA: o texto da frase dentro de: o formato cinema. */
+.f-cinema .texto-f {
+  /* Cor das letras (texto da frase): branco. Troque o código para mudar a cor. */
+  color: #ffffff;
+  /* Letra (texto da frase): letra normal (Inter), tamanho 1,3, grossura 500. Número maior = letra maior. */
+  font: 500 1.3rem/1.3 var(--fonte);
+  /* Brilho em volta das letras (texto da frase), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 4px #000000, 0 0 2px #000000;
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato cinema. */
+.f-cinema .rotulo-f {
+  /* Letra (etiqueta da frase): fonte Cinzel, tamanho 0,9, grossura 400. Número maior = letra maior. */
+  font: 400 .9rem 'Cinzel', var(--fonte-titulo);
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .3em;
+}
+
+/* ---------- neon: letreiro luminoso ---------- */
+/* PEÇA: a frase dentro de: o formato neon. */
+.f-neon .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 22 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 22px 12px;
+  /* Contorno (frase): lisa, 3 pontinhos de grossura, cor lilás-rosado. */
+  border: 3px solid #ff2bd6;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 18px;
+  /* Sombra ou brilho em volta (frase), na cor: lilás-rosado e lilás-rosado, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 22px #ff2bd6, inset 0 0 22px rgba(255, 43, 214, .45);
+  /* Liga a animação "neon-falha": dura 1,1 segundos. Número menor = mais rápida. */
+  animation: neon-falha 1.1s steps(2) both;
+}
+
+/* ANIMAÇÃO "neon-falha": o neon falha antes de ligar. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes neon-falha {
+  /* Como está quando já passou 20% e  50% do tempo da animação: */
+  20%, 50% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,25. */
+    opacity: .25;
+  }
+  /* Como está quando já passou 35% e  65% do tempo da animação: */
+  35%, 65% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato neon. */
+.f-neon .texto-f {
+  /* Cor das letras (texto da frase): branco. Troque o código para mudar a cor. */
+  color: #fff0fb;
+  /* Letra (texto da frase): fonte Pacifico, tamanho 1,6, grossura 400. Número maior = letra maior. */
+  font: 400 1.6rem/1.25 'Pacifico', var(--fonte-titulo);
+  /* Brilho em volta das letras (texto da frase), na cor: branco e lilás-rosado. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 8px #ffffff, 0 0 20px #ff2bd6, 0 0 40px #ff2bd6;
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato neon. */
+.f-neon .rotulo-f {
+  /* Cor das letras (etiqueta da frase): verde-água. Troque o código para mudar a cor. */
+  color: #2bf0ff;
+  /* Brilho em volta das letras (etiqueta da frase), na cor: verde-água. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 10px #2bf0ff;
+}
+
+/* ---------- maquina: folha na máquina de escrever ---------- */
+/* PEÇA: o lugar das frases dentro de: o formato máquina de escrever. */
+.f-maquina .palco-f {
+  /* Distribui as peças. */
+  justify-content: flex-start;
+  /* Espaço de dentro, entre a borda e o conteúdo, (lugar das frases): 22 pontinhos em cima e embaixo, 18 pontinhos nos lados. */
+  padding: 22px 18px;
+  /* Cor das letras (lugar das frases): marrom. Troque o código para mudar a cor. */
+  color: #2c2214;
+  /* Fundo em degradê (lugar das frases), nas cores: dourado bem clarinho e laranja bem clarinho. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #fbf3df, #efe2c4);
+  /* Sombra ou brilho em volta (lugar das frases), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 18px 30px -14px #000000;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: o texto da frase dentro de: o formato máquina de escrever. */
+.f-maquina .texto-f {
+  /* Altura mínima (texto da frase): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Letra (texto da frase): fonte Special Elite, tamanho 1,08, grossura 400. Número maior = letra maior. */
+  font: 400 1.08rem/1.35 'Special Elite', var(--fonte-mono);
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato máquina de escrever. */
+.f-maquina .rotulo-f {
+  /* Cor das letras (etiqueta da frase): vermelho escuro. Troque o código para mudar a cor. */
+  color: #8f1d14;
+  /* Tipo de letra (etiqueta da frase): fonte Special Elite. */
+  font-family: 'Special Elite', var(--fonte-mono);
+}
+
+/* ---------- carta: carta para virar ---------- */
+/* PEÇA: a frase dentro de: o formato carta. */
+.f-carta .item-f {
+  /* Largura (frase): 76% do espaço. Número maior = mais largo. */
+  width: 76%;
+  /* Altura mínima (frase): 330 pontinhos. Número maior = mais alto. */
+  min-height: 330px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 26 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 26px 16px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 16px;
+  /* Cor das letras (frase): roxo bem escuro. Troque o código para mudar a cor. */
+  color: #2a1158;
+  /* Cor de fundo (frase): dourado bem clarinho. Troque o código para mudar a cor. */
+  background: #f8efd9;
+  /* Sombra ou brilho em volta (frase), na cor: laranja e preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 0 3px #c9a24b, 0 18px 30px -12px #000000;
+}
+
+/* PEÇA: a tampa que se toca dentro de: o formato carta. */
+.f-carta .tampa-f {
+  /* Cor das letras (tampa que se toca): laranja claro. Troque o código para mudar a cor. */
+  color: #ffd98a;
+  /* Fundo (tampa que se toca) em fatias de pizza repetidas, nas cores: roxo bem escuro e roxo escuro. */
+  background: repeating-conic-gradient(from 45deg, #2a1158 0 12deg, #4a1f92 12deg 24deg);
+}
+
+/* PEÇA: o texto da frase dentro de: o formato carta. */
+.f-carta .texto-f {
+  /* Letra (texto da frase): letra de título (Playfair), tamanho 1,3, grossura 600, inclinada. Número maior = letra maior. */
+  font: italic 600 1.3rem/1.3 var(--fonte-titulo);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato carta. */
+.f-carta .dest {
+  /* Cor das letras (palavras em destaque): rosa escuro. Troque o código para mudar a cor. */
+  color: #a3123f;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}
+
+/* ---------- presente: caixa para abrir ---------- */
+/* PEÇA: a frase dentro de: o formato presente. */
+.f-presente .item-f {
+  /* Largura (frase): 86% do espaço. Número maior = mais largo. */
+  width: 86%;
+  /* Altura mínima (frase): 260 pontinhos. Número maior = mais alto. */
+  min-height: 260px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 22 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 22px 16px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 14px;
+  /* Cor das letras (frase): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Cor de fundo (frase): o vidro translúcido do tema. Troque o código para mudar a cor. */
+  background: var(--vidro);
+  /* Contorno (frase): tracejada, 2 pontinhos de grossura, cor a cor de destaque do tema. */
+  border: 2px dashed var(--ac);
+}
+
+/* PEÇA: a tampa que se toca dentro de: o formato presente. */
+.f-presente .tampa-f {
+  /* Fundo em degradê (tampa que se toca), nas cores: a cor de destaque do tema, a 2ª cor de destaque do tema e a cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(90deg, var(--ac) 0 42%, var(--ac2) 42% 58%, var(--ac) 58%);
+  /* Liga a animação "presente-pula": dura 1,2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: presente-pula 1.2s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "presente-pula": o presente chama o toque. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes presente-pula {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: fica 1,03 vezes maior e gira 1 graus para a direita. */
+    transform: scale(1.03) rotate(1deg);
+  }
+}
+
+/* ---------- estrela: céu para acender ---------- */
+/* PEÇA: a frase dentro de: o formato estrela. */
+.f-estrela .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 22 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 22px 12px;
+  /* Altura mínima (frase): 240 pontinhos. Número maior = mais alto. */
+  min-height: 240px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Junta as peças no meio. */
+  justify-content: center;
+}
+
+/* PEÇA: a tampa que se toca dentro de: o formato estrela. */
+.f-estrela .tampa-f {
+  /* Sem fundo (tampa que se toca): dá para ver o que está atrás. */
+  background: none;
+  /* Cor das letras (tampa que se toca): dourado bem clarinho. Troque o código para mudar a cor. */
+  color: #ffe9a8;
+  /* Tamanho da letra (tampa que se toca): 6,4 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 6.4rem;
+  /* Brilho em volta das letras (tampa que se toca), na cor: dourado claro. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 26px #ffd34d;
+  /* Liga a animação "estrela-chama": dura 1,3 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: estrela-chama 1.3s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "estrela-chama": a estrela pulsa, chamando o toque. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes estrela-chama {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: fica 1,14 vezes maior. */
+    transform: scale(1.14);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato estrela. */
+.f-estrela .texto-f {
+  /* Cor das letras (texto da frase): branco. Troque o código para mudar a cor. */
+  color: #ffffff;
+  /* Letra (texto da frase): letra de título (Playfair), tamanho 1,5, grossura 500, inclinada. Número maior = letra maior. */
+  font: italic 500 1.5rem/1.3 var(--fonte-titulo);
+  /* Brilho em volta das letras (texto da frase), na cor: dourado claro e preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 16px #ffd34d, 0 2px 8px #000000;
+}
+
+/* ---------- bolha: bolha que sobe ---------- */
+/* PEÇA: a frase dentro de: o formato bolha. */
+.f-bolha .item-f {
+  /* Largura (frase): o menor entre 86% da largura da tela e 340 pontinhos. Número maior = mais largo. */
+  width: min(86vw, 340px);
+  /* Mantém a proporção entre largura e altura (1). */
+  aspect-ratio: 1;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 34 pontinhos em todos os lados. */
+  padding: 34px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor das letras (frase): a cor do texto do tema. Troque o código para mudar a cor. */
+  color: var(--tx);
+  /* Fundo redondo (frase), nas cores: branco, meio transparente e o vidro translúcido do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 30% 26%, rgba(255, 255, 255, .5), var(--vidro) 46%);
+  /* Contorno (frase): lisa, 2 pontinhos de grossura, cor a cor de borda do tema. */
+  border: 2px solid var(--borda);
+  /* Sombra ou brilho em volta (frase), na cor: branco, meio transparente e a cor de brilho do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, .16), 0 0 26px -8px var(--sombra);
+  /* Liga a animação "bolha-sobe": dura 1 segundos. Número menor = mais rápida. */
+  animation: bolha-sobe 1s ease-out both;
+}
+
+/* ANIMAÇÃO "bolha-sobe": a bolha sobe. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes bolha-sobe {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: desce 130 pontinhos e encolhe para 60% do tamanho. */
+    transform: translateY(130px) scale(.6);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato bolha. */
+.f-bolha .texto-f {
+  /* Tamanho da letra (texto da frase): 1,15 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 1.15rem;
+}
+
+/* ---------- quadrinho: balão de gibi ---------- */
+/* PEÇA: a frase dentro de: o formato gibi. */
+.f-quadrinho .item-f {
+  /* Largura (frase): 90% do espaço. Número maior = mais largo. */
+  width: 90%;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 26 pontinhos em cima e embaixo, 18 pontinhos nos lados. */
+  padding: 26px 18px;
+  /* Cor das letras (frase): cinza escuro. Troque o código para mudar a cor. */
+  color: #1a1a1a;
+  /* Cor de fundo (frase): dourado claro. Troque o código para mudar a cor. */
+  background: #ffe14d;
+  /* Contorno (frase): lisa, 4 pontinhos de grossura, cor cinza escuro. */
+  border: 4px solid #1a1a1a;
+  /* Sombra ou brilho em volta (frase), na cor: rosa. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 8px 8px 0 #e0245e;
+  /* Movimento (frase): anda um tanto calculado e gira um tanto calculado. */
+  transform: translateX(var(--x)) rotate(var(--r));
+  /* Usa a animação "gibi-pow". */
+  animation-name: gibi-pow;
+}
+
+/* ANIMAÇÃO "gibi-pow": o quadrinho explode na tela. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes gibi-pow {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: encolhe para 20% do tamanho e gira 16 graus para a esquerda. */
+    transform: scale(.2) rotate(-16deg);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato gibi. */
+.f-quadrinho .texto-f {
+  /* Letra (texto da frase): fonte Permanent Marker, tamanho 1,5, grossura 400. Número maior = letra maior. */
+  font: 400 1.5rem/1.12 'Permanent Marker', var(--fonte-mao);
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato gibi. */
+.f-quadrinho .rotulo-f {
+  /* Cor das letras (etiqueta da frase): rosa. Troque o código para mudar a cor. */
+  color: #e0245e;
+  /* Letra (etiqueta da frase): fonte Bebas Neue, tamanho 1, grossura 400. Número maior = letra maior. */
+  font: 400 1rem 'Bebas Neue', var(--fonte);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato gibi. */
+.f-quadrinho .dest {
+  /* Cor das letras (palavras em destaque): rosa. Troque o código para mudar a cor. */
+  color: #e0245e;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* ---------- holograma: projeção azul ---------- */
+/* PEÇA: a frase dentro de: o formato holograma. */
+.f-holograma .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 24 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 24px 14px;
+  /* Cor das letras (frase): verde-água bem clarinho. Troque o código para mudar a cor. */
+  color: #8feaff;
+  /* Fundo (frase) em listras repetidas, nas cores: verde-água, quase invisível e transparente. */
+  background: repeating-linear-gradient(0deg, rgba(53, 224, 255, .12) 0 2px, transparent 2px 5px);
+  /* Contorno (frase): lisa, 1 pontinhos de grossura, cor verde-água. */
+  border: 1px solid #35e0ff;
+  /* Recorta a peça com uma tesoura, formando o desenho. */
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+/* PEÇA: o texto da frase dentro de: o formato holograma. */
+.f-holograma .texto-f {
+  /* Letra (texto da frase): fonte VT323, tamanho 1,5, grossura 400. Número maior = letra maior. */
+  font: 400 1.5rem/1.2 'VT323', var(--fonte-mono);
+  /* Brilho em volta das letras (texto da frase), na cor: verde-água. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 10px #35e0ff;
+}
+
+/* ---------- pergaminho: papel que desenrola ---------- */
+/* PEÇA: a frase dentro de: o formato pergaminho. */
+.f-pergaminho .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 30 pontinhos em cima e embaixo, 20 pontinhos nos lados. */
+  padding: 30px 20px;
+  /* Cor das letras (frase): marrom. Troque o código para mudar a cor. */
+  color: #3a2a18;
+  /* Fundo em degradê (frase), nas cores: laranja, dourado bem clarinho e laranja. Troque os códigos para mudar as cores. */
+  background: linear-gradient(180deg, #c9a56a, #f6e9c6 7%, #f6e9c6 93%, #c9a56a);
+  /* Sombra ou brilho em volta (frase), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 28px -12px #000000;
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: top;
+  /* Liga a animação "pergaminho-abre": dura 0,8 segundos. Número menor = mais rápida. */
+  animation: pergaminho-abre .8s ease both;
+}
+
+/* ANIMAÇÃO "pergaminho-abre": o pergaminho desenrola. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes pergaminho-abre {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: encolhe para 6% da altura. */
+    transform: scaleY(.06);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato pergaminho. */
+.f-pergaminho .texto-f {
+  /* Letra (texto da frase): letra de mão (Caveat), tamanho 1,55, grossura 500. Número maior = letra maior. */
+  font: 500 1.55rem/1.15 var(--fonte-mao);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato pergaminho. */
+.f-pergaminho .dest {
+  /* Cor das letras (palavras em destaque): vermelho escuro. Troque o código para mudar a cor. */
+  color: #8a1c0e;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* ---------- recibo: papel de impressora ---------- */
+/* PEÇA: o lugar das frases dentro de: o formato recibo. */
+.f-recibo .palco-f {
+  /* Distribui as peças. */
+  justify-content: flex-start;
+  /* Espaço de dentro, entre a borda e o conteúdo, (lugar das frases): 18 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 18px 14px;
+  /* Cor das letras (lugar das frases): cinza escuro. Troque o código para mudar a cor. */
+  color: #1d1d1d;
+  /* Cor de fundo (lugar das frases): branco. Troque o código para mudar a cor. */
+  background: #fbfbf7;
+  /* Sombra ou brilho em volta (lugar das frases), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 16px 28px -12px #000000;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* PEÇA: a frase dentro de: o formato recibo. */
+.f-recibo .item-f {
+  /* Espaço de dentro, embaixo: 8 pontinhos. */
+  padding-bottom: 8px;
+  /* Contorno de baixo (frase): tracejada, 1 pontinhos de grossura, cor cinza. */
+  border-bottom: 1px dashed #8a8a8a;
+  /* Ponto em que a peça fica presa para girar ou crescer. */
+  transform-origin: top;
+  /* Liga a animação "recibo-imprime": dura 0,5 segundos. Número menor = mais rápida. */
+  animation: recibo-imprime .5s steps(6) both;
+}
+
+/* ANIMAÇÃO "recibo-imprime": o recibo sai da impressora. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes recibo-imprime {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: encolhe para 10% da altura. */
+    transform: scaleY(.1);
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato recibo. */
+.f-recibo .texto-f {
+  /* Altura mínima (texto da frase): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Letra (texto da frase): letra de computador (Space Mono), tamanho 0,96, grossura 400. Número maior = letra maior. */
+  font: 400 .96rem/1.3 var(--fonte-mono);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato recibo. */
+.f-recibo .dest {
+  /* Cor das letras (palavras em destaque): cinza escuro. Troque o código para mudar a cor. */
+  color: #1d1d1d;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+  /* Sublinha o texto. */
+  text-decoration: underline;
+}
+
+/* ---------- notificacao: avisos do celular ---------- */
+/* PEÇA: o lugar das frases dentro de: o formato avisos. */
+.f-notificacao .palco-f {
+  /* Distribui as peças. */
+  justify-content: flex-start;
+}
+
+/* PEÇA: a frase dentro de: o formato avisos. */
+.f-notificacao .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 12 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 12px 14px;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 16px;
+  /* Cor das letras (frase): cinza escuro. Troque o código para mudar a cor. */
+  color: #101114;
+  /* Cor de fundo (frase): branco. Troque o código para mudar a cor. */
+  background: rgba(250, 250, 252, .94);
+  /* Sombra ou brilho em volta (frase), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 10px 20px -10px #000000;
+  /* Texto encostado à esquerda. */
+  text-align: left;
+  /* Usa a animação "aviso-desce". */
+  animation-name: aviso-desce;
+}
+
+/* ANIMAÇÃO "aviso-desce": o aviso desce do topo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes aviso-desce {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: sobe 70 pontinhos. */
+    transform: translateY(-70px);
+  }
+}
+
+/* PEÇA: a etiqueta da frase dentro de: o formato avisos. */
+.f-notificacao .rotulo-f {
+  /* Cor das letras (etiqueta da frase): cinza. Troque o código para mudar a cor. */
+  color: #5a5f6b;
+}
+
+/* PEÇA: o texto da frase dentro de: o formato avisos. */
+.f-notificacao .texto-f {
+  /* Altura mínima (texto da frase): zero. Número maior = mais alto. */
+  min-height: 0;
+  /* Letra (texto da frase): letra normal (Inter), tamanho 1, grossura 500. Número maior = letra maior. */
+  font: 500 1rem/1.3 var(--fonte);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato avisos. */
+.f-notificacao .dest {
+  /* Cor das letras (palavras em destaque): rosa. Troque o código para mudar a cor. */
+  color: #d0104c;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+  /* Letra em pé, sem inclinar. */
+  font-style: normal;
+}
+
+/* ---------- lousa: giz no quadro-negro ---------- */
+/* PEÇA: a frase dentro de: o formato lousa. */
+.f-lousa .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 26 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 26px 16px;
+  /* Altura mínima (frase): 280 pontinhos. Número maior = mais alto. */
+  min-height: 280px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Cor das letras (frase): branco. Troque o código para mudar a cor. */
+  color: #f4f1e8;
+  /* Fundo redondo (frase), nas cores: cinza escuro. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 30% 30%, #2f3a35, #1c2421);
+  /* Contorno (frase): lisa, 10 pontinhos de grossura, cor marrom. */
+  border: 10px solid #6d4a2b;
+}
+
+/* PEÇA: o texto da frase dentro de: o formato lousa. */
+.f-lousa .texto-f {
+  /* Letra (texto da frase): letra de mão (Caveat), tamanho 1,7, grossura 500. Número maior = letra maior. */
+  font: 500 1.7rem/1.15 var(--fonte-mao);
+}
+
+/* ---------- coracao: coração que abre ---------- */
+/* PEÇA: a frase dentro de: o formato coração. */
+.f-coracao .item-f {
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase): 24 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 24px 14px;
+  /* Altura mínima (frase): 260 pontinhos. Número maior = mais alto. */
+  min-height: 260px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Arredonda os cantos (frase). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 26px;
+  /* Cor das letras (frase): branco. Troque o código para mudar a cor. */
+  color: #ffffff;
+  /* Fundo em degradê (frase), nas cores: rosa e rosa escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(150deg, #e0245e, #8c1040);
+  /* Sombra ou brilho em volta (frase), na cor: rosa. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 34px -6px #e0245e;
+}
+
+/* PEÇA: a tampa que se toca dentro de: o formato coração. */
+.f-coracao .tampa-f {
+  /* Cor de fundo (tampa que se toca): rosa bem escuro. Troque o código para mudar a cor. */
+  background: #2a0716;
+  /* Cor das letras (tampa que se toca): rosa claro. Troque o código para mudar a cor. */
+  color: #ff5c8a;
+  /* Tamanho da letra (tampa que se toca): 7 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: 7rem;
+  /* Liga a animação "coracao-bate": dura 1 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: coracao-bate 1s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "coracao-bate": o coração bate, chamando o toque. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes coracao-bate {
+  /* Como está quando já passou 15% do tempo da animação: */
+  15% {
+    /* Tamanho da letra: 7,8 vezes o tamanho normal da letra. Número maior = letra maior. */
+    font-size: 7.8rem;
+  }
+  /* Como está quando já passou 30% do tempo da animação: */
+  30% {
+    /* Tamanho da letra: 7 vezes o tamanho normal da letra. Número maior = letra maior. */
+    font-size: 7rem;
+  }
+}
+
+/* PEÇA: o texto da frase dentro de: o formato coração. */
+.f-coracao .texto-f {
+  /* Letra (texto da frase): letra de título (Playfair), tamanho 1,35, grossura 600, inclinada. Número maior = letra maior. */
+  font: italic 600 1.35rem/1.3 var(--fonte-titulo);
+}
+
+/* PEÇA: as palavras em destaque dentro de: o formato coração. */
+.f-coracao .dest {
+  /* Cor das letras (palavras em destaque): dourado claro. Troque o código para mudar a cor. */
+  color: #ffe14d;
+  /* Tira a sombra (palavras em destaque). */
+  text-shadow: none;
+}

@@ -25,7 +25,7 @@
   <!-- Mesma coisa, para o lugar onde os arquivos das letras ficam guardados. -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Baixa os tipos de letra do Google. Se a internet falhar, o site usa as letras do próprio celular. -->
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Caveat:wght@500;700&family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&family=Monoton&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Press+Start+2P&family=Rye&family=Space+Mono&family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=Big+Shoulders+Display:wght@700;800;900&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@500;700&family=Cinzel:wght@500;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;600;800&family=Monoton&family=Pacifico&family=Permanent+Marker&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Press+Start+2P&family=Rye&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&family=Special+Elite&family=Syne:wght@700;800&family=Tilt+Neon&family=Unbounded:wght@400;800&family=VT323&display=swap" rel="stylesheet">
   <!-- Roupa básica do site: botões, textos, tela final e rodapé. -->
   <link rel="stylesheet" href="css/base.css">
   <!-- Os 10 temas de cores. Para mudar as cores do site, comece por este arquivo. -->
@@ -42,7 +42,9 @@
   <link rel="stylesheet" href="css/capitulos.css">
   <!-- Visual do filme de frases. -->
   <link rel="stylesheet" href="css/filme.css">
-  <!-- Polimento moderno: fundo animado, leitor de digital, papel com textura e inclinação 3D. -->
+  <!-- Visual das 20 entradas dos links. -->
+  <link rel="stylesheet" href="css/aberturas.css">
+  <!-- Polimento moderno: fundo animado, papel com textura e inclinação 3D. -->
   <link rel="stylesheet" href="css/acabamento.css">
 <!-- Fim da parte invisível. -->
 </head>
@@ -105,6 +107,10 @@
   <script src="data/frases-amigos.js"></script>
   <!-- Frases do filme de frases de datas especiais. -->
   <script src="data/frases-datas.js"></script>
+  <!-- A entrada própria de cada link. -->
+  <script src="data/aberturas.js"></script>
+  <!-- Como as frases aparecem em cada link. -->
+  <script src="data/formatos.js"></script>
   <!-- Qual fundo animado cada link usa. -->
   <script src="data/cenarios.js"></script>
   <!-- Textos dos capítulos extras de paquera. -->
@@ -137,8 +143,16 @@
   <script src="js/artes-amigos.js"></script>
   <!-- As 20 animações de datas especiais. -->
   <script src="js/artes-datas.js"></script>
-  <!-- Tela do leitor de digital, que abre cada mensagem. -->
+  <!-- Motor de luz: conversa com a placa de vídeo do celular. -->
+  <script src="js/luz.js"></script>
+  <!-- A entrada de cada link: as peças comuns e a ordem das coisas. -->
   <script src="js/abertura.js"></script>
+  <!-- Entradas desenhadas pela placa de vídeo: poeira, líquido, calor. -->
+  <script src="js/entradas-luz.js"></script>
+  <!-- Entradas desenhadas com linhas e letras: ondas, neon, circuito, gravidade. -->
+  <script src="js/entradas-traco.js"></script>
+  <!-- Entradas que parecem aplicativos: cartas, stories, conversa, carta holográfica. -->
+  <script src="js/entradas-app.js"></script>
   <!-- Mostra as frases, uma de cada vez. -->
   <script src="js/filme.js"></script>
   <!-- As 8 brincadeiras dos capítulos extras. -->

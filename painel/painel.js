@@ -51,6 +51,9 @@
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
+  // Monta o link de uma chave. No site publicado, o link fica mais curto, sem "index.html".
+  const linkDe = (chave) => baseUrl() + ((window.CONFIG && CONFIG.URL_BASE) ? '' : 'index.html') + '?k=' + chave;
+
   // Descobre o endereço base do site: CONFIG.URL_BASE se preenchido; senão, o endereço do painel sem "painel/...".
   const baseUrl = () => {
     // Preferência para o que está no config.js.
@@ -177,13 +180,15 @@
     // Pega a chave fixa deste link e guarda com o nome "chave".
     const chave = Chave.fixa(id);
     // Guarda este valor com o nome "link".
-    const link = baseUrl() + 'index.html?k=' + chave;
+    const link = linkDe(chave);
     // Preenche e mostra a gaveta.
     $('#gNome').textContent = '#' + m.id + ' · ' + m.nome;
     // Guarda o novo valor em $('#gLink').value.
     $('#gLink').value = link;
-    // Guarda o novo valor em $('#gAbrir').href.
-    $('#gAbrir').href = link;
+    // Marca se o painel está aberto no computador do dono.
+    const local = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    // No computador, o botão Abrir mostra a versão do computador. No site, abre o link de verdade.
+    $('#gAbrir').href = local ? '../index.html?k=' + chave : link;
     // Mostra $('#gaveta').
     $('#gaveta').hidden = false;
     // Avisa quando o endereço é de arquivo local (só funciona neste computador).
@@ -218,7 +223,7 @@
               esc(x.nome) +
               (x.para ? ' · para: ' + esc(x.para) : '') +
               '<br>' +
-              esc(baseUrl() + 'index.html?k=' + x.chave) +
+              esc(linkDe(x.chave)) +
               '</li>'
           )
           .join('')

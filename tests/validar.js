@@ -43,7 +43,9 @@ for (const f of [
   'data/frases-paquera.js',
   'data/frases-namoro.js',
   'data/frases-amigos.js',
-  'data/frases-datas.js'
+  'data/frases-datas.js',
+  'data/formatos.js',
+  'data/aberturas.js'
 ])
   // Roda o arquivo de dados.
   vm.runInContext(fs.readFileSync(path.join(raiz, f), 'utf8'), ctx, { filename: f });
@@ -200,6 +202,85 @@ for (const m of MS) {
   for (const f of frases) if (CONVITE.test(f)) err(m.id + ' pede para sair/encontrar: ' + f);
   // Anota a duração.
   duracoes.push(m.cat + ' ' + frases.length + ' frases ' + Math.round(total / 1000) + 's');
+}
+// Lê os arquivos das entradas.
+const aberturaJs = ['luz', 'traco', 'app'].map((n) => fs.readFileSync(path.join(raiz, 'js/entradas-' + n + '.js'), 'utf8')).join('\n');
+// Textos que cada tipo de entrada precisa ter, além da frase grande, da dica e da frase final.
+const CAMPOS_ENTRADA = {
+  // Imagem quadriculada: o desenho e as frases de cada toque.
+  pixels: ['icone', 'etapas'],
+  // Tela enchendo: as frases que mudam.
+  carga: ['etapas'],
+  // Câmera de calor: a frase escondida.
+  termica: ['escondido'],
+  // Letras que caem: a frase escondida.
+  gravidade: ['escondido'],
+  // Ondas: a frequência.
+  sinal: ['freq'],
+  // Lente: as 3 palavras.
+  lente: ['pistas'],
+  // Conversa: as falas e as respostas.
+  ia: ['falas', 'respostas'],
+  // Stories: as frases das telas.
+  stories: ['quadros'],
+  // Carta holográfica: o desenho e o verso.
+  holo: ['icone', 'verso'],
+  // Salto: os números da contagem.
+  salto: ['de', 'ate', 'unidade'],
+  // Cartas: as frases e as duas palavras.
+  match: ['cartas', 'sim', 'nao'],
+  // Túnel: as palavras.
+  tunel: ['palavras'],
+  // Órbita: o desenho da bolinha.
+  orbita: ['icone']
+};
+// Tipos de abertura já usados em cada categoria.
+const entradasUsadas = new Set();
+// Títulos e frases finais já usados, para nenhum link repetir o outro.
+const textosEntrada = new Set();
+// Confere a entrada de cada mensagem.
+for (const m of MS) {
+  // Pega a entrada deste link.
+  const a = ctx.ABERTURAS[m.id];
+  // Todo link tem uma entrada, de um tipo que existe, com os três textos.
+  if (!a || !new RegExp('E\\.' + a.tipo + ' = async').test(aberturaJs) || !a.titulo || !a.dica || !a.ok) {
+    // Avisa o problema.
+    err(m.id + ' abertura inválida');
+    // Vai para o próximo link.
+    continue;
+  }
+  // Confere os textos próprios deste tipo de entrada.
+  for (const c of CAMPOS_ENTRADA[a.tipo] || []) if (a[c] === undefined) err(m.id + ' entrada sem o campo ' + c);
+  // Dentro da categoria, cada tipo aparece uma vez só.
+  if (entradasUsadas.has(m.cat + a.tipo)) err('abertura repetida em ' + m.id + ': ' + a.tipo);
+  // Anota o tipo.
+  entradasUsadas.add(m.cat + a.tipo);
+  // Passa pelo título e pela frase final.
+  for (const t of [a.titulo, a.ok]) {
+    // Nenhum link pode repetir o texto de outro.
+    if (textosEntrada.has(t)) err('texto de abertura repetido em ' + m.id + ': ' + t);
+    // Anota o texto.
+    textosEntrada.add(t);
+  }
+  // Nenhuma entrada pode ser convite para sair.
+  if (CONVITE.test(JSON.stringify(a))) err('convite na abertura de ' + m.id);
+}
+// Lê o arquivo dos formatos.
+const filmeJs = fs.readFileSync(path.join(raiz, 'js/filme.js'), 'utf8');
+// Formatos já usados em cada categoria.
+const formatosUsados = new Set();
+// Confere o formato de cada mensagem.
+for (const m of MS) {
+  // Pega o formato deste link.
+  const c = ctx.CFILME[m.id];
+  // Todo link tem um formato que existe e uma etiqueta com número.
+  if (!c || !new RegExp('\\b' + c.formato + ': \\{').test(filmeJs) || !c.rotulo.includes('#'))
+    // Usa a ajuda "err" (ela está definida neste arquivo).
+    err(m.id + ' formato inválido');
+  // Dentro da categoria, cada formato aparece uma vez só.
+  if (c && formatosUsados.has(m.cat + c.formato)) err('formato repetido em ' + m.id + ': ' + c.formato);
+  // Anota o formato.
+  if (c) formatosUsados.add(m.cat + c.formato);
 }
 // Mostra um exemplo de cada categoria.
 console.log('filme de frases:', duracoes[0], '|', duracoes[20], '|', duracoes[40], '|', duracoes[60]);

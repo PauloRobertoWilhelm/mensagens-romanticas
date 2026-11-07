@@ -92,10 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const cat = CATEGORIAS[msg.cat];
   // Prepara a música, ainda sem tocar.
   Musica.iniciar(cat);
-  // Segurança extra: qualquer primeiro clique na página libera a música.
-  document.addEventListener('click', () => Musica.tocar(), { once: true });
-  // No celular, tirar o dedo da tela também libera a música.
-  document.addEventListener('pointerup', () => Musica.tocar(), { once: true });
+  // Todo clique tenta ligar a música. Quando ela já está tocando, nada muda.
+  document.addEventListener('click', () => Musica.tocar());
+  // No celular, tirar o dedo da tela também tenta ligar a música.
+  document.addEventListener('pointerup', () => Musica.tocar());
 
   // Liga o fundo animado tecnológico deste link.
   Cenarios.iniciar(window.CENARIO[msg.id]);

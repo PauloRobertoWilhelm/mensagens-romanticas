@@ -1,0 +1,1927 @@
+/* ==========================================================
+   aberturas.css — o visual das 20 entradas dos links.
+   Cada bloco começa com o nome do tipo de entrada.
+   ========================================================== */
+
+/* ==========================================================
+   COMO LER ESTE ARQUIVO (explicado para quem nunca viu código)
+
+   Este arquivo é a "roupa" do site: diz a cor, o tamanho e o jeito de cada peça.
+   Ele NÃO decide o que acontece; quem decide são os arquivos da pasta js.
+
+   Cada PEÇA da tela aparece assim:
+     .nome-da-peca {
+       /* comentário que explica a linha de baixo * /
+       color: #ff0000;
+     }
+
+   Para mudar alguma coisa:
+     1. Aperte Ctrl+F e procure a peça (ex.: carimbo) ou a palavra "Cor".
+     2. Leia o comentário e mude SÓ o valor que fica depois dos dois-pontos.
+     3. Nunca apague o ponto e vírgula (;) nem as chaves { }.
+     4. Salve e olhe no navegador.
+
+   Palavrinhas que aparecem bastante:
+     #ff0000   = código de uma cor. Procure "seletor de cores" no Google para achar outras.
+     rgba(...) = cor com transparência. O último número vai de 0 (invisível) a 1 (cheia).
+     var(--ac) = cor guardada no tema, em css/temas.css. Mude lá para mudar em todo lugar.
+     px        = pontinho da tela.   rem = tamanho normal de letra (2rem = o dobro).
+     %         = pedaço do espaço.   vw e vh = pedaço da largura e da altura da tela.
+     s e ms    = segundos e milésimos de segundo.
+   ========================================================== */
+
+/* ---------- Peças comuns ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "cheia" ligado. */
+.abertura.cheia > .caixa {
+  /* Corta o que passar para fora (caixa da tela). */
+  overflow: hidden;
+  /* Cor de fundo (caixa da tela): a 1ª cor de fundo do tema. Troque o código para mudar a cor. */
+  background: var(--bg-a);
+}
+
+/* PEÇA: o quadro de desenho da entrada. */
+.luz {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Largura (quadro de desenho da entrada): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Altura (quadro de desenho da entrada): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+}
+
+/* PEÇA: a camada invisível que ouve o dedo. */
+.ab-pele {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+  /* Impede a tela de rolar enquanto o dedo mexe aqui. */
+  touch-action: none;
+}
+
+/* PEÇA: a frase grande. */
+.ab-titulo {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: 6% da largura da tela. */
+  left: 6vw;
+  /* Distância da direita: 6% da largura da tela. */
+  right: 6vw;
+  /* Distância de cima: 7% da altura da tela. */
+  top: 7vh;
+  /* Espaço de fora (frase grande): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase grande): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,5 segundos. Número maior = mais lento. */
+  transition: opacity .5s;
+}
+
+/* PEÇA: a frase grande com "some" ligado. */
+.ab-titulo.some {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+}
+
+/* PEÇA: a frase que ensina o gesto. */
+.ab-dica {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: 6% da largura da tela. */
+  left: 6vw;
+  /* Distância da direita: 6% da largura da tela. */
+  right: 6vw;
+  /* Distância de baixo: o maior entre 7% da altura da tela e 34 pontinhos. */
+  bottom: max(7vh, 34px);
+  /* Espaço de fora (frase que ensina o gesto): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase que ensina o gesto): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (frase que ensina o gesto): Space Grotesk, grossura 500. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 500 clamp(1.05rem, 2.5vmin, 1.3rem) 'Space Grotesk', Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+  /* Brilho em volta das letras (frase que ensina o gesto), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 1px 14px rgba(0,0,0,.65);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,4 segundos. Número maior = mais lento. */
+  transition: opacity .4s;
+  /* Liga a animação "ab-respira": dura 2 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: ab-respira 2s ease-in-out infinite;
+}
+
+/* PEÇA: a frase que ensina o gesto com "some" ligado. */
+.ab-dica.some {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Desliga a animação desta peça. */
+  animation: none;
+}
+
+/* PEÇA: a frase final. */
+.ab-ok {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 4;
+  /* Distância da esquerda: 6% da largura da tela. */
+  left: 6vw;
+  /* Distância da direita: 6% da largura da tela. */
+  right: 6vw;
+  /* Distância de baixo: o maior entre 9% da altura da tela e 40 pontinhos. */
+  bottom: max(9vh, 40px);
+  /* Espaço de fora (frase final): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase final): branco. Troque o código para mudar a cor. */
+  color: var(--tinta, #fff);
+  /* Letra (frase final): Space Grotesk, grossura 600. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 600 clamp(1.2rem, 3.2vmin, 1.7rem) / 1.25 'Space Grotesk', Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+  /* Brilho em volta das letras (frase final), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 1px 16px rgba(0,0,0,.45);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Liga a animação "ab-sobe": dura 0,7 segundos. Número menor = mais rápida. */
+  animation: ab-sobe .7s both;
+}
+
+/* PEÇA: a alça invisível de arrastar. */
+.ab-alca {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+  /* Movimento (alça invisível de arrastar): vai para a esquerda 50% do espaço e sobe 50% do espaço. */
+  transform: translate(-50%, -50%);
+  /* Espaço de dentro, entre a borda e o conteúdo, (alça invisível de arrastar): zero em todos os lados. */
+  padding: 0;
+  /* Tira o contorno (alça invisível de arrastar). */
+  border: 0;
+  /* Arredonda os cantos (alça invisível de arrastar). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Sem fundo (alça invisível de arrastar): dá para ver o que está atrás. */
+  background: transparent;
+  /* Mostra a mão de agarrar no computador. */
+  cursor: grab;
+  /* Impede a tela de rolar enquanto o dedo mexe aqui. */
+  touch-action: none;
+}
+
+/* PEÇA: a alça invisível de arrastar quando escolhido pelo teclado e peças parecidas. */
+.ab-alca:focus-visible, .ab-pino:focus-visible, .ab-opcao:focus-visible, .ab-redondo:focus-visible, .ab-cartao:focus-visible {
+  /* Contorno de destaque em volta (alça invisível de arrastar), cor branco. */
+  outline: 3px solid #fff;
+  /* Distância entre a peça e esse contorno. */
+  outline-offset: 3px;
+}
+
+/* PEÇA: o clarão branco. */
+.ab-clarao {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+  /* Cor de fundo (clarão branco): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Liga a animação "ab-clarao": dura 0,85 segundos. Número menor = mais rápida. */
+  animation: ab-clarao .85s ease-out both;
+}
+
+/* PEÇA: a frase que muda. */
+.ab-estado {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: 6% da largura da tela. */
+  left: 6vw;
+  /* Distância da direita: 6% da largura da tela. */
+  right: 6vw;
+  /* Distância de baixo: o maior entre 8% da altura da tela e 36 pontinhos. */
+  bottom: max(8vh, 36px);
+  /* Espaço de fora (frase que muda): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase que muda): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (frase que muda): Space Grotesk, grossura 500. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 500 clamp(1.1rem, 2.9vmin, 1.45rem) / 1.25 'Space Grotesk', Inter, sans-serif;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: o botão de pular. */
+.ab-pular {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 5;
+  /* Distância da direita: 12 pontinhos. */
+  right: 12px;
+  /* Distância de cima: 12 pontinhos. */
+  top: 12px;
+  /* Altura mínima (botão de pular): 44 pontinhos. Número maior = mais alto. */
+  min-height: 44px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão de pular): zero em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 0 16px;
+  /* Tira o contorno (botão de pular). */
+  border: 0;
+  /* Arredonda os cantos (botão de pular). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 99px;
+  /* Cor das letras (botão de pular): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (botão de pular): preto, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(0, 0, 0, .55);
+  /* Letra (botão de pular): fonte Space Grotesk, tamanho 1, grossura 600. Número maior = letra maior. */
+  font: 600 1rem 'Space Grotesk', Inter, sans-serif;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+}
+
+/* PEÇA: o rodapé da música dentro de: entrando. */
+body.entrando #rodape {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* ANIMAÇÃO "ab-sobe": a frase sobe aparecendo. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-sobe {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: desce 14 pontinhos. */
+    transform: translateY(14px);
+  }
+}
+
+/* ANIMAÇÃO "ab-respira": a peça fica mais fraca e volta, para chamar atenção. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-respira {
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,62. */
+    opacity: .62;
+  }
+}
+
+/* ANIMAÇÃO "ab-clarao": o clarão branco some. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-clarao {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+    opacity: 1;
+  }
+  /* Como a animação termina: */
+  to {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+  }
+}
+
+/* ANIMAÇÃO "ab-treme": a peça treme. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-treme {
+  /* Como está quando já passou 25% do tempo da animação: */
+  25% {
+    /* Movimento: vai para a esquerda 4 pontinhos e desce 2 pontinhos. */
+    transform: translate(-4px, 2px);
+  }
+  /* Como está quando já passou 50% do tempo da animação: */
+  50% {
+    /* Movimento: vai para a direita 3 pontinhos e sobe 3 pontinhos. */
+    transform: translate(3px, -3px);
+  }
+  /* Como está quando já passou 75% do tempo da animação: */
+  75% {
+    /* Movimento: vai para a esquerda 2 pontinhos e sobe 2 pontinhos. */
+    transform: translate(-2px, -2px);
+  }
+}
+
+/* ---------- sem placa de vídeo: fundo simples e frase em texto comum ---------- */
+/* PEÇA: a caixa da tela com "sem-luz" ligado quando a tela da entrada estiver com "cheia" ligado. */
+.abertura.cheia > .caixa.sem-luz {
+  /* Fundo em degradê (caixa da tela), nas cores: roxo bem escuro e preto. Troque os códigos para mudar as cores. */
+  background: linear-gradient(160deg, #1b1430, #05040a);
+}
+
+/* PEÇA: o quadro de desenho da entrada dentro de: a tela sem placa de vídeo. */
+.sem-luz .luz {
+  /* Esconde esta peça da tela. */
+  display: none;
+}
+
+/* PEÇA: a frase reserva. */
+.ab-reserva {
+  /* Esconde esta peça da tela. */
+  display: none;
+}
+
+/* PEÇA: a frase reserva dentro de: a tela sem placa de vídeo. */
+.sem-luz .ab-reserva {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Distância de cima: 30% da altura da tela. */
+  top: 30vh;
+  /* Letra (frase reserva): Unbounded, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(2rem, 9vmin, 4rem) / 1.05 Unbounded, Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* ---------- nucleo: forma 3D ---------- */
+/* PEÇA: a frase grande dentro de: a entrada da forma 3D. */
+.ab-nucleo .ab-titulo {
+  /* Letra (frase grande): Unbounded, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.5rem, 6.6vmin, 3.2rem) / 1.08 Unbounded, Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.02em;
+}
+
+/* PEÇA: enfeite desenhado em: a caixa da tela dentro de: a entrada da forma 3D. */
+.ab-nucleo .caixa::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Largura (enfeite desenhado em: a caixa da tela): 120vmin. Número maior = mais largo. */
+  width: 120vmin;
+  /* Altura (enfeite desenhado em: a caixa da tela): 120vmin. Número maior = mais alto. */
+  height: 120vmin;
+  /* Movimento (enfeite desenhado em: a caixa da tela): vai para a esquerda 50% do espaço e sobe 50% do espaço. */
+  transform: translate(-50%, -50%);
+  /* Arredonda os cantos (enfeite desenhado em: a caixa da tela). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo redondo (enfeite desenhado em: a caixa da tela), nas cores: a cor de destaque do tema e transparente. Troque os códigos para mudar as cores. */
+  background: radial-gradient(closest-side, var(--ac), transparent 70%);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: calc(var(--energia, 0) * .55);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Mistura a cor com o que está atrás, como tinta. */
+  mix-blend-mode: screen;
+}
+
+/* PEÇA: a linha da energia. */
+.ab-barra {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: 18% da largura da tela. */
+  left: 18vw;
+  /* Distância da direita: 18% da largura da tela. */
+  right: 18vw;
+  /* Distância de baixo: o maior entre 4% da altura da tela e 22 pontinhos. */
+  bottom: max(4vh, 22px);
+  /* Altura (linha da energia): 3 pontinhos. Número maior = mais alto. */
+  height: 3px;
+  /* Arredonda os cantos (linha da energia). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 3px;
+  /* Cor de fundo (linha da energia): branco, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(255,255,255,.2);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a peça dentro de: a linha da energia. */
+.ab-barra i {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Largura (peça): zero. Número maior = mais largo. */
+  width: 0;
+  /* Altura (peça): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 3px;
+  /* Cor de fundo (peça): branco. Troque o código para mudar a cor. */
+  background: #fff;
+}
+
+/* ---------- mercurio: metal líquido ---------- */
+/* PEÇA: a frase grande dentro de: a entrada do metal líquido. */
+.ab-mercurio .ab-titulo {
+  /* Letra (frase grande): Syne, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.9rem, 8.4vmin, 4.8rem) / 1 Syne, Inter, sans-serif;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.02em;
+}
+
+/* ---------- termica: câmera de calor ---------- */
+/* PEÇA: a frase grande dentro de: a entrada da câmera de calor. */
+.ab-termica .ab-titulo {
+  /* Letra (frase grande): Space Grotesk, grossura 700. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 700 clamp(1.3rem, 4.6vmin, 2.2rem) / 1.1 'Space Grotesk', Inter, sans-serif;
+}
+
+/* PEÇA: enfeite desenhado em: a caixa da tela dentro de: a entrada da câmera de calor e enfeite desenhado em: a caixa da tela dentro de: a entrada da câmera de calor. */
+.ab-termica .caixa::before, .ab-termica .caixa::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 1;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Cor de fundo (enfeite desenhado em: a caixa da tela): branco, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(255,255,255,.55);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: enfeite desenhado em: a caixa da tela dentro de: a entrada da câmera de calor. */
+.ab-termica .caixa::before {
+  /* Largura (enfeite desenhado em: a caixa da tela): 44 pontinhos. Número maior = mais largo. */
+  width: 44px;
+  /* Altura (enfeite desenhado em: a caixa da tela): 1 pontinhos. Número maior = mais alto. */
+  height: 1px;
+  /* Espaço de fora, à esquerda: menos 22 pontinhos. */
+  margin-left: -22px;
+}
+
+/* PEÇA: enfeite desenhado em: a caixa da tela dentro de: a entrada da câmera de calor. */
+.ab-termica .caixa::after {
+  /* Largura (enfeite desenhado em: a caixa da tela): 1 pontinhos. Número maior = mais largo. */
+  width: 1px;
+  /* Altura (enfeite desenhado em: a caixa da tela): 44 pontinhos. Número maior = mais alto. */
+  height: 44px;
+  /* Espaço de fora, em cima: menos 22 pontinhos. */
+  margin-top: -22px;
+}
+
+/* PEÇA: o termômetro. */
+.ab-graus {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: 6% da largura da tela. */
+  left: 6vw;
+  /* Distância de baixo: o maior entre 12% da altura da tela e 60 pontinhos. */
+  bottom: max(12vh, 60px);
+  /* Cor das letras (termômetro): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (termômetro): Big Shoulders Display, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 min(22vw, 18vh) / 1 'Big Shoulders Display', Inter, sans-serif;
+  /* Todos os números com a mesma largura, para não tremerem quando mudam. */
+  font-variant-numeric: tabular-nums;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada da câmera de calor. */
+.ab-termica .ab-dica {
+  /* Texto encostado à esquerda. */
+  text-align: left;
+}
+
+/* ---------- carga: líquido enchendo ---------- */
+/* PEÇA: o número gigante. */
+.ab-numero {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Letra (número gigante): Big Shoulders Display, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 min(92vw, 78vh) / 1 'Big Shoulders Display', Inter, sans-serif;
+  /* Todos os números com a mesma largura, para não tremerem quando mudam. */
+  font-variant-numeric: tabular-nums;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.02em;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+  /* Faz a mudança acontecer devagar, sem pular: tudo em 0,4 segundos. Número maior = mais lento. */
+  transition: font-size .4s;
+}
+
+/* PEÇA: o número gigante com "seco" ligado. */
+.ab-numero.seco {
+  /* Cor das letras (número gigante): branco. Troque o código para mudar a cor. */
+  color: #fff;
+}
+
+/* PEÇA: o número gigante com "molhado" ligado. */
+.ab-numero.molhado {
+  /* Cor das letras (número gigante): var(--tinta). Troque o código para mudar a cor. */
+  color: var(--tinta);
+}
+
+/* PEÇA: o número gigante dentro de: travou. */
+.travou .ab-numero {
+  /* Liga a animação "ab-treme": dura 0,12 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: ab-treme .12s infinite;
+}
+
+/* PEÇA: o número gigante dentro de: cheio. */
+.cheio .ab-numero {
+  /* Tamanho da letra (número gigante): o menor entre 64% da largura da tela e 60% da altura da tela. Número maior = letra maior. */
+  font-size: min(64vw, 60vh);
+}
+
+/* PEÇA: a frase grande dentro de: a entrada do líquido enchendo. */
+.ab-carga .ab-titulo {
+  /* Distância de cima: 6% da altura da tela. */
+  top: 6vh;
+  /* Letra (frase grande): Big Shoulders Display, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.6rem, 6.6vmin, 3.2rem) / 1 'Big Shoulders Display', Inter, sans-serif;
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+}
+
+/* PEÇA: a frase grande com "molhado" ligado dentro de: a entrada do líquido enchendo e a frase que muda com "molhado" ligado. */
+.ab-carga .ab-titulo.molhado, .ab-estado.molhado {
+  /* Cor das letras (frase grande): var(--tinta). Troque o código para mudar a cor. */
+  color: var(--tinta);
+}
+
+/* PEÇA: a frase final dentro de: a entrada do líquido enchendo. */
+.ab-carga .ab-ok {
+  /* Tira a sombra (frase final). */
+  text-shadow: none;
+}
+
+/* ---------- frase final em cima de desenho cheio de detalhes ---------- */
+/* PEÇA: a frase final dentro de: a entrada do circuito e a frase final dentro de: a entrada da lente. */
+.ab-circuito .ab-ok, .ab-lente .ab-ok {
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância da direita: automático. */
+  right: auto;
+  /* Largura (frase final): max-content. Número maior = mais largo. */
+  width: max-content;
+  /* Largura máxima (frase final): 86% da largura da tela. Número maior = mais largo. */
+  max-width: 86vw;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase final): 10 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 10px 16px;
+  /* Arredonda os cantos (frase final). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 14px;
+  /* Cor de fundo (frase final): preto, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(4, 6, 10, .78);
+  /* Movimento (frase final): vai para a esquerda 50% do espaço. */
+  transform: translateX(-50%);
+  /* Desliga a animação desta peça. */
+  animation: none;
+}
+
+/* ---------- glitch: imagem com defeito ---------- */
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada da imagem com defeito. */
+.ab-glitch .ab-dica {
+  /* Distância de baixo: o maior entre 5% da altura da tela e 26 pontinhos. */
+  bottom: max(5vh, 26px);
+}
+
+/* ---------- agua: pingos ---------- */
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada da água. */
+.ab-agua .ab-dica {
+  /* Letra (frase que ensina o gesto): Instrument Serif, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: italic 400 clamp(1.3rem, 3.4vmin, 1.8rem) 'Instrument Serif', Georgia, serif;
+}
+
+/* PEÇA: a frase final dentro de: a entrada da água. */
+.ab-agua .ab-ok {
+  /* Letra (frase final): Instrument Serif, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: italic 400 clamp(1.4rem, 3.8vmin, 2rem) / 1.2 'Instrument Serif', Georgia, serif;
+}
+
+/* ---------- lente: vidro ---------- */
+/* PEÇA: a frase grande dentro de: a entrada da lente. */
+.ab-lente .ab-titulo {
+  /* Letra (frase grande): Space Grotesk, grossura 700. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 700 clamp(1.25rem, 4.6vmin, 2.2rem) / 1.1 'Space Grotesk', Inter, sans-serif;
+  /* Distância da direita: 26% da largura da tela. */
+  right: 26vw;
+}
+
+/* PEÇA: o marcador de palavras achadas. */
+.ab-achados {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da direita: 6% da largura da tela. */
+  right: 6vw;
+  /* Distância de cima: 7% da altura da tela. */
+  top: 7vh;
+  /* Espaço de dentro, entre a borda e o conteúdo, (marcador de palavras achadas): 6 pontinhos em cima e embaixo, 12 pontinhos nos lados. */
+  padding: 6px 12px;
+  /* Arredonda os cantos (marcador de palavras achadas). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 99px;
+  /* Cor das letras (marcador de palavras achadas): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (marcador de palavras achadas): preto, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(0,0,0,.35);
+  /* Letra (marcador de palavras achadas): fonte Space Grotesk, tamanho 1, grossura 700. Número maior = letra maior. */
+  font: 700 1rem 'Space Grotesk', Inter, sans-serif;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* ---------- sinal: ondas ---------- */
+/* PEÇA: a frase grande dentro de: a entrada das ondas. */
+.ab-sinal .ab-titulo {
+  /* Distância de cima: 5% da altura da tela. */
+  top: 5vh;
+  /* Letra (frase grande): Space Grotesk, grossura 500. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 500 clamp(1.1rem, 3.6vmin, 1.7rem) 'Space Grotesk', Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: o número da estação. */
+.ab-freq {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de cima: 9% da altura da tela. */
+  top: 9vh;
+  /* Cor das letras (número da estação): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (número da estação): Big Shoulders Display, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 min(24vw, 14vh) / 1 'Big Shoulders Display', Inter, sans-serif;
+  /* Todos os números com a mesma largura, para não tremerem quando mudam. */
+  font-variant-numeric: tabular-nums;
+  /* Texto no meio. */
+  text-align: center;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a régua do rádio. */
+.ab-regua {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+  /* Distância da esquerda: 10% da largura da tela. */
+  left: 10vw;
+  /* Distância da direita: 10% da largura da tela. */
+  right: 10vw;
+  /* Distância de baixo: o maior entre 14% da altura da tela e 74 pontinhos. */
+  bottom: max(14vh, 74px);
+  /* Altura (régua do rádio): 26 pontinhos. Número maior = mais alto. */
+  height: 26px;
+  /* Fundo (régua do rádio) em listras repetidas, nas cores: branco, meio transparente e transparente. */
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.45) 0 1px, transparent 1px 5%) center / 100% 10px no-repeat;
+}
+
+/* PEÇA: a régua do rádio com "some" ligado. */
+.ab-regua.some {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,4 segundos. Número maior = mais lento. */
+  transition: opacity .4s;
+}
+
+/* PEÇA: o cursor do rádio. */
+.ab-pino {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Largura (cursor do rádio): 52 pontinhos. Número maior = mais largo. */
+  width: 52px;
+  /* Altura (cursor do rádio): 52 pontinhos. Número maior = mais alto. */
+  height: 52px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (cursor do rádio): zero em todos os lados. */
+  padding: 0;
+  /* Contorno (cursor do rádio): lisa, 3 pontinhos de grossura, cor branco. */
+  border: 3px solid #fff;
+  /* Arredonda os cantos (cursor do rádio). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Movimento (cursor do rádio): vai para a esquerda 50% do espaço e sobe 50% do espaço. */
+  transform: translate(-50%, -50%);
+  /* Cor de fundo (cursor do rádio): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Sombra ou brilho em volta (cursor do rádio), na cor: a cor de destaque do tema. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 0 22px var(--ac);
+  /* Mostra a mão de agarrar no computador. */
+  cursor: grab;
+  /* Impede a tela de rolar enquanto o dedo mexe aqui. */
+  touch-action: none;
+}
+
+/* ---------- salto: alta velocidade ---------- */
+/* PEÇA: a frase grande dentro de: a entrada do salto. */
+.ab-salto .ab-titulo {
+  /* Letra (frase grande): Unbounded, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.25rem, 5vmin, 2.4rem) / 1.1 Unbounded, Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: o número da contagem. */
+.ab-contador {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Cor das letras (número da contagem): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (número da contagem): Big Shoulders Display, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 min(40vw, 34vh) / 1 'Big Shoulders Display', Inter, sans-serif;
+  /* Todos os números com a mesma largura, para não tremerem quando mudam. */
+  font-variant-numeric: tabular-nums;
+  /* Texto no meio. */
+  text-align: center;
+  /* Movimento (número da contagem): sobe 50% do espaço e calc. */
+  transform: translateY(-50%) scale(calc(1 + var(--p, 0) * .22));
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: o texto pequeno dentro de: o número da contagem. */
+.ab-contador small {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Tamanho da letra (texto pequeno): 0,28 vezes o tamanho da letra daqui. Número maior = letra maior. */
+  font-size: .28em;
+  /* Grossura da letra: 700. Número maior = letra mais grossa. */
+  font-weight: 700;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: .01em;
+}
+
+/* ---------- neon: letreiro ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-neon" ligado. */
+.abertura.ab-neon > .caixa {
+  /* Cor de fundo (caixa da tela): preto. Troque o código para mudar a cor. */
+  background: #0b0810;
+}
+
+/* PEÇA: enfeite desenhado em: a caixa da tela quando a tela da entrada estiver com "ab-neon" ligado. */
+.abertura.ab-neon > .caixa::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Fundo redondo (enfeite desenhado em: a caixa da tela), nas cores: a cor de destaque do tema e transparente. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 50% 55%, var(--ac), transparent 62%);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: calc(var(--brilho, 0) * .34);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a frase grande dentro de: a entrada do neon. */
+.ab-neon .ab-titulo {
+  /* Distância de cima: 8% da altura da tela. */
+  top: 8vh;
+  /* Cor das letras (frase grande): branco, meio transparente. Troque o código para mudar a cor. */
+  color: rgba(255,255,255,.2);
+  /* Letra (frase grande): Tilt Neon, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 400 clamp(2.4rem, 12vmin, 6rem) / 1 'Tilt Neon', Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+  /* Faz a mudança acontecer devagar, sem pular: a cor em 0,3 segundos e o brilho do texto em 0,3 segundos. Número maior = mais lento. */
+  transition: color .3s, text-shadow .3s;
+}
+
+/* PEÇA: a frase grande com "aceso" ligado dentro de: a entrada do neon. */
+.ab-neon .ab-titulo.aceso {
+  /* Cor das letras (frase grande): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Brilho em volta das letras (frase grande), na cor: a cor de destaque do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 10px var(--ac), 0 0 34px var(--ac), 0 0 70px var(--ac);
+}
+
+/* PEÇA: a área de desenhar. */
+.ab-area {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+  /* Impede a tela de rolar enquanto o dedo mexe aqui. */
+  touch-action: none;
+}
+
+/* ---------- circuito: placa ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-circuito" ligado. */
+.abertura.ab-circuito > .caixa {
+  /* Fundo redondo (caixa da tela), nas cores: branco, quase invisível, transparente, verde-água bem escuro e preto. Troque os códigos para mudar as cores. */
+  background: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1.4px) 0 0 / 14px 14px, linear-gradient(150deg, #06302a, #03161a);
+}
+
+/* PEÇA: a frase grande dentro de: a entrada do circuito. */
+.ab-circuito .ab-titulo {
+  /* Distância de cima: 6% da altura da tela. */
+  top: 6vh;
+  /* Letra (frase grande): Space Grotesk, grossura 700. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 700 clamp(1.35rem, 5vmin, 2.3rem) / 1.08 'Space Grotesk', Inter, sans-serif;
+  /* Brilho em volta das letras (frase grande), na cor: preto. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 10px #021311;
+}
+
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada do circuito. */
+.ab-circuito .ab-dica {
+  /* Distância de baixo: o maior entre 5% da altura da tela e 26 pontinhos. */
+  bottom: max(5vh, 26px);
+}
+
+/* ---------- gravidade: letras que caem ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-gravidade" ligado. */
+.abertura.ab-gravidade > .caixa {
+  /* Cor de fundo (caixa da tela): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+}
+
+/* PEÇA: a frase escondida. */
+.ab-escondido {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 0;
+  /* Distância da esquerda: 8% da largura da tela. */
+  left: 8vw;
+  /* Distância da direita: 8% da largura da tela. */
+  right: 8vw;
+  /* Distância de cima: 34% do espaço. */
+  top: 34%;
+  /* Espaço de fora (frase escondida): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase escondida): var(--tinta). Troque o código para mudar a cor. */
+  color: var(--tinta);
+  /* Letra (frase escondida): Instrument Serif, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: italic 400 clamp(2rem, 9.4vmin, 4.6rem) / 1.04 'Instrument Serif', Georgia, serif;
+  /* Texto no meio. */
+  text-align: center;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+  opacity: 0;
+  /* Movimento (frase escondida): encolhe para 94% do tamanho. */
+  transform: scale(.94);
+  /* Faz a mudança acontecer devagar, sem pular: a transparência em 0,8 segundos e o movimento em 0,8 segundos. Número maior = mais lento. */
+  transition: opacity .8s, transform .8s;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a frase escondida dentro de: revelou. */
+.revelou .ab-escondido {
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 1. */
+  opacity: 1;
+  /* Movimento (frase escondida): nenhum movimento: a peça fica no lugar normal. */
+  transform: none;
+}
+
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada das letras que caem. */
+.ab-gravidade .ab-dica {
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Cor das letras (frase que ensina o gesto): var(--tinta). Troque o código para mudar a cor. */
+  color: var(--tinta);
+  /* Tira a sombra (frase que ensina o gesto). */
+  text-shadow: none;
+  /* Distância de baixo: o maior entre 3% da altura da tela e 18 pontinhos. */
+  bottom: max(3vh, 18px);
+}
+
+/* PEÇA: a frase final dentro de: a entrada das letras que caem. */
+.ab-gravidade .ab-ok {
+  /* Tira a sombra (frase final). */
+  text-shadow: none;
+  /* Distância de cima: 12% da altura da tela. */
+  top: 12vh;
+  /* Distância de baixo: automático. */
+  bottom: auto;
+}
+
+/* ---------- orbita: estilingue ---------- */
+/* PEÇA: a frase grande dentro de: a entrada da órbita. */
+.ab-orbita .ab-titulo {
+  /* Distância de cima: 6% da altura da tela. */
+  top: 6vh;
+  /* Letra (frase grande): Instrument Serif, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: italic 400 clamp(2rem, 9vmin, 4.6rem) / 1 'Instrument Serif', Georgia, serif;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* ---------- pixels: imagem que fica nítida ---------- */
+/* PEÇA: o número de aumento. */
+.ab-zoom {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: 6% da largura da tela. */
+  left: 6vw;
+  /* Distância de cima: 5% da altura da tela. */
+  top: 5vh;
+  /* Cor das letras (número de aumento): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (número de aumento): Big Shoulders Display, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 min(22vw, 16vh) / 1 'Big Shoulders Display', Inter, sans-serif;
+  /* Brilho em volta das letras (número de aumento), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 2px 22px rgba(0,0,0,.5);
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a frase que muda dentro de: a entrada da imagem quadriculada. */
+.ab-pixels .ab-estado {
+  /* Brilho em volta das letras (frase que muda), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 1px 14px rgba(0,0,0,.75);
+}
+
+/* ---------- match: cartas ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-match" ligado. */
+.abertura.ab-match > .caixa {
+  /* Fundo redondo (caixa da tela), nas cores: a 2ª cor de destaque do tema, transparente, a cor de destaque do tema, transparente e a 2ª cor de fundo do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(90% 60% at 20% 10%, var(--ac2), transparent), radial-gradient(90% 70% at 90% 90%, var(--ac), transparent), var(--bg-b);
+}
+
+/* PEÇA: a pilha de cartas. */
+.ab-pilha {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância de cima: 46% do espaço. */
+  top: 46%;
+  /* Largura (pilha de cartas): o menor entre 78% da largura da tela, 46% da altura da tela e 400 pontinhos. Número maior = mais largo. */
+  width: min(78vw, 46vh, 400px);
+  /* Altura (pilha de cartas): o menor entre 106% da largura da tela, 62% da altura da tela e 540 pontinhos. Número maior = mais alto. */
+  height: min(106vw, 62vh, 540px);
+  /* Movimento (pilha de cartas): vai para a esquerda 50% do espaço e sobe 50% do espaço. */
+  transform: translate(-50%, -50%);
+}
+
+/* PEÇA: a carta de deslizar. */
+.ab-carta {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Encosta as peças no fim. */
+  align-items: flex-end;
+  /* Espaço de dentro, entre a borda e o conteúdo, (carta de deslizar): 26 pontinhos em todos os lados. */
+  padding: 26px;
+  /* Arredonda os cantos (carta de deslizar). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 30px;
+  /* Fundo em degradê (carta de deslizar), nas cores: branco. Troque os códigos para mudar as cores. */
+  background: linear-gradient(160deg, #fff, #f4eef7);
+  /* Sombra ou brilho em volta (carta de deslizar), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 22px 50px rgba(0,0,0,.28);
+  /* Movimento (carta de deslizar): calc e calc. */
+  transform: translateY(calc(var(--i) * 14px)) scale(calc(1 - var(--i) * .05));
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,3 segundos. Número maior = mais lento. */
+  transition: transform .3s;
+  /* Impede a tela de rolar enquanto o dedo mexe aqui. */
+  touch-action: none;
+  /* Mostra a mão de agarrar no computador. */
+  cursor: grab;
+  /* Corta o que passar para fora (carta de deslizar). */
+  overflow: hidden;
+}
+
+/* PEÇA: enfeite desenhado em: a carta de deslizar. */
+.ab-carta::before {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Altura (enfeite desenhado em: a carta de deslizar): 58% do espaço. Número maior = mais alto. */
+  height: 58%;
+  /* Fundo redondo (enfeite desenhado em: a carta de deslizar), nas cores: a cor de destaque do tema, transparente, a 2ª cor de destaque do tema, transparente e a 3ª cor de fundo do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(70% 90% at 30% 20%, var(--ac), transparent), radial-gradient(70% 90% at 80% 60%, var(--ac2), transparent), var(--bg-c);
+  /* Efeito visual (enfeite desenhado em: a carta de deslizar): troca as cores. */
+  filter: hue-rotate(calc(var(--i) * 46deg));
+}
+
+/* PEÇA: a carta de deslizar com "presa" ligado. */
+.ab-carta.presa {
+  /* Muda na hora, sem animação. */
+  transition: none;
+}
+
+/* PEÇA: a carta de deslizar com "foi" ligado. */
+.ab-carta.foi {
+  /* Movimento (carta de deslizar): vai para a direita 135% da largura da tela, desce 30 pontinhos e gira 24 graus para a direita. */
+  transform: translate(135vw, 30px) rotate(24deg) !important;
+  /* Faz a mudança acontecer devagar, sem pular: o movimento em 0,4 segundos. Número maior = mais lento. */
+  transition: transform .4s ease-in;
+}
+
+/* PEÇA: a carta de deslizar com "nega" ligado. */
+.ab-carta.nega {
+  /* Liga a animação "ab-treme": dura 0,16 segundos, repetindo 2 vezes. Número menor = mais rápida. */
+  animation: ab-treme .16s 2;
+}
+
+/* PEÇA: a frase da carta. */
+.ab-carta-texto {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Espaço de fora (frase da carta): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase da carta): roxo bem escuro. Troque o código para mudar a cor. */
+  color: #1a1020;
+  /* Letra (frase da carta): Bricolage Grotesque, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.7rem, 7.4vmin, 2.8rem) / 1.02 'Bricolage Grotesque', Inter, sans-serif;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.02em;
+}
+
+/* PEÇA: o carimbo. */
+.ab-carimbo {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 26 pontinhos. */
+  top: 26px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (carimbo): 6 pontinhos em cima e embaixo, 14 pontinhos nos lados. */
+  padding: 6px 14px;
+  /* Contorno (carimbo): lisa, 4 pontinhos de grossura. */
+  border: 4px solid;
+  /* Arredonda os cantos (carimbo). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 10px;
+  /* Letra (carimbo): Bricolage Grotesque, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.3rem, 5vmin, 1.9rem) 'Bricolage Grotesque', Inter, sans-serif;
+  /* Escreve tudo em LETRA MAIÚSCULA. */
+  text-transform: uppercase;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: o carimbo com "sim" ligado. */
+.ab-carimbo.sim {
+  /* Distância da esquerda: 22 pontinhos. */
+  left: 22px;
+  /* Cor das letras (carimbo): verde escuro. Troque o código para mudar a cor. */
+  color: #12a150;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: var(--sim, 0);
+  /* Movimento (carimbo): gira 12 graus para a esquerda. */
+  transform: rotate(-12deg);
+}
+
+/* PEÇA: o carimbo com "nao" ligado. */
+.ab-carimbo.nao {
+  /* Distância da direita: 22 pontinhos. */
+  right: 22px;
+  /* Cor das letras (carimbo): vermelho. Troque o código para mudar a cor. */
+  color: #e0314f;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: calculada pelo código. */
+  opacity: var(--nao, 0);
+  /* Movimento (carimbo): gira 12 graus para a direita. */
+  transform: rotate(12deg);
+}
+
+/* PEÇA: a fileira de botões. */
+.ab-botoes {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de baixo: o maior entre 5% da altura da tela e 22 pontinhos. */
+  bottom: max(5vh, 22px);
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 26 pontinhos. Número maior = mais separadas. */
+  gap: 26px;
+}
+
+/* PEÇA: o botão redondo. */
+.ab-redondo {
+  /* Largura (botão redondo): 64 pontinhos. Número maior = mais largo. */
+  width: 64px;
+  /* Altura (botão redondo): 64 pontinhos. Número maior = mais alto. */
+  height: 64px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (botão redondo): zero em todos os lados. */
+  padding: 0;
+  /* Tira o contorno (botão redondo). */
+  border: 0;
+  /* Arredonda os cantos (botão redondo). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor das letras (botão redondo): roxo bem escuro. Troque o código para mudar a cor. */
+  color: #1a1020;
+  /* Cor de fundo (botão redondo): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Sombra ou brilho em volta (botão redondo), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  /* Letra (botão redondo): fonte Inter, tamanho 1,6, grossura 700. Número maior = letra maior. */
+  font: 700 1.6rem Inter, sans-serif;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+}
+
+/* PEÇA: o botão redondo com "sim" ligado. */
+.ab-redondo.sim {
+  /* Cor das letras (botão redondo): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (botão redondo): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+}
+
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada das cartas. */
+.ab-match .ab-dica {
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 2;
+  /* Distância de cima: 3,5% da altura da tela. */
+  top: 3.5vh;
+  /* Distância de baixo: automático. */
+  bottom: auto;
+  /* Cor das letras (frase que ensina o gesto): var(--tinta). Troque o código para mudar a cor. */
+  color: var(--tinta);
+  /* Tira a sombra (frase que ensina o gesto). */
+  text-shadow: none;
+}
+
+/* PEÇA: a tela do match. */
+.ab-deu {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+}
+
+/* PEÇA: a frase grande dentro de: a tela do match. */
+.ab-deu .ab-titulo {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Distância de cima: automático. */
+  top: auto;
+  /* Distância da esquerda: automático. */
+  left: auto;
+  /* Distância da direita: automático. */
+  right: auto;
+  /* Espaço de dentro, entre a borda e o conteúdo, (frase grande): zero em cima e embaixo, 7% da largura da tela nos lados. */
+  padding: 0 7vw;
+  /* Cor das letras (frase grande): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (frase grande): Bricolage Grotesque, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(2.5rem, 11.6vmin, 5.6rem) / .98 'Bricolage Grotesque', Inter, sans-serif;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.03em;
+  /* Texto no meio. */
+  text-align: center;
+  /* Brilho em volta das letras (frase grande), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 6px 30px rgba(0,0,0,.35);
+  /* Liga a animação "ab-sobe": dura 0,6 segundos. Número menor = mais rápida. */
+  animation: ab-sobe .6s both;
+}
+
+/* PEÇA: o círculo do match. */
+.ab-bola {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Largura (círculo do match): 70vmin. Número maior = mais largo. */
+  width: 70vmin;
+  /* Altura (círculo do match): 70vmin. Número maior = mais alto. */
+  height: 70vmin;
+  /* Espaço de fora, em cima: -35vmin. */
+  margin-top: -35vmin;
+  /* Arredonda os cantos (círculo do match). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,75. */
+  opacity: .75;
+  /* Mistura a cor com o que está atrás, como tinta. */
+  mix-blend-mode: screen;
+}
+
+/* PEÇA: o círculo do match com "um" ligado. */
+.ab-bola.um {
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Cor de fundo (círculo do match): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Liga a animação "ab-bola1": dura 0,7 segundos. Número menor = mais rápida. */
+  animation: ab-bola1 .7s ease-out both;
+}
+
+/* PEÇA: o círculo do match com "dois" ligado. */
+.ab-bola.dois {
+  /* Distância da direita: 50% do espaço. */
+  right: 50%;
+  /* Cor de fundo (círculo do match): a 2ª cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac2);
+  /* Liga a animação "ab-bola2": dura 0,7 segundos. Número menor = mais rápida. */
+  animation: ab-bola2 .7s ease-out both;
+}
+
+/* ANIMAÇÃO "ab-bola1": o primeiro círculo do match corre para o meio. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-bola1 {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: vai para a direita 70vmin. */
+    transform: translateX(70vmin);
+  }
+  /* Como a animação termina: */
+  to {
+    /* Movimento: vai para a esquerda 46vmin. */
+    transform: translateX(-46vmin);
+  }
+}
+
+/* ANIMAÇÃO "ab-bola2": o segundo círculo do match corre para o meio. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-bola2 {
+  /* Como a animação começa: */
+  from {
+    /* Movimento: vai para a esquerda 70vmin. */
+    transform: translateX(-70vmin);
+  }
+  /* Como a animação termina: */
+  to {
+    /* Movimento: vai para a direita 46vmin. */
+    transform: translateX(46vmin);
+  }
+}
+
+/* ---------- stories: telas em sequência ---------- */
+/* PEÇA: as barrinhas de cima. */
+.ab-barras {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 4;
+  /* Distância da esquerda: 12 pontinhos. */
+  left: 12px;
+  /* Distância da direita: 12 pontinhos. */
+  right: 12px;
+  /* Distância de cima: 12 pontinhos. */
+  top: 12px;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Espaço entre as peças de dentro: 5 pontinhos. Número maior = mais separadas. */
+  gap: 5px;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a barrinha. */
+.ab-barrinha {
+  /* Estica para ocupar o espaço que sobrar. */
+  flex: 1;
+  /* Altura (barrinha): 4 pontinhos. Número maior = mais alto. */
+  height: 4px;
+  /* Corta o que passar para fora (barrinha). */
+  overflow: hidden;
+  /* Arredonda os cantos (barrinha). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 4px;
+  /* Cor de fundo (barrinha): branco, meio transparente. Troque o código para mudar a cor. */
+  background: rgba(255,255,255,.35);
+}
+
+/* PEÇA: a peça dentro de: a barrinha. */
+.ab-barrinha i {
+  /* Ocupa uma linha inteira só para si. */
+  display: block;
+  /* Largura (peça): zero. Número maior = mais largo. */
+  width: 0;
+  /* Altura (peça): 100% do espaço. Número maior = mais alto. */
+  height: 100%;
+  /* Cor de fundo (peça): branco. Troque o código para mudar a cor. */
+  background: #fff;
+}
+
+/* PEÇA: anda dentro de: a barrinha. */
+.ab-barrinha i.anda {
+  /* Liga a animação "ab-enche": dura 4,2 segundos. Número menor = mais rápida. */
+  animation: ab-enche 4.2s linear both;
+}
+
+/* PEÇA: sem margens dentro de: a barrinha. */
+.ab-barrinha i.cheia {
+  /* Largura (sem margens): 100% do espaço. Número maior = mais largo. */
+  width: 100%;
+  /* Desliga a animação desta peça. */
+  animation: none;
+}
+
+/* ANIMAÇÃO "ab-enche": a barrinha enche até o fim. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-enche {
+  /* Como a animação termina: */
+  to {
+    /* Largura: 100% do espaço. Número maior = mais largo. */
+    width: 100%;
+  }
+}
+
+/* PEÇA: a tela do story. */
+.ab-quadro {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Espaço de dentro, entre a borda e o conteúdo, (tela do story): 8% da altura da tela em cima e embaixo, 7% da largura da tela nos lados. */
+  padding: 8vh 7vw;
+  /* Liga a animação "ab-quadro": dura 0,45 segundos. Número menor = mais rápida. */
+  animation: ab-quadro .45s both;
+}
+
+/* ANIMAÇÃO "ab-quadro": a tela do story entra. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-quadro {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: fica 1,06 vezes maior. */
+    transform: scale(1.06);
+  }
+}
+
+/* PEÇA: a tela do story com "q0" ligado. */
+.ab-quadro.q0 {
+  /* Encosta as peças no fim. */
+  align-items: flex-end;
+  /* Espaço de dentro, embaixo: 20% da altura da tela. */
+  padding-bottom: 20vh;
+  /* Fundo em degradê (tela do story), nas cores: a cor de destaque do tema e a 3ª cor de fundo do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(170deg, var(--ac), var(--bg-c));
+}
+
+/* PEÇA: a tela do story com "q1" ligado. */
+.ab-quadro.q1 {
+  /* Encosta as peças no começo. */
+  align-items: flex-start;
+  /* Espaço de dentro, em cima: 12% da altura da tela. */
+  padding-top: 12vh;
+  /* Fundo (tela do story) em fatias, nas cores: a 2ª cor de destaque do tema, a cor de destaque do tema, a 2ª cor de fundo do tema e a 2ª cor de destaque do tema. */
+  background: conic-gradient(from 210deg at 70% 30%, var(--ac2), var(--ac), var(--bg-b), var(--ac2));
+}
+
+/* PEÇA: a tela do story com "q2" ligado. */
+.ab-quadro.q2 {
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Texto no meio. */
+  text-align: center;
+  /* Fundo redondo (tela do story), nas cores: a cor de destaque do tema e a 1ª cor de fundo do tema. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 50% 120%, var(--ac), var(--bg-a) 72%);
+}
+
+/* PEÇA: a tela do story com "q3" ligado. */
+.ab-quadro.q3 {
+  /* Encosta as peças no fim. */
+  align-items: flex-end;
+  /* Espaço de dentro, embaixo: 14% da altura da tela. */
+  padding-bottom: 14vh;
+  /* Fundo em degradê (tela do story), nas cores: a 1ª cor de fundo do tema, a cor de destaque do tema e a 2ª cor de destaque do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(20deg, var(--bg-a), var(--ac) 80%, var(--ac2));
+}
+
+/* PEÇA: a frase do story. */
+.ab-frase {
+  /* Espaço de fora (frase do story): zero em todos os lados. */
+  margin: 0;
+  /* Cor das letras (frase do story): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (frase do story): Bricolage Grotesque, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(2.4rem, 12.4vmin, 6.2rem) / .98 'Bricolage Grotesque', Inter, sans-serif;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.03em;
+  /* Brilho em volta das letras (frase do story), na cor: preto, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 3px 24px rgba(0,0,0,.28);
+}
+
+/* PEÇA: o pedacinho de texto dentro de: a frase do story. */
+.ab-frase span {
+  /* Fica na mesma linha do texto, mas pode ter tamanho próprio. */
+  display: inline-block;
+  /* Liga a animação "ab-palavra": dura 0,5 segundos. Número menor = mais rápida. */
+  animation: ab-palavra .5s cubic-bezier(.2, .9, .3, 1.3) both;
+}
+
+/* ANIMAÇÃO "ab-palavra": cada palavra entra com um pulinho. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-palavra {
+  /* Como a animação começa: */
+  from {
+    /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0. */
+    opacity: 0;
+    /* Movimento: desce 0,5 vezes o tamanho da letra daqui e encolhe para 90% do tamanho. */
+    transform: translateY(.5em) scale(.9);
+  }
+}
+
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada dos stories. */
+.ab-stories .ab-dica {
+  /* Distância de baixo: o maior entre 6% da altura da tela e 30 pontinhos. */
+  bottom: max(6vh, 30px);
+}
+
+/* ---------- ia: conversa ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-ia" ligado. */
+.abertura.ab-ia > .caixa {
+  /* Fundo redondo (caixa da tela), nas cores: a 3ª cor de fundo do tema, transparente e preto. Troque os códigos para mudar as cores. */
+  background: radial-gradient(70% 50% at 50% 0, var(--bg-c), transparent), #0b0a12;
+}
+
+/* PEÇA: a bola de luz da assistente. */
+.ab-orbe {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância de cima: 6% da altura da tela. */
+  top: 6vh;
+  /* Largura (bola de luz da assistente): o menor entre 30% da largura da tela e 20% da altura da tela. Número maior = mais largo. */
+  width: min(30vw, 20vh);
+  /* Altura (bola de luz da assistente): o menor entre 30% da largura da tela e 20% da altura da tela. Número maior = mais alto. */
+  height: min(30vw, 20vh);
+  /* Espaço de fora, à esquerda: uma conta feita pelo navegador. */
+  margin-left: calc(min(30vw, 20vh) / -2);
+  /* Arredonda os cantos (bola de luz da assistente). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Fundo (bola de luz da assistente) em fatias, nas cores: a cor de destaque do tema, a 2ª cor de destaque do tema, azul claro e a cor de destaque do tema. */
+  background: conic-gradient(from 0deg, var(--ac), var(--ac2), #6d7bff, var(--ac));
+  /* Efeito visual (bola de luz da assistente): borrão. */
+  filter: blur(7px);
+  /* Liga a animação "ab-orbe": dura 5 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: ab-orbe 5s linear infinite;
+}
+
+/* PEÇA: enfeite desenhado em: a bola de luz da assistente. */
+.ab-orbe::after {
+  /* Enfeite desenhado sem texto. */
+  content: '';
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: 22% do espaço em todos os lados. */
+  inset: 22%;
+  /* Arredonda os cantos (enfeite desenhado em: a bola de luz da assistente). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (enfeite desenhado em: a bola de luz da assistente): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Efeito visual (enfeite desenhado em: a bola de luz da assistente): borrão. */
+  filter: blur(16px);
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,85. */
+  opacity: .85;
+  /* Liga a animação "ab-respira": dura 2,4 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: ab-respira 2.4s ease-in-out infinite;
+}
+
+/* ANIMAÇÃO "ab-orbe": a bola de luz da assistente gira. Animação é um filminho: diz como a peça começa e como termina. */
+@keyframes ab-orbe {
+  /* Como a animação termina: */
+  to {
+    /* Movimento: gira 360 graus para a direita. */
+    transform: rotate(360deg);
+  }
+}
+
+/* PEÇA: a frase grande dentro de: a entrada da conversa. */
+.ab-ia .ab-titulo {
+  /* Distância de cima: uma conta feita pelo navegador. */
+  top: calc(9vh + min(30vw, 20vh));
+  /* Letra (frase grande): Space Grotesk, grossura 700. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 700 clamp(1.1rem, 3.6vmin, 1.5rem) 'Space Grotesk', Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: o lugar da conversa. */
+.ab-chat {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 5% da largura da tela. */
+  left: 5vw;
+  /* Distância da direita: 5% da largura da tela. */
+  right: 5vw;
+  /* Distância de cima: uma conta feita pelo navegador. */
+  top: calc(15vh + min(30vw, 20vh));
+  /* Distância de baixo: 21% da altura da tela. */
+  bottom: 21vh;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Espaço entre as peças de dentro: 10 pontinhos. Número maior = mais separadas. */
+  gap: 10px;
+  /* Corta o que passar para fora (lugar da conversa). */
+  overflow: hidden;
+  /* Largura máxima (lugar da conversa): 620 pontinhos. Número maior = mais largo. */
+  max-width: 620px;
+  /* Espaço de fora (lugar da conversa): centralizado nos lados. */
+  margin: 0 auto;
+}
+
+/* PEÇA: o balão da conversa. */
+.ab-balao {
+  /* Largura máxima (balão da conversa): 84% do espaço. Número maior = mais largo. */
+  max-width: 84%;
+  /* Espaço de fora (balão da conversa): zero em todos os lados. */
+  margin: 0;
+  /* Espaço de dentro, entre a borda e o conteúdo, (balão da conversa): 12 pontinhos em cima e embaixo, 16 pontinhos nos lados. */
+  padding: 12px 16px;
+  /* Arredonda os cantos (balão da conversa). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 20px 20px 20px 6px;
+  /* Cor das letras (balão da conversa): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (balão da conversa): branco, quase invisível. Troque o código para mudar a cor. */
+  background: rgba(255,255,255,.12);
+  /* Letra (balão da conversa): Space Grotesk, grossura 500. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 500 clamp(1.05rem, 3vmin, 1.3rem) / 1.3 'Space Grotesk', Inter, sans-serif;
+  /* Liga a animação "ab-sobe": dura 0,3 segundos. Número menor = mais rápida. */
+  animation: ab-sobe .3s both;
+  /* Alinha só esta peça, diferente das outras. */
+  align-self: flex-start;
+}
+
+/* PEÇA: o balão da conversa com "eu" ligado. */
+.ab-balao.eu {
+  /* Alinha só esta peça, diferente das outras. */
+  align-self: flex-end;
+  /* Arredonda os cantos (balão da conversa). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 20px 20px 6px 20px;
+  /* Cor das letras (balão da conversa): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Cor de fundo (balão da conversa): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+}
+
+/* PEÇA: os três pontinhos. */
+.ab-pontos {
+  /* Arruma as peças em fila, sem ocupar a linha inteira. */
+  display: inline-flex;
+  /* Espaço entre as peças de dentro: 5 pontinhos. Número maior = mais separadas. */
+  gap: 5px;
+}
+
+/* PEÇA: a peça dentro de: os três pontinhos. */
+.ab-pontos i {
+  /* Largura (peça): 7 pontinhos. Número maior = mais largo. */
+  width: 7px;
+  /* Altura (peça): 7 pontinhos. Número maior = mais alto. */
+  height: 7px;
+  /* Arredonda os cantos (peça). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Cor de fundo (peça): branco. Troque o código para mudar a cor. */
+  background: #fff;
+  /* Liga a animação "ab-respira": dura 0,9 segundos, repetindo para sempre. Número menor = mais rápida. */
+  animation: ab-respira .9s infinite;
+}
+
+/* PEÇA: a peça (o 2º) dentro de: os três pontinhos. */
+.ab-pontos i:nth-child(2) {
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: .15s;
+}
+
+/* PEÇA: a peça (o 3º) dentro de: os três pontinhos. */
+.ab-pontos i:nth-child(3) {
+  /* Espera este tempo antes de começar a animação. */
+  animation-delay: .3s;
+}
+
+/* PEÇA: o lugar das respostas. */
+.ab-opcoes {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Camada: número maior fica por cima das outras peças. */
+  z-index: 3;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância da direita: zero. */
+  right: 0;
+  /* Distância de baixo: o maior entre 11% da altura da tela e 60 pontinhos. */
+  bottom: max(11vh, 60px);
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 12 pontinhos. Número maior = mais separadas. */
+  gap: 12px;
+}
+
+/* PEÇA: a resposta. */
+.ab-opcao {
+  /* Largura mínima (resposta): 120 pontinhos. Número maior = mais largo. */
+  min-width: 120px;
+  /* Altura mínima (resposta): 52 pontinhos. Número maior = mais alto. */
+  min-height: 52px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (resposta): zero em cima e embaixo, 22 pontinhos nos lados. */
+  padding: 0 22px;
+  /* Tira o contorno (resposta). */
+  border: 0;
+  /* Arredonda os cantos (resposta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 99px;
+  /* Cor das letras (resposta): a cor do texto dos botões do tema. Troque o código para mudar a cor. */
+  color: var(--btn-tx);
+  /* Cor de fundo (resposta): a cor de destaque do tema. Troque o código para mudar a cor. */
+  background: var(--ac);
+  /* Letra (resposta): fonte Space Grotesk, tamanho 1,15, grossura 700. Número maior = letra maior. */
+  font: 700 1.15rem 'Space Grotesk', Inter, sans-serif;
+  /* Mostra a mãozinha no computador. */
+  cursor: pointer;
+  /* Liga a animação "ab-sobe": dura 0,35 segundos. Número menor = mais rápida. */
+  animation: ab-sobe .35s both;
+}
+
+/* PEÇA: a resposta com "foge" ligado. */
+.ab-opcao.foge {
+  /* Cor das letras (resposta): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Cor de fundo (resposta): branco, quase invisível. Troque o código para mudar a cor. */
+  background: rgba(255,255,255,.14);
+  /* Faz a mudança acontecer devagar, sem pular: a posição em 0,16 segundos e a posição em 0,16 segundos. Número maior = mais lento. */
+  transition: left .16s, top .16s;
+}
+
+/* PEÇA: a resposta com "foge" ligado com "solta" ligado. */
+.ab-opcao.foge.solta {
+  /* Fica grudada na tela, mesmo se a página rolar. */
+  position: fixed;
+}
+
+/* PEÇA: a frase que ensina o gesto dentro de: a entrada da conversa. */
+.ab-ia .ab-dica {
+  /* Distância de baixo: o maior entre 4% da altura da tela e 22 pontinhos. */
+  bottom: max(4vh, 22px);
+}
+
+/* ---------- holo: carta holográfica ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-holo" ligado. */
+.abertura.ab-holo > .caixa {
+  /* Fundo (caixa da tela) em fatias, nas cores: a 1ª cor de fundo do tema, a 3ª cor de fundo do tema, a 1ª cor de fundo do tema, a 2ª cor de fundo do tema e a 1ª cor de fundo do tema. */
+  background: conic-gradient(from 180deg at 50% 46%, var(--bg-a), var(--bg-c), var(--bg-a), var(--bg-b), var(--bg-a));
+}
+
+/* PEÇA: a mesa da carta. */
+.ab-mesa {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Profundidade do 3D. Número menor = efeito mais forte. */
+  perspective: 1100px;
+  /* Espaço de dentro, embaixo: 7% da altura da tela. */
+  padding-bottom: 7vh;
+}
+
+/* PEÇA: a carta holográfica. */
+.ab-cartao {
+  /* Fica no lugar normal e serve de guia para as peças de dentro. */
+  position: relative;
+  /* Largura (carta holográfica): o menor entre 66% da largura da tela, 46% da altura da tela e 340 pontinhos. Número maior = mais largo. */
+  width: min(66vw, 46vh, 340px);
+  /* Altura (carta holográfica): o menor entre 94% da largura da tela, 66% da altura da tela e 486 pontinhos. Número maior = mais alto. */
+  height: min(94vw, 66vh, 486px);
+  /* Espaço de dentro, entre a borda e o conteúdo, (carta holográfica): zero em todos os lados. */
+  padding: 0;
+  /* Tira o contorno (carta holográfica). */
+  border: 0;
+  /* Sem fundo (carta holográfica): dá para ver o que está atrás. */
+  background: none;
+  /* Movimento (carta holográfica): tomba para trás um valor guardado em --rx e vira de lado um valor guardado em --ry. */
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  /* Mantém o efeito 3D nas peças de dentro. */
+  transform-style: preserve-3d;
+  /* Mostra a mão de agarrar no computador. */
+  cursor: grab;
+  /* Impede a tela de rolar enquanto o dedo mexe aqui. */
+  touch-action: none;
+}
+
+/* PEÇA: o lado da carta. */
+.ab-lado {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Arruma as peças de dentro em fila. */
+  display: flex;
+  /* A fila fica em pé: uma peça embaixo da outra. */
+  flex-direction: column;
+  /* Centraliza as peças de dentro. */
+  align-items: center;
+  /* Junta as peças no meio. */
+  justify-content: center;
+  /* Espaço entre as peças de dentro: 14 pontinhos. Número maior = mais separadas. */
+  gap: 14px;
+  /* Espaço de dentro, entre a borda e o conteúdo, (lado da carta): 22 pontinhos em todos os lados. */
+  padding: 22px;
+  /* Corta o que passar para fora (lado da carta). */
+  overflow: hidden;
+  /* Arredonda os cantos (lado da carta). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 22px;
+  /* Cor das letras (lado da carta): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Fundo em degradê (lado da carta), nas cores: roxo bem escuro. Troque os códigos para mudar as cores. */
+  background: linear-gradient(150deg, #17122a, #2c1b4a 60%, #120e22);
+  /* Sombra ou brilho em volta (lado da carta), na cor: preto, meio transparente e branco, meio transparente. Os números dizem o tamanho; o código diz a cor. */
+  box-shadow: 0 30px 70px rgba(0,0,0,.5), inset 0 0 0 1.5px rgba(255,255,255,.28);
+  /* Esconde o verso da peça quando ela vira de costas. */
+  backface-visibility: hidden;
+}
+
+/* PEÇA: o lado da carta com "verso" ligado. */
+.ab-lado.verso {
+  /* Movimento (lado da carta): vira de lado 180 graus. */
+  transform: rotateY(180deg);
+  /* Fundo em degradê (lado da carta), nas cores: a cor de destaque do tema e a 3ª cor de fundo do tema. Troque os códigos para mudar as cores. */
+  background: linear-gradient(150deg, var(--ac), var(--bg-c));
+}
+
+/* PEÇA: o desenho da carta. */
+.ab-holo-icone {
+  /* Letra (desenho da carta): Segoe UI Emoji, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 400 min(30vw, 22vh, 150px) / 1 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+/* PEÇA: o nome da carta. */
+.ab-holo-nome {
+  /* Letra (nome da carta): Unbounded, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(1.3rem, 5.6vmin, 2.2rem) / 1.05 Unbounded, Inter, sans-serif;
+  /* Texto no meio. */
+  text-align: center;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.02em;
+}
+
+/* PEÇA: a frase do verso. */
+.ab-holo-verso {
+  /* Letra (frase do verso): Instrument Serif, grossura 400. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 400 clamp(1.9rem, 8.2vmin, 3rem) / 1.06 'Instrument Serif', Georgia, serif;
+  /* Texto no meio. */
+  text-align: center;
+}
+
+/* PEÇA: o brilho colorido da carta. */
+.ab-foil {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância das bordas: zero, então cobre tudo. */
+  inset: 0;
+  /* Fundo (brilho colorido da carta) em listras repetidas, nas cores: transparente, rosa, meio transparente, amarelo, meio transparente, verde-água, meio transparente, azul, meio transparente, transparente, branco, quase invisível e transparente. */
+  background: linear-gradient(115deg, transparent 18%, rgba(255,0,136,.55) 34%, rgba(255,214,0,.5) 44%, rgba(0,255,170,.5) 54%, rgba(0,136,255,.55) 64%, transparent 80%) var(--bx, 50%) var(--by, 50%) / 260% 260%, repeating-linear-gradient(55deg, rgba(255,255,255,.1) 0 2px, transparent 2px 7px);
+  /* Mistura a cor com o que está atrás, como tinta. */
+  mix-blend-mode: color-dodge;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a frase que ensina o gesto quando a tela da entrada estiver com "ab-holo" ligado. */
+.abertura.ab-holo .ab-dica {
+  /* Distância de baixo: o maior entre 4,5% da altura da tela e 24 pontinhos. */
+  bottom: max(4.5vh, 24px);
+}
+
+/* ---------- tunel: palavras em 3D ---------- */
+/* PEÇA: a caixa da tela quando a tela da entrada estiver com "ab-tunel" ligado. */
+.abertura.ab-tunel > .caixa {
+  /* Fundo redondo (caixa da tela), nas cores: a 3ª cor de fundo do tema e preto. Troque os códigos para mudar as cores. */
+  background: radial-gradient(circle at 50% 50%, var(--bg-c), #07060c 68%);
+  /* Profundidade do 3D. Número menor = efeito mais forte. */
+  perspective: 620px;
+}
+
+/* PEÇA: o mundo em 3D. */
+.ab-mundo {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: 50% do espaço. */
+  left: 50%;
+  /* Distância de cima: 50% do espaço. */
+  top: 50%;
+  /* Largura (mundo em 3D): zero. Número maior = mais largo. */
+  width: 0;
+  /* Altura (mundo em 3D): zero. Número maior = mais alto. */
+  height: 0;
+  /* Mantém o efeito 3D nas peças de dentro. */
+  transform-style: preserve-3d;
+}
+
+/* PEÇA: a palavra em 3D. */
+.ab-3d {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Cor das letras (palavra em 3D): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Letra (palavra em 3D): Unbounded, grossura 800. Os números do meio mudam o tamanho: maior = letra maior. */
+  font: 800 clamp(2.4rem, 13vmin, 6.4rem) / 1 Unbounded, Inter, sans-serif;
+  /* Espaço entre as letras. Número maior = letras mais separadas. */
+  letter-spacing: -.03em;
+  /* Texto no meio. */
+  text-align: center;
+  /* Não deixa o texto quebrar de linha. */
+  white-space: nowrap;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* PEÇA: a palavra em 3D com "fim" ligado. */
+.ab-3d.fim {
+  /* Largura (palavra em 3D): 84% da largura da tela. Número maior = mais largo. */
+  width: 84vw;
+  /* Cor das letras (palavra em 3D): branco. Troque o código para mudar a cor. */
+  color: #fff;
+  /* Tamanho da letra (palavra em 3D): cresce com a tela, de 2,3 vezes o tamanho normal da letra até 5,8 vezes o tamanho normal da letra. Número maior = letra maior. */
+  font-size: clamp(2.3rem, 11.6vmin, 5.8rem);
+  /* Como tratar os espaços do texto. */
+  white-space: normal;
+  /* Brilho em volta das letras (palavra em 3D), na cor: a cor de destaque do tema. Os números dizem o tamanho; o código diz a cor. */
+  text-shadow: 0 0 34px var(--ac);
+}
+
+/* PEÇA: o aro do túnel. */
+.ab-aro {
+  /* Fica solta, no lugar exato que as distâncias abaixo mandarem. */
+  position: absolute;
+  /* Distância da esquerda: zero. */
+  left: 0;
+  /* Distância de cima: zero. */
+  top: 0;
+  /* Largura (aro do túnel): 150vmax. Número maior = mais largo. */
+  width: 150vmax;
+  /* Altura (aro do túnel): 150vmax. Número maior = mais alto. */
+  height: 150vmax;
+  /* Contorno (aro do túnel): lisa, 1,5 pontinhos de grossura, cor a cor de destaque do tema. */
+  border: 1.5px solid var(--ac);
+  /* Arredonda os cantos (aro do túnel). Número maior = mais redondo; 50% vira círculo. */
+  border-radius: 50%;
+  /* Transparência: 0 = invisível, 1 = aparece inteiro. Aqui: 0,32. */
+  opacity: .32;
+  /* Não recebe toques: o dedo passa direto para o que está atrás. */
+  pointer-events: none;
+}
+
+/* ---------- quem pediu menos movimento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  /* PEÇA: a frase que ensina o gesto e peças parecidas. */
+  .ab-dica, .ab-orbe, .ab-orbe::after, .ab-frase span, .travou .ab-numero {
+    /* Desliga a animação desta peça. */
+    animation: none;
+  }
+}

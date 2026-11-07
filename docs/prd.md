@@ -41,7 +41,7 @@ Site estático no GitHub Pages. O dono gera um link com chave, manda para algué
 
 **RF-08 Mensagens longas e interativas.** Como dono, quero mensagens maiores, com mais efeitos e interação. *Aceite:* depois da animação, cada link tem 2 capítulos interativos com texto próprio; a mesma sequência de capítulos não se repete na categoria; todo toque solta faíscas e o dedo deixa rastro.
 
-**RF-08b Visual moderno.** Como dono, quero que a mensagem pareça tecnológica. *Aceite:* cada link da categoria tem um fundo animado diferente (20 cenários em WebGL, que reagem ao dedo e pulsam no ritmo da música); cada mensagem abre com um leitor de digital; títulos se decodificam; o conteúdo inclina em 3D; se o aparelho não suportar, o site funciona sem o fundo.
+**RF-08b Visual moderno.** Como dono, quero que a mensagem pareça tecnológica. *Aceite:* cada link da categoria tem um fundo animado diferente (20 cenários em WebGL, que reagem ao dedo e pulsam no ritmo da música); cada mensagem abre com uma entrada de tela inteira, feita de luz, líquido, som ou letras que reagem ao dedo (20 tipos, cada um uma vez por categoria); títulos se decodificam; o conteúdo inclina em 3D; se o aparelho não suportar, o site funciona sem o fundo.
 
 **RF-08c Frases na duração da música.** Como dono, quero mensagens longas. *Aceite:* cada link tem um filme de frases que dura pelo menos 70% da música da categoria (ajuste em `FRASES_MUSICA`); as frases ficam em `data/frases-*.js`; o validador confere a duração dos 80 links.
 

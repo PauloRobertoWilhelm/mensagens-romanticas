@@ -168,6 +168,12 @@ const estouro = () => {
       // Se a condição valer, pula para a próxima volta.
       // Sem gesto para fazer: adianta o relógio mais depressa e olha de novo.
       if (s.k === 'wait' || s.k === 'none') {
+        // Esquece o último gesto: no filme, a tampa de cada frase aparece no mesmo lugar.
+        ultimo = '';
+        // Mede se alguma peça saiu da tela enquanto as frases passam.
+        const fora = await pg.evaluate(estouro);
+        // Anota o aviso, se for novo.
+        if (fora && !avisos.includes(fora)) avisos.push(fora);
         // Adianta quase um segundo.
         await pg.clock.runFor(750);
         // Volta para o começo da repetição.

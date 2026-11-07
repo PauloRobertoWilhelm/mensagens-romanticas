@@ -90,18 +90,14 @@
     if (tocando || !audio) return;
     // Anota que a música já começou.
     tocando = true;
-    // Tenta tocar; se o navegador recusar, a mensagem segue sem som.
+    // Tenta tocar; se o navegador recusar, o próximo toque tenta de novo.
     const p = audio.play();
     // Se a condição entre parênteses valer: se der erro, segue sem quebrar.
     if (p && p.catch)
       // Se der erro, segue sem quebrar.
       p.catch(() => {
-        // Anota que a música não vai tocar.
-        semAudio = true;
-        // Esconde btn.
-        btn.hidden = true;
-        // Liga o visual "parado" (veja .parado no CSS).
-        rodape.classList.add('parado');
+        // Anota que ainda não tocou, para tentar de novo no próximo toque.
+        tocando = false;
       });
     // Sobe o volume de 0 até o configurado em 2 s (fade-in suave).
     const alvo = (window.CONFIG && CONFIG.VOLUME) || 0.85;
